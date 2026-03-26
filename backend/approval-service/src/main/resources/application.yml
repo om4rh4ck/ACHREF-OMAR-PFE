@@ -1,0 +1,25 @@
+﻿server:
+  port: 8084
+
+spring:
+  application:
+    name: approval-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/vermeg_sirh
+    username: vermeg
+    password: vermeg123
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${KEYCLOAK_ISSUER_URI:http://localhost:8080/realms/vermeg-sirh}
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html

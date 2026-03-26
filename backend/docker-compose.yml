@@ -1,0 +1,29 @@
+﻿version: '3.9'
+services:
+  postgres:
+    image: postgres:15
+    container_name: vermeg-postgres
+    environment:
+      POSTGRES_DB: vermeg_sirh
+      POSTGRES_USER: vermeg
+      POSTGRES_PASSWORD: vermeg123
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:24.0
+    container_name: vermeg-keycloak
+    command: ["start-dev", "--import-realm"]
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+      KC_DB: dev-file
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./keycloak/realm-vermeg.json:/opt/keycloak/data/import/realm-vermeg.json:ro
+
+volumes:
+  pg_data:

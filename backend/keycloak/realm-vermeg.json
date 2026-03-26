@@ -1,0 +1,76 @@
+﻿{
+  "realm": "vermeg-sirh",
+  "enabled": true,
+  "registrationAllowed": true,
+  "loginWithEmailAllowed": true,
+  "duplicateEmailsAllowed": false,
+  "resetPasswordAllowed": true,
+  "clients": [
+    {
+      "clientId": "sirh-frontend",
+      "name": "SIRH Frontend SPA",
+      "enabled": true,
+      "publicClient": true,
+      "directAccessGrantsEnabled": true,
+      "standardFlowEnabled": true,
+      "redirectUris": [
+        "http://localhost:5173/*",
+        "http://localhost:4200/*"
+      ],
+      "webOrigins": [
+        "http://localhost:5173",
+        "http://localhost:4200"
+      ],
+      "attributes": {
+        "pkce.code.challenge.method": "S256"
+      }
+    }
+  ],
+  "roles": {
+    "realm": [
+      { "name": "EMPLOYEE" },
+      { "name": "MANAGER" },
+      { "name": "HR_ADMIN" },
+      { "name": "RECRUITER" },
+      { "name": "CANDIDATE" }
+    ]
+  },
+  "users": [
+    {
+      "username": "admin@vermeg.com",
+      "enabled": true,
+      "email": "admin@vermeg.com",
+      "firstName": "Admin",
+      "lastName": "VERMEG",
+      "credentials": [{ "type": "password", "value": "admin123", "temporary": false }],
+      "realmRoles": ["HR_ADMIN"]
+    },
+    {
+      "username": "manager@vermeg.com",
+      "enabled": true,
+      "email": "manager@vermeg.com",
+      "firstName": "Marc",
+      "lastName": "Manager",
+      "credentials": [{ "type": "password", "value": "manager123", "temporary": false }],
+      "realmRoles": ["MANAGER"]
+    },
+    {
+      "username": "recruiter@vermeg.com",
+      "enabled": true,
+      "email": "recruiter@vermeg.com",
+      "firstName": "Rita",
+      "lastName": "Recruteur",
+      "credentials": [{ "type": "password", "value": "recruiter123", "temporary": false }],
+      "realmRoles": ["RECRUITER"]
+    },
+    {
+      "username": "employee@vermeg.com",
+      "enabled": true,
+      "email": "employee@vermeg.com",
+      "firstName": "Eric",
+      "lastName": "Employe",
+      "credentials": [{ "type": "password", "value": "employee123", "temporary": false }],
+      "realmRoles": ["EMPLOYEE"]
+    }
+  ]
+}
