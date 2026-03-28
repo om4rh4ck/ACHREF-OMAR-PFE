@@ -175,7 +175,7 @@ export class ApiService {
     return this.http.post<DocumentRequest>('/api/documents', payload);
   }
 
-  createDocumentByAdmin(payload: { employee_email: string; type: string; details: string }): Observable<DocumentRequest> {
+  createDocumentByAdmin(payload: { employee_email: string; type: string; details: string; file_data?: string; file_name?: string }): Observable<DocumentRequest> {
     return this.http.post<DocumentRequest>('/api/documents/admin', payload);
   }
 
@@ -195,7 +195,7 @@ export class ApiService {
     return this.http.post<SalaryRequest>('/api/salaries', payload);
   }
 
-  createSalaryByAdmin(payload: { employee_email: string; month: number; year: number; details: string }): Observable<SalaryRequest> {
+  createSalaryByAdmin(payload: { employee_email: string; month: number; year: number; details: string; file_data?: string; file_name?: string }): Observable<SalaryRequest> {
     return this.http.post<SalaryRequest>('/api/salaries/admin', payload);
   }
 

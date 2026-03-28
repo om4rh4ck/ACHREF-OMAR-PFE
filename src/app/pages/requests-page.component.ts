@@ -51,12 +51,14 @@ import { AuthService } from '../services/auth.service';
               </form>
 
               <div class="stack-list mt-3">
-                <div class="stack-item" *ngFor="let item of myLeaves()">
+                <div class="stack-item request-card" *ngFor="let item of myLeaves()">
                   <div class="d-flex justify-content-between align-items-start gap-2">
                     <div>
-                      <div class="fw-semibold">{{ item.type }}</div>
-                      <div class="text-secondary small">{{ item.start_date }} → {{ item.end_date }}</div>
-                      <div class="text-secondary small">{{ item.reason || '---' }}</div>
+                      <div class="d-flex align-items-center gap-2">
+                        <span class="request-pill">{{ leaveLabel(item.type) }}</span>
+                        <span class="text-secondary small">{{ item.start_date }} → {{ item.end_date }}</span>
+                      </div>
+                      <div class="text-secondary small mt-1">{{ item.reason || '---' }}</div>
                     </div>
                     <span class="status-badge" [ngClass]="statusClass(item.status)">{{ statusLabel(item.status) }}</span>
                   </div>
@@ -102,7 +104,10 @@ import { AuthService } from '../services/auth.service';
                       <tr *ngFor="let item of mySalaries()">
                         <td>{{ item.month }}/{{ item.year }}</td>
                         <td class="text-secondary">{{ item.details || '---' }}</td>
-                        <td><span class="status-badge" [ngClass]="statusClass(item.status)">{{ statusLabel(item.status) }}</span></td>
+                        <td>
+                          <span class="status-badge" [ngClass]="statusClass(item.status)">{{ statusLabel(item.status) }}</span>
+                          <button class="ghost-btn ghost-btn-sm ms-2 doc-btn" type="button" *ngIf="item.file_data" (click)="openFile(item.file_data, item.file_name || 'fiche-paie.pdf')">Ouvrir</button>
+                        </td>
                       </tr>
                     </tbody>
                   </table>
@@ -137,13 +142,18 @@ import { AuthService } from '../services/auth.service';
               </form>
 
               <div class="stack-list mt-3">
-                <div class="stack-item" *ngFor="let item of myDocuments()">
+                <div class="stack-item request-card" *ngFor="let item of myDocuments()">
                   <div class="d-flex justify-content-between align-items-start gap-2">
                     <div>
-                      <div class="fw-semibold">{{ item.type }}</div>
-                      <div class="text-secondary small">{{ item.details || '---' }}</div>
+                      <div class="d-flex align-items-center gap-2">
+                        <span class="request-pill">{{ documentLabel(item.type) }}</span>
+                        <span class="text-secondary small">{{ item.details || '---' }}</span>
+                      </div>
                     </div>
-                    <span class="status-badge" [ngClass]="statusClass(item.status)">{{ statusLabel(item.status) }}</span>
+                    <div class="d-flex align-items-center gap-2">
+                      <span class="status-badge" [ngClass]="statusClass(item.status)">{{ statusLabel(item.status) }}</span>
+                      <button class="ghost-btn ghost-btn-sm doc-btn" type="button" *ngIf="item.file_data" (click)="openFile(item.file_data, item.file_name || 'document.pdf')">Ouvrir</button>
+                    </div>
                   </div>
                 </div>
                 <div class="empty-state" *ngIf="!myDocuments().length">Aucune demande de document.</div>
@@ -162,6 +172,8 @@ export class RequestsPageComponent implements OnInit {
   readonly myLeaves = signal<LeaveRequest[]>([]);
   readonly mySalaries = signal<SalaryRequest[]>([]);
   readonly myDocuments = signal<DocumentRequest[]>([]);
+
+  focusTab: 'salary' | 'leave' | 'documents' = 'leave';
 
   leaveForm = { type: 'CONGE_PAYE', start_date: '', end_date: '', reason: '' };
   salaryForm = { month: new Date().getMonth() + 1, year: new Date().getFullYear(), details: '' };
@@ -209,6 +221,14 @@ export class RequestsPageComponent implements OnInit {
     });
   }
 
+  openFile(dataUrl: string, filename: string): void {
+    const link = document.createElement('a');
+    link.href = dataUrl;
+    link.download = filename;
+    link.target = '_blank';
+    link.click();
+  }
+
   statusClass(status: string): string {
     const s = (status || '').toUpperCase();
     if (['APPROVED', 'COMPLETED', 'VALIDATED'].includes(s)) return 'is-success';
@@ -222,5 +242,21 @@ export class RequestsPageComponent implements OnInit {
     if (s === 'REJECTED') return 'Refuse';
     return 'En attente';
   }
+
+  leaveLabel(type?: string): string {
+    const t = (type || '').toUpperCase();
+    if (t === 'CONGE_PAYE') return 'Congé payé';
+    if (t === 'CONGE_SANS_SOLDE') return 'Congé sans solde';
+    if (t === 'MALADIE') return 'Congé maladie';
+    return type || 'Congé';
+  }
+
+  documentLabel(type?: string): string {
+    const t = (type || '').toUpperCase();
+    if (t === 'ATTESTATION_TRAVAIL') return 'Attestation de travail';
+    if (t === 'ATTESTATION_SALAIRE') return 'Attestation de salaire';
+    if (t === 'CONTRAT') return 'Contrat';
+    if (t === 'FICHE_PAIE') return 'Fiche de paie';
+    return type || 'Document';
+  }
 }
-  focusTab: 'salary' | 'leave' | 'documents' = 'leave';

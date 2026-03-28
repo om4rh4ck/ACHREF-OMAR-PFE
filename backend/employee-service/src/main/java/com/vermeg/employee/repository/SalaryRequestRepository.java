@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface SalaryRequestRepository extends JpaRepository<SalaryRequest, Long> {
     List<SalaryRequest> findByUserIdOrderByCreatedAtDesc(Long userId);
+    List<SalaryRequest> findByEmployeeEmailOrderByCreatedAtDesc(String employeeEmail);
     List<SalaryRequest> findByStatusOrderByCreatedAtDesc(String status);
 }

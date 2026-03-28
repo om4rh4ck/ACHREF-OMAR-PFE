@@ -38,6 +38,8 @@ export interface DocumentRequest {
   user_id: number;
   type: string;
   details?: string;
+  file_data?: string;
+  file_name?: string;
   status: 'PENDING' | 'APPROVED' | 'REJECTED';
   created_at: string;
 }
@@ -49,6 +51,8 @@ export interface SalaryRequest {
   month: number;
   year: number;
   details?: string;
+  file_data?: string;
+  file_name?: string;
   status: 'PENDING' | 'APPROVED' | 'REJECTED';
   created_at: string;
 }

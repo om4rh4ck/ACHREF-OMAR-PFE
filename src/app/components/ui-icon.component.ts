@@ -84,6 +84,11 @@ import { Component, Input } from '@angular/core';
         <path d="M8 9h8"></path>
         <path d="M8 13h6"></path>
       </ng-container>
+      <ng-container *ngSwitchCase="'contract'">
+        <rect x="4" y="6" width="16" height="12" rx="2"></rect>
+        <path d="M9 6V5.5A1.5 1.5 0 0 1 10.5 4h3A1.5 1.5 0 0 1 15 5.5V6"></path>
+        <path d="M8 12h8"></path>
+      </ng-container>
       <ng-container *ngSwitchCase="'role'">
         <path d="M12 3l7 4v5c0 4.5-3 7.8-7 9-4-1.2-7-4.5-7-9V7z"></path>
         <path d="M9.5 12.5l1.7 1.7L15 10.4"></path>

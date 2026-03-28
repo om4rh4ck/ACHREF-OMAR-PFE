@@ -277,18 +277,45 @@ export class DashboardPageComponent implements OnInit {
     }
   }
 
-  get cardOneLabel(): string { return this.user?.role === 'CANDIDATE' ? 'Mes candidatures' : 'Effectif'; }
-  get cardOneValue(): string | number { return this.user?.role === 'CANDIDATE' ? this.applications().length : this.stats()?.employees ?? 0; }
-  get cardOneIcon(): string { return this.user?.role === 'CANDIDATE' ? 'applications' : 'users'; }
+  get cardOneLabel(): string {
+    if (this.user?.role === 'CANDIDATE') return 'Mes candidatures';
+    if (this.user?.role === 'EMPLOYEE') return 'Salaire';
+    return 'Effectif';
+  }
+  get cardOneValue(): string | number {
+    if (this.user?.role === 'CANDIDATE') return this.applications().length;
+    if (this.user?.role === 'EMPLOYEE') {
+      const salary = this.user?.salary;
+      return salary !== null && salary !== undefined ? `${salary} DT` : 'Non defini';
+    }
+    return this.stats()?.employees ?? 0;
+  }
+  get cardOneIcon(): string {
+    if (this.user?.role === 'CANDIDATE') return 'applications';
+    if (this.user?.role === 'EMPLOYEE') return 'salary';
+    return 'users';
+  }
   get cardTwoLabel(): string { return this.user?.role === 'EMPLOYEE' ? 'Conges disponibles' : 'Offres ouvertes'; }
   get cardTwoValue(): string | number { return this.user?.role === 'EMPLOYEE' ? `${this.user?.leave_balance ?? 25} j` : this.stats()?.openJobs ?? 0; }
   get cardTwoIcon(): string { return this.user?.role === 'EMPLOYEE' ? 'leave' : 'jobs'; }
   get cardThreeLabel(): string { return this.user?.role === 'MANAGER' ? 'Mon equipe' : 'Candidatures'; }
   get cardThreeValue(): string | number { return this.user?.role === 'MANAGER' ? this.team().length : this.stats()?.totalApplications ?? this.applications().length; }
   get cardThreeIcon(): string { return this.user?.role === 'MANAGER' ? 'team' : 'applications'; }
-  get cardFourLabel(): string { return this.user?.role === 'HR_ADMIN' ? 'Mobilite interne' : 'Role'; }
-  get cardFourValue(): string | number { return this.user?.role === 'HR_ADMIN' ? this.stats()?.mobilityRate ?? '18%' : this.user?.role ?? '-'; }
-  get cardFourIcon(): string { return this.user?.role === 'HR_ADMIN' ? 'mobility' : 'role'; }
+  get cardFourLabel(): string {
+    if (this.user?.role === 'HR_ADMIN') return 'Mobilite interne';
+    if (this.user?.role === 'EMPLOYEE') return 'Contrat';
+    return 'Role';
+  }
+  get cardFourValue(): string | number {
+    if (this.user?.role === 'HR_ADMIN') return this.stats()?.mobilityRate ?? '18%';
+    if (this.user?.role === 'EMPLOYEE') return this.user?.contract_type || this.user?.contractType || 'Non defini';
+    return this.user?.role ?? '-';
+  }
+  get cardFourIcon(): string {
+    if (this.user?.role === 'HR_ADMIN') return 'mobility';
+    if (this.user?.role === 'EMPLOYEE') return 'contract';
+    return 'role';
+  }
 
   get secondarySectionEyebrow(): string {
     if (this.user?.role === 'HR_ADMIN') return 'Validation RH';

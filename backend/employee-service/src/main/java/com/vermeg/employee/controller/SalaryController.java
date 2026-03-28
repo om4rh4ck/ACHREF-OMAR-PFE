@@ -1,8 +1,10 @@
 package com.vermeg.employee.controller;
 
 import com.vermeg.employee.model.Employee;
+import com.vermeg.employee.model.NotificationEntity;
 import com.vermeg.employee.model.SalaryRequest;
 import com.vermeg.employee.repository.EmployeeRepository;
+import com.vermeg.employee.repository.NotificationRepository;
 import com.vermeg.employee.repository.SalaryRequestRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,15 +21,17 @@ public class SalaryController {
 
     private final SalaryRequestRepository salaryRequestRepository;
     private final EmployeeRepository employeeRepository;
+    private final NotificationRepository notificationRepository;
 
-    public SalaryController(SalaryRequestRepository salaryRequestRepository, EmployeeRepository employeeRepository) {
+    public SalaryController(SalaryRequestRepository salaryRequestRepository, EmployeeRepository employeeRepository, NotificationRepository notificationRepository) {
         this.salaryRequestRepository = salaryRequestRepository;
         this.employeeRepository = employeeRepository;
+        this.notificationRepository = notificationRepository;
     }
 
     @PostMapping
     public ResponseEntity<?> create(Authentication authentication, @RequestBody Map<String, Object> payload) {
-        Employee me = employeeRepository.findByEmail(authentication.getName()).orElse(null);
+        Employee me = employeeRepository.findByEmail(authEmail(authentication)).orElse(null);
         if (me == null) return ResponseEntity.status(401).build();
         SalaryRequest request = new SalaryRequest();
         request.setUserId(me.getId());
@@ -35,8 +39,12 @@ public class SalaryController {
         request.setMonth(Integer.parseInt(Objects.toString(payload.getOrDefault("month", "1"))));
         request.setYear(Integer.parseInt(Objects.toString(payload.getOrDefault("year", "2026"))));
         request.setDetails(Objects.toString(payload.get("details"), ""));
+        request.setFileData(Objects.toString(payload.get("file_data"), ""));
+        request.setFileName(Objects.toString(payload.get("file_name"), ""));
         request.setStatus("PENDING");
-        return ResponseEntity.ok(salaryRequestRepository.save(request));
+        SalaryRequest saved = salaryRequestRepository.save(request);
+        notifyUser(me.getId(), "Nouvelle demande de fiche de paie en attente.", "INFO");
+        return ResponseEntity.ok(saved);
     }
 
     @PreAuthorize("hasRole('HR_ADMIN')")
@@ -52,15 +60,24 @@ public class SalaryController {
         request.setMonth(Integer.parseInt(Objects.toString(payload.getOrDefault("month", "1"))));
         request.setYear(Integer.parseInt(Objects.toString(payload.getOrDefault("year", "2026"))));
         request.setDetails(Objects.toString(payload.get("details"), ""));
+        request.setFileData(Objects.toString(payload.get("file_data"), ""));
+        request.setFileName(Objects.toString(payload.get("file_name"), ""));
         request.setStatus("APPROVED");
-        return ResponseEntity.ok(salaryRequestRepository.save(request));
+        SalaryRequest saved = salaryRequestRepository.save(request);
+        notifyUser(target.getId(), "Votre fiche de paie " + saved.getMonth() + "/" + saved.getYear() + " est disponible.", "SUCCESS");
+        return ResponseEntity.ok(saved);
     }
 
     @GetMapping("/my")
     public List<SalaryRequest> my(Authentication authentication) {
-        Employee me = employeeRepository.findByEmail(authentication.getName()).orElse(null);
-        if (me == null) return List.of();
-        return salaryRequestRepository.findByUserIdOrderByCreatedAtDesc(me.getId());
+        String email = authEmail(authentication);
+        Employee me = employeeRepository.findByEmail(email).orElse(null);
+        if (me == null) {
+            return salaryRequestRepository.findByEmployeeEmailOrderByCreatedAtDesc(email);
+        }
+        List<SalaryRequest> byUserId = salaryRequestRepository.findByUserIdOrderByCreatedAtDesc(me.getId());
+        if (!byUserId.isEmpty()) return byUserId;
+        return salaryRequestRepository.findByEmployeeEmailOrderByCreatedAtDesc(email);
     }
 
     @PreAuthorize("hasRole('HR_ADMIN')")
@@ -75,8 +92,25 @@ public class SalaryController {
         return salaryRequestRepository.findById(id)
                 .map(existing -> {
                     existing.setStatus(status.toUpperCase());
-                    return ResponseEntity.ok(salaryRequestRepository.save(existing));
+                    SalaryRequest saved = salaryRequestRepository.save(existing);
+                    notifyUser(saved.getUserId(), "Votre demande de fiche de paie est " + status.toUpperCase() + ".", "INFO");
+                    return ResponseEntity.ok(saved);
                 })
                 .orElse(ResponseEntity.notFound().build());
+    }
+
+    private String authEmail(Authentication authentication) {
+        if (authentication == null) return "";
+        return authentication.getName();
+    }
+
+    private void notifyUser(Long userId, String message, String type) {
+        if (userId == null) return;
+        NotificationEntity notification = new NotificationEntity();
+        notification.setUserId(userId);
+        notification.setMessage(message);
+        notification.setType(type);
+        notification.setIsRead(false);
+        notificationRepository.save(notification);
     }
 }

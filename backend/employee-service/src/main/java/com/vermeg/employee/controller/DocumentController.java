@@ -2,8 +2,10 @@ package com.vermeg.employee.controller;
 
 import com.vermeg.employee.model.DocumentRequest;
 import com.vermeg.employee.model.Employee;
+import com.vermeg.employee.model.NotificationEntity;
 import com.vermeg.employee.repository.DocumentRequestRepository;
 import com.vermeg.employee.repository.EmployeeRepository;
+import com.vermeg.employee.repository.NotificationRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -19,23 +21,29 @@ public class DocumentController {
 
     private final DocumentRequestRepository documentRequestRepository;
     private final EmployeeRepository employeeRepository;
+    private final NotificationRepository notificationRepository;
 
-    public DocumentController(DocumentRequestRepository documentRequestRepository, EmployeeRepository employeeRepository) {
+    public DocumentController(DocumentRequestRepository documentRequestRepository, EmployeeRepository employeeRepository, NotificationRepository notificationRepository) {
         this.documentRequestRepository = documentRequestRepository;
         this.employeeRepository = employeeRepository;
+        this.notificationRepository = notificationRepository;
     }
 
     @PostMapping
     public ResponseEntity<?> create(Authentication authentication, @RequestBody Map<String, Object> payload) {
-        Employee me = employeeRepository.findByEmail(authentication.getName()).orElse(null);
+        Employee me = employeeRepository.findByEmail(authEmail(authentication)).orElse(null);
         if (me == null) return ResponseEntity.status(401).build();
         DocumentRequest d = new DocumentRequest();
         d.setUserId(me.getId());
         d.setEmployeeEmail(me.getEmail());
         d.setType(Objects.toString(payload.get("type"), "ATTESTATION_TRAVAIL"));
         d.setDetails(Objects.toString(payload.get("details"), ""));
+        d.setFileData(Objects.toString(payload.get("file_data"), ""));
+        d.setFileName(Objects.toString(payload.get("file_name"), ""));
         d.setStatus("PENDING");
-        return ResponseEntity.ok(documentRequestRepository.save(d));
+        DocumentRequest saved = documentRequestRepository.save(d);
+        notifyUser(me.getId(), "Nouvelle demande de document en attente.", "INFO");
+        return ResponseEntity.ok(saved);
     }
 
     @PreAuthorize("hasRole('HR_ADMIN')")
@@ -50,15 +58,24 @@ public class DocumentController {
         d.setEmployeeEmail(target.getEmail());
         d.setType(Objects.toString(payload.get("type"), "ATTESTATION_TRAVAIL"));
         d.setDetails(Objects.toString(payload.get("details"), ""));
+        d.setFileData(Objects.toString(payload.get("file_data"), ""));
+        d.setFileName(Objects.toString(payload.get("file_name"), ""));
         d.setStatus("APPROVED");
-        return ResponseEntity.ok(documentRequestRepository.save(d));
+        DocumentRequest saved = documentRequestRepository.save(d);
+        notifyUser(target.getId(), "Votre document " + saved.getType() + " est disponible.", "SUCCESS");
+        return ResponseEntity.ok(saved);
     }
 
     @GetMapping("/my")
     public List<DocumentRequest> my(Authentication authentication) {
-        Employee me = employeeRepository.findByEmail(authentication.getName()).orElse(null);
-        if (me == null) return List.of();
-        return documentRequestRepository.findByUserIdOrderByCreatedAtDesc(me.getId());
+        String email = authEmail(authentication);
+        Employee me = employeeRepository.findByEmail(email).orElse(null);
+        if (me == null) {
+            return documentRequestRepository.findByEmployeeEmailOrderByCreatedAtDesc(email);
+        }
+        List<DocumentRequest> byUserId = documentRequestRepository.findByUserIdOrderByCreatedAtDesc(me.getId());
+        if (!byUserId.isEmpty()) return byUserId;
+        return documentRequestRepository.findByEmployeeEmailOrderByCreatedAtDesc(email);
     }
 
     @PreAuthorize("hasRole('HR_ADMIN')")
@@ -73,8 +90,25 @@ public class DocumentController {
         return documentRequestRepository.findById(id)
                 .map(existing -> {
                     existing.setStatus(status.toUpperCase());
-                    return ResponseEntity.ok(documentRequestRepository.save(existing));
+                    DocumentRequest saved = documentRequestRepository.save(existing);
+                    notifyUser(saved.getUserId(), "Votre demande de document est " + status.toUpperCase() + ".", "INFO");
+                    return ResponseEntity.ok(saved);
                 })
                 .orElse(ResponseEntity.notFound().build());
+    }
+
+    private String authEmail(Authentication authentication) {
+        if (authentication == null) return "";
+        return authentication.getName();
+    }
+
+    private void notifyUser(Long userId, String message, String type) {
+        if (userId == null) return;
+        NotificationEntity notification = new NotificationEntity();
+        notification.setUserId(userId);
+        notification.setMessage(message);
+        notification.setType(type);
+        notification.setIsRead(false);
+        notificationRepository.save(notification);
     }
 }

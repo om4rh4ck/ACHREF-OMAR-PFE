@@ -64,6 +64,7 @@ import { AuthService } from '../services/auth.service';
                       <th>Periode</th>
                       <th>Raison</th>
                       <th>Statut</th>
+                      <th>Actions</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -75,6 +76,12 @@ import { AuthService } from '../services/auth.service';
                       <td>{{ item.start_date }} → {{ item.end_date }}</td>
                       <td class="text-secondary">{{ item.reason || '---' }}</td>
                       <td><span class="status-badge" [ngClass]="statusClass(item.status)">{{ statusLabel(item.status) }}</span></td>
+                      <td>
+                        <div class="inline-actions">
+                          <button class="ghost-btn" type="button" (click)="updateLeave(item.id, 'REJECTED')">Refuser</button>
+                          <button class="primary-btn" type="button" (click)="updateLeave(item.id, 'APPROVED')">Accepter</button>
+                        </div>
+                      </td>
                     </tr>
                   </tbody>
                 </table>
@@ -104,6 +111,9 @@ import { AuthService } from '../services/auth.service';
                 <div class="col-md-4">
                   <input class="form-control app-input" [(ngModel)]="salaryAdminForm.details" name="salaryDetails" placeholder="Details" />
                 </div>
+                <div class="col-md-6">
+                  <input type="file" class="form-control app-input" (change)="onSalaryFile($event)" />
+                </div>
                 <div class="col-12">
                   <button class="primary-btn" type="submit">
                     <span class="btn-icon"><app-ui-icon name="salary" /></span>
@@ -120,6 +130,7 @@ import { AuthService } from '../services/auth.service';
                       <th>Periode</th>
                       <th>Details</th>
                       <th>Statut</th>
+                      <th>Actions</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -131,6 +142,12 @@ import { AuthService } from '../services/auth.service';
                       <td>{{ item.month }}/{{ item.year }}</td>
                       <td class="text-secondary">{{ item.details || '---' }}</td>
                       <td><span class="status-badge" [ngClass]="statusClass(item.status)">{{ statusLabel(item.status) }}</span></td>
+                      <td>
+                        <div class="inline-actions">
+                          <button class="ghost-btn" type="button" (click)="updateSalary(item.id, 'REJECTED')">Refuser</button>
+                          <button class="primary-btn" type="button" (click)="updateSalary(item.id, 'APPROVED')">Accepter</button>
+                        </div>
+                      </td>
                     </tr>
                   </tbody>
                 </table>
@@ -162,6 +179,9 @@ import { AuthService } from '../services/auth.service';
                 <div class="col-md-4">
                   <input class="form-control app-input" [(ngModel)]="documentAdminForm.details" name="docDetails" placeholder="Details" />
                 </div>
+                <div class="col-md-6">
+                  <input type="file" class="form-control app-input" (change)="onDocumentFile($event)" />
+                </div>
                 <div class="col-12">
                   <button class="primary-btn" type="submit">
                     <span class="btn-icon"><app-ui-icon name="document" /></span>
@@ -178,6 +198,7 @@ import { AuthService } from '../services/auth.service';
                       <th>Type</th>
                       <th>Details</th>
                       <th>Statut</th>
+                      <th>Actions</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -189,6 +210,12 @@ import { AuthService } from '../services/auth.service';
                       <td>{{ item.type }}</td>
                       <td class="text-secondary">{{ item.details || '---' }}</td>
                       <td><span class="status-badge" [ngClass]="statusClass(item.status)">{{ statusLabel(item.status) }}</span></td>
+                      <td>
+                        <div class="inline-actions">
+                          <button class="ghost-btn" type="button" (click)="updateDocument(item.id, 'REJECTED')">Refuser</button>
+                          <button class="primary-btn" type="button" (click)="updateDocument(item.id, 'APPROVED')">Accepter</button>
+                        </div>
+                      </td>
                     </tr>
                   </tbody>
                 </table>
@@ -229,6 +256,8 @@ import { AuthService } from '../services/auth.service';
                 <th>Employe</th>
                 <th>Departement</th>
                 <th>Contrat</th>
+                <th>Salaire (DT)</th>
+                <th>Maj contrat & salaire</th>
               </tr>
             </thead>
             <tbody>
@@ -239,6 +268,20 @@ import { AuthService } from '../services/auth.service';
                 </td>
                 <td>{{ emp.department || 'N/A' }}</td>
                 <td>{{ emp.contract_type || emp.contractType || 'Non defini' }}</td>
+                <td>{{ emp.salary ?? 'Non defini' }}</td>
+                <td>
+                  <div class="inline-actions">
+                    <select class="form-select app-input" [(ngModel)]="draftContracts[emp.id]" [name]="'contract-' + emp.id">
+                      <option value="" disabled>Contrat</option>
+                      <option *ngFor="let c of contractTypes()" [ngValue]="c.name">{{ c.name }}</option>
+                    </select>
+                    <input class="form-control app-input" type="number" min="0" step="0.01" [(ngModel)]="draftSalaries[emp.id]" [name]="'salary-' + emp.id" placeholder="Salaire" />
+                    <button class="primary-btn" type="button" (click)="updateEmployeeContract(emp)">
+                      <span class="btn-icon"><app-ui-icon name="users" /></span>
+                      Enregistrer
+                    </button>
+                  </div>
+                </td>
               </tr>
             </tbody>
           </table>
@@ -263,16 +306,27 @@ export class HrRequestsPageComponent implements OnInit {
   readonly contractTypes = signal<{ id: number; name: string; description?: string }[]>([]);
   filterContract = '';
   filterDepartment = '';
+  draftContracts: Record<number, string> = {};
+  draftSalaries: Record<number, number | null> = {};
   leaveAdminForm = { employee_email: '', type: 'CONGE_PAYE', start_date: '', end_date: '', reason: '' };
-  salaryAdminForm = { employee_email: '', month: new Date().getMonth() + 1, year: new Date().getFullYear(), details: '' };
-  documentAdminForm = { employee_email: '', type: 'ATTESTATION_TRAVAIL', details: '' };
+  salaryAdminForm = { employee_email: '', month: new Date().getMonth() + 1, year: new Date().getFullYear(), details: '', file_data: '', file_name: '' };
+  documentAdminForm = { employee_email: '', type: 'ATTESTATION_TRAVAIL', details: '', file_data: '', file_name: '' };
 
   ngOnInit(): void {
     this.reloadAll();
     this.api.getUsers().subscribe({
       next: (list) => {
         this.users.set(list);
-        this.employees.set(list.filter((u) => u.role === 'EMPLOYEE'));
+        const emps = list.filter((u) => u.role === 'EMPLOYEE');
+        this.employees.set(emps);
+        this.draftContracts = emps.reduce<Record<number, string>>((acc, u) => {
+          acc[u.id] = u.contract_type || u.contractType || '';
+          return acc;
+        }, {});
+        this.draftSalaries = emps.reduce<Record<number, number | null>>((acc, u) => {
+          acc[u.id] = u.salary ?? null;
+          return acc;
+        }, {});
       },
       error: () => {
         this.users.set([]);
@@ -307,6 +361,29 @@ export class HrRequestsPageComponent implements OnInit {
     this.api.updateDocumentStatus(id, status).subscribe({ next: () => this.reloadAll() });
   }
 
+  updateEmployeeContract(emp: User): void {
+    const contractType = this.draftContracts[emp.id] || '';
+    const salaryValue = this.draftSalaries[emp.id];
+    const salary = salaryValue === null || salaryValue === undefined || Number.isNaN(Number(salaryValue))
+      ? null
+      : Number(salaryValue);
+    this.api.updateUser(emp.id, { contract_type: contractType || null, salary }).subscribe({
+      next: () => {
+        this.api.getUsers().subscribe({
+          next: (list) => {
+            this.users.set(list);
+            const emps = list.filter((u) => u.role === 'EMPLOYEE');
+            this.employees.set(emps);
+            this.draftSalaries = emps.reduce<Record<number, number | null>>((acc, u) => {
+              acc[u.id] = u.salary ?? null;
+              return acc;
+            }, {});
+          }
+        });
+      }
+    });
+  }
+
   createLeaveManual(): void {
     this.api.createLeaveByAdmin(this.leaveAdminForm).subscribe({
       next: () => {
@@ -319,7 +396,7 @@ export class HrRequestsPageComponent implements OnInit {
   createSalaryManual(): void {
     this.api.createSalaryByAdmin(this.salaryAdminForm).subscribe({
       next: () => {
-        this.salaryAdminForm = { employee_email: '', month: new Date().getMonth() + 1, year: new Date().getFullYear(), details: '' };
+        this.salaryAdminForm = { employee_email: '', month: new Date().getMonth() + 1, year: new Date().getFullYear(), details: '', file_data: '', file_name: '' };
         this.reloadAll();
       }
     });
@@ -328,10 +405,36 @@ export class HrRequestsPageComponent implements OnInit {
   createDocumentManual(): void {
     this.api.createDocumentByAdmin(this.documentAdminForm).subscribe({
       next: () => {
-        this.documentAdminForm = { employee_email: '', type: 'ATTESTATION_TRAVAIL', details: '' };
+        this.documentAdminForm = { employee_email: '', type: 'ATTESTATION_TRAVAIL', details: '', file_data: '', file_name: '' };
         this.reloadAll();
       }
     });
+  }
+
+  onSalaryFile(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      const result = typeof reader.result === 'string' ? reader.result : '';
+      this.salaryAdminForm.file_data = result;
+      this.salaryAdminForm.file_name = file.name;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  onDocumentFile(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      const result = typeof reader.result === 'string' ? reader.result : '';
+      this.documentAdminForm.file_data = result;
+      this.documentAdminForm.file_name = file.name;
+    };
+    reader.readAsDataURL(file);
   }
 
   userName(email?: string): string {

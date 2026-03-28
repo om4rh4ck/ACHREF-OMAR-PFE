@@ -2,8 +2,10 @@ package com.vermeg.employee.controller;
 
 import com.vermeg.employee.model.Employee;
 import com.vermeg.employee.model.LeaveRequest;
+import com.vermeg.employee.model.NotificationEntity;
 import com.vermeg.employee.repository.EmployeeRepository;
 import com.vermeg.employee.repository.LeaveRequestRepository;
+import com.vermeg.employee.repository.NotificationRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -20,15 +22,17 @@ public class LeaveController {
 
     private final LeaveRequestRepository leaveRequestRepository;
     private final EmployeeRepository employeeRepository;
+    private final NotificationRepository notificationRepository;
 
-    public LeaveController(LeaveRequestRepository leaveRequestRepository, EmployeeRepository employeeRepository) {
+    public LeaveController(LeaveRequestRepository leaveRequestRepository, EmployeeRepository employeeRepository, NotificationRepository notificationRepository) {
         this.leaveRequestRepository = leaveRequestRepository;
         this.employeeRepository = employeeRepository;
+        this.notificationRepository = notificationRepository;
     }
 
     @PostMapping
     public ResponseEntity<?> create(@RequestBody Map<String, Object> dto, Authentication authentication) {
-        Employee me = employeeRepository.findByEmail(authentication.getName()).orElse(null);
+        Employee me = employeeRepository.findByEmail(authEmail(authentication)).orElse(null);
         if (me == null) return ResponseEntity.status(401).build();
 
         LeaveRequest leave = new LeaveRequest();
@@ -39,7 +43,9 @@ public class LeaveController {
         leave.setEndDate(LocalDate.parse(Objects.toString(dto.get("end_date"))));
         leave.setReason(Objects.toString(dto.get("reason"), ""));
         leave.setStatus("PENDING");
-        return ResponseEntity.ok(leaveRequestRepository.save(leave));
+        LeaveRequest saved = leaveRequestRepository.save(leave);
+        notifyUser(me.getId(), "Nouvelle demande de conge en attente.", "INFO");
+        return ResponseEntity.ok(saved);
     }
 
     @PreAuthorize("hasRole('HR_ADMIN')")
@@ -58,12 +64,14 @@ public class LeaveController {
         leave.setEndDate(LocalDate.parse(Objects.toString(dto.get("end_date"))));
         leave.setReason(Objects.toString(dto.get("reason"), ""));
         leave.setStatus("APPROVED");
-        return ResponseEntity.ok(leaveRequestRepository.save(leave));
+        LeaveRequest saved = leaveRequestRepository.save(leave);
+        notifyUser(target.getId(), "Votre conge a ete enregistre.", "SUCCESS");
+        return ResponseEntity.ok(saved);
     }
 
     @GetMapping("/my")
     public List<LeaveRequest> my(Authentication authentication) {
-        return leaveRequestRepository.findByEmployeeEmailOrderByCreatedAtDesc(authentication.getName());
+        return leaveRequestRepository.findByEmployeeEmailOrderByCreatedAtDesc(authEmail(authentication));
     }
 
     @PreAuthorize("hasAnyRole('MANAGER','HR_ADMIN')")
@@ -78,8 +86,25 @@ public class LeaveController {
         return leaveRequestRepository.findById(id)
                 .map(existing -> {
                     existing.setStatus(status.toUpperCase());
-                    return ResponseEntity.ok(leaveRequestRepository.save(existing));
+                    LeaveRequest saved = leaveRequestRepository.save(existing);
+                    notifyUser(saved.getUserId(), "Votre demande de conge est " + status.toUpperCase() + ".", "INFO");
+                    return ResponseEntity.ok(saved);
                 })
                 .orElse(ResponseEntity.notFound().build());
+    }
+
+    private String authEmail(Authentication authentication) {
+        if (authentication == null) return "";
+        return authentication.getName();
+    }
+
+    private void notifyUser(Long userId, String message, String type) {
+        if (userId == null) return;
+        NotificationEntity notification = new NotificationEntity();
+        notification.setUserId(userId);
+        notification.setMessage(message);
+        notification.setType(type);
+        notification.setIsRead(false);
+        notificationRepository.save(notification);
     }
 }

@@ -150,7 +150,6 @@ export class AppShellComponent implements OnInit {
         return [
           { label: 'Dashboard', route: '/employee/dashboard', icon: 'dashboard' },
           { label: 'Offres', route: '/jobs', icon: 'jobs', badge: this.jobCount() },
-          { label: 'Demandes RH', route: '/requests', icon: 'leave' },
           { label: 'Salaire & Contrat', route: '/requests', icon: 'salary' },
           { label: 'Actualites', route: '/news', icon: 'news' },
           { label: 'Messages', route: '/messages', icon: 'messages', badge: this.messageCount() },
@@ -174,7 +173,6 @@ export class AppShellComponent implements OnInit {
           { label: 'Offres', route: '/jobs', icon: 'jobs', badge: this.jobCount() },
           { label: 'Candidatures', route: '/applications', icon: 'applications', badge: this.applicationCount() },
           { label: 'Entretiens', route: '/interviews', icon: 'interviews' },
-          { label: 'Demandes RH', route: '/hr-requests', icon: 'leave' },
           { label: 'Contrats & Salaires', route: '/hr-requests', icon: 'salary' },
           { label: 'Utilisateurs', route: '/users', icon: 'users' },
           { label: 'Actualites', route: '/news', icon: 'news' },

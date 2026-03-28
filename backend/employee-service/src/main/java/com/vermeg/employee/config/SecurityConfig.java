@@ -63,7 +63,10 @@ public class SecurityConfig {
                     authorities.add(new SimpleGrantedAuthority("ROLE_" + role));
                 }
             }
-            return new JwtAuthenticationToken(jwt, authorities, jwt.getClaimAsString("preferred_username"));
+            String email = jwt.getClaimAsString("email");
+            String preferred = jwt.getClaimAsString("preferred_username");
+            String name = (email != null && !email.isBlank()) ? email : preferred;
+            return new JwtAuthenticationToken(jwt, authorities, name);
         };
     }
 }

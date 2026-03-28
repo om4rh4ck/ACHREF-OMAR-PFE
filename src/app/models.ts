@@ -129,6 +129,8 @@ export interface DocumentRequest {
   employee_email?: string;
   type: string;
   details?: string;
+  file_data?: string;
+  file_name?: string;
   status: string;
   created_at: string;
 }
@@ -140,6 +142,8 @@ export interface SalaryRequest {
   month: number;
   year: number;
   details?: string;
+  file_data?: string;
+  file_name?: string;
   status: string;
   created_at: string;
 }
