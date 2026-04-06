@@ -15,6 +15,7 @@ public class JobApplication {
     private Long userId;
     private String status = "PENDING";
     private LocalDateTime appliedAt = LocalDateTime.now();
+    private Long managerId;
 
     @Column(columnDefinition = "TEXT")
     private String coverLetter;
@@ -43,6 +44,8 @@ public class JobApplication {
     public void setStatus(String status) { this.status = status; }
     public LocalDateTime getAppliedAt() { return appliedAt; }
     public void setAppliedAt(LocalDateTime appliedAt) { this.appliedAt = appliedAt; }
+    public Long getManagerId() { return managerId; }
+    public void setManagerId(Long managerId) { this.managerId = managerId; }
     public String getCoverLetter() { return coverLetter; }
     public void setCoverLetter(String coverLetter) { this.coverLetter = coverLetter; }
     public String getCvFile() { return cvFile; }

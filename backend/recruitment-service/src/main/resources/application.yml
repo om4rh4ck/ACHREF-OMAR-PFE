@@ -1,5 +1,8 @@
 server:
   port: 8083
+  tomcat:
+    max-http-form-post-size: 20MB
+    max-swallow-size: 20MB
 
 spring:
   application:
@@ -25,3 +28,6 @@ spring:
 springdoc:
   swagger-ui:
     path: /swagger-ui.html
+
+app:
+  employee-service-url: ${EMPLOYEE_SERVICE_URL:http://employee-service:8082}

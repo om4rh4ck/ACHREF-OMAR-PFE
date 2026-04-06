@@ -18,7 +18,7 @@ import { AuthService } from '../services/auth.service';
           <div class="section-heading">
             <div>
               <p class="eyebrow">Mobilite & recrutement</p>
-              <h2 class="section-title">Offres internes et externes</h2>
+              <h2 class="section-title">{{ jobsSectionTitle }}</h2>
             </div>
             <button
               *ngIf="canPublish"
@@ -33,15 +33,23 @@ import { AuthService } from '../services/auth.service';
           <form *ngIf="showCreate()" class="row g-3 mb-4" (ngSubmit)="saveJob()">
             <div class="col-md-6"><input class="form-control app-input" [(ngModel)]="jobForm.title" name="title" placeholder="Titre" required /></div>
             <div class="col-md-6">
-              <select class="form-select app-input" [(ngModel)]="jobForm.department" name="department" required>
-                <option value="" disabled>Departement</option>
-                <option *ngFor="let dept of departments()" [ngValue]="dept.name">{{ dept.name }}</option>
-              </select>
+              <ng-container *ngIf="!isManager(); else managerDept">
+                <select class="form-select app-input" [(ngModel)]="jobForm.department" name="department" required>
+                  <option value="" disabled>Departement</option>
+                  <option *ngFor="let dept of departments()" [ngValue]="dept.name">{{ dept.name }}</option>
+                </select>
+              </ng-container>
+              <ng-template #managerDept>
+                <input class="form-control app-input" [value]="auth.user()?.department || 'Non defini'" readonly />
+              </ng-template>
             </div>
             <div class="col-md-6"><input class="form-control app-input" [(ngModel)]="jobForm.salary_range" name="salary_range" placeholder="Salaire" required /></div>
+            <div class="col-md-6" *ngIf="jobForm.type === 'INTERNAL'">
+              <input class="form-control app-input" [(ngModel)]="jobForm.project" name="project" placeholder="Projet / mission (ex: Swift Dev)" />
+            </div>
             <div class="col-md-6"><input class="form-control app-input" type="date" [(ngModel)]="jobForm.opening_date" name="opening_date" required /></div>
             <div class="col-md-6"><input class="form-control app-input" type="date" [(ngModel)]="jobForm.closing_date" name="closing_date" required /></div>
-            <div class="col-md-6">
+            <div class="col-md-6" *ngIf="canChooseType()">
               <select class="form-select app-input" [(ngModel)]="jobForm.type" name="type">
                 <option value="INTERNAL">Interne</option>
                 <option value="EXTERNAL">Externe</option>
@@ -78,6 +86,7 @@ import { AuthService } from '../services/auth.service';
                 </div>
                 <h3>{{ job.title }}</h3>
                 <p class="text-secondary">{{ job.department }} · {{ job.salary_range }}</p>
+                <p class="small text-secondary" *ngIf="job.project">Projet: {{ job.project }}</p>
                 <p class="small text-secondary">Statut: <span class="status-badge" [ngClass]="statusClass(job.status)">{{ statusLabel(job.status) }}</span></p>
                 <p class="job-description">{{ job.description }}</p>
                 <div class="d-flex gap-2 mt-auto flex-wrap">
@@ -202,6 +211,9 @@ import { AuthService } from '../services/auth.service';
               </label>
             </div>
 
+            <div class="col-12" *ngIf="selectedJob()?.type === 'INTERNAL' && selectedJob()?.project">
+              <input class="form-control app-input" [value]="selectedJob()?.project" readonly />
+            </div>
             <div class="col-12">
               <textarea class="form-control app-input" [(ngModel)]="applicationForm.cover_letter" name="cover_letter" rows="4" placeholder="Lettre de motivation"></textarea>
             </div>
@@ -244,6 +256,7 @@ import { AuthService } from '../services/auth.service';
                 </div>
                 <h3>{{ job.title }}</h3>
                 <p class="text-secondary">{{ job.department }} · {{ job.salary_range }}</p>
+                <p class="small text-secondary" *ngIf="job.project">Projet: {{ job.project }}</p>
                 <p class="job-description">{{ job.description }}</p>
                 <a class="text-link mt-auto" routerLink="/auth/login">Se connecter pour postuler</a>
               </article>
@@ -270,6 +283,7 @@ export class JobsPageComponent implements OnInit {
     department: '',
     description: '',
     salary_range: '',
+    project: '',
     requirements: '',
     opening_date: '',
     closing_date: '',
@@ -298,13 +312,22 @@ export class JobsPageComponent implements OnInit {
     return ['HR_ADMIN', 'MANAGER', 'RECRUITER'].includes(this.auth.user()?.role ?? '');
   }
 
+  get jobsSectionTitle(): string {
+    const role = this.auth.user()?.role;
+    if (role === 'CANDIDATE') return 'Offres externes disponibles';
+    if (role === 'EMPLOYEE') return 'Offres internes disponibles';
+    return 'Offres internes et externes';
+  }
+
   ngOnInit(): void {
     this.loadJobs();
   }
 
   loadJobs(): void {
     const user = this.auth.user();
-    const load = !user ? this.api.getPublicJobs() : (this.canPublish ? this.api.getJobs() : this.api.getVisibleJobs());
+    const load = !user
+      ? this.api.getPublicJobs()
+      : (user.role === 'CANDIDATE' ? this.api.getPublicJobs() : (this.canPublish ? this.api.getJobs() : this.api.getVisibleJobs()));
     load.subscribe({
       next: (jobs) => this.jobs.set(Array.isArray(jobs) ? jobs : []),
       error: () => this.jobs.set([])
@@ -317,6 +340,10 @@ export class JobsPageComponent implements OnInit {
 
   saveJob(): void {
     const editing = this.editJob();
+    if (this.isManager()) {
+      this.jobForm.type = 'INTERNAL';
+      this.jobForm.department = this.auth.user()?.department || this.jobForm.department;
+    }
     if (!this.jobForm.recruiter_id && (this.isManager() || this.isRecruiter())) {
       this.jobForm.recruiter_id = this.auth.user()?.id ?? null;
     }
@@ -347,6 +374,7 @@ export class JobsPageComponent implements OnInit {
     this.jobForm.department = job.department;
     this.jobForm.description = job.description;
     this.jobForm.salary_range = job.salary_range;
+    this.jobForm.project = job.project || '';
     this.jobForm.requirements = job.requirements;
     this.jobForm.opening_date = job.opening_date || '';
     this.jobForm.closing_date = job.closing_date;
@@ -371,7 +399,22 @@ export class JobsPageComponent implements OnInit {
       return;
     }
 
-    if (!this.applicationForm.cv_file || !this.applicationForm.cin_file) {
+    const role = this.auth.user()?.role;
+    const dept = this.auth.user()?.department || '';
+    if (role === 'EMPLOYEE' && job.type !== 'INTERNAL') {
+      this.applyError.set('Les employes peuvent postuler uniquement aux offres internes.');
+      return;
+    }
+    if (role === 'CANDIDATE' && job.type !== 'EXTERNAL') {
+      this.applyError.set('Les candidats peuvent postuler uniquement aux offres externes.');
+      return;
+    }
+    if (role === 'EMPLOYEE' && job.type === 'INTERNAL' && job.department && dept && job.department !== dept) {
+      this.applyError.set('Cette offre interne est reservee a un autre departement.');
+      return;
+    }
+
+    if ((role === 'CANDIDATE' || job.type === 'EXTERNAL') && (!this.applicationForm.cv_file || !this.applicationForm.cin_file)) {
       this.applyError.set('Veuillez joindre votre CV et votre CIN.');
       return;
     }
@@ -381,6 +424,9 @@ export class JobsPageComponent implements OnInit {
         this.selectedJob.set(null);
         this.applyError.set('');
         this.resetApplicationForm();
+      },
+      error: (err) => {
+        this.applyError.set(err?.error?.error || 'Demande impossible. Verifiez les informations.');
       }
     });
   }
@@ -392,7 +438,7 @@ export class JobsPageComponent implements OnInit {
       return list.filter((job) => job.type === 'EXTERNAL' && job.status === 'PUBLISHED');
     }
     if (role === 'EMPLOYEE') {
-      return list.filter((job) => job.status === 'PUBLISHED');
+      return list.filter((job) => job.status === 'PUBLISHED' && job.type === 'INTERNAL');
     }
     if (role === 'MANAGER' || role === 'RECRUITER') {
       return list;
@@ -408,13 +454,14 @@ export class JobsPageComponent implements OnInit {
     this.editJob.set(null);
     this.showCreate.set(false);
     this.jobForm.title = '';
-    this.jobForm.department = '';
+    this.jobForm.department = this.isManager() ? (this.auth.user()?.department || '') : '';
     this.jobForm.description = '';
     this.jobForm.salary_range = '';
+    this.jobForm.project = '';
     this.jobForm.requirements = '';
     this.jobForm.opening_date = '';
     this.jobForm.closing_date = '';
-    this.jobForm.type = 'INTERNAL';
+    this.jobForm.type = this.isManager() ? 'INTERNAL' : 'INTERNAL';
     this.jobForm.status = 'PUBLISHED';
     this.jobForm.recruiter_id = null;
   }
@@ -458,6 +505,10 @@ export class JobsPageComponent implements OnInit {
 
   isHrAdmin(): boolean {
     return this.auth.user()?.role === 'HR_ADMIN';
+  }
+
+  canChooseType(): boolean {
+    return this.auth.user()?.role === 'HR_ADMIN' || this.auth.user()?.role === 'RECRUITER';
   }
 
   isManager(): boolean {

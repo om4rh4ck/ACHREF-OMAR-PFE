@@ -26,6 +26,8 @@ public class Employee {
     private Long managerId;
     private Double salary;
     private String contractType;
+    private String project;
+    private Double budget;
     @Column(columnDefinition = "TEXT")
     private String avatarUrl;
 
@@ -61,6 +63,10 @@ public class Employee {
     public void setSalary(Double salary) { this.salary = salary; }
     public String getContractType() { return contractType; }
     public void setContractType(String contractType) { this.contractType = contractType; }
+    public String getProject() { return project; }
+    public void setProject(String project) { this.project = project; }
+    public Double getBudget() { return budget; }
+    public void setBudget(Double budget) { this.budget = budget; }
     public String getAvatarUrl() { return avatarUrl; }
     public void setAvatarUrl(String avatarUrl) { this.avatarUrl = avatarUrl; }
 }

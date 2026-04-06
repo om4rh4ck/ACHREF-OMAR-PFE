@@ -198,6 +198,14 @@ export class RegisterPageComponent {
     this.loading.set(true);
     this.error.set('');
     this.success.set('');
+    const fullName = this.form.full_name.trim();
+    const nameParts = fullName.split(/\s+/).filter(Boolean);
+    if (nameParts.length < 2) {
+      this.error.set('Le nom complet doit contenir au moins deux mots (prenom + nom).');
+      this.loading.set(false);
+      return;
+    }
+    this.form.full_name = nameParts.join(' ');
     if (this.form.password !== this.confirmPassword) {
       this.error.set('La confirmation du mot de passe ne correspond pas.');
       this.loading.set(false);

@@ -1,0 +1,18 @@
+version: "3.9"
+
+services:
+  router:
+    image: nginx:1.25-alpine
+    container_name: vermeg-router
+    ports:
+      - "${ROUTER_PORT:-80}:80"
+    env_file:
+      - ./router.env
+    volumes:
+      - ./router/nginx.conf.template:/etc/nginx/templates/default.conf.template:ro
+    networks:
+      - vermeg-net
+
+networks:
+  vermeg-net:
+    external: true

@@ -8,4 +8,6 @@ import java.util.List;
 public interface JobApplicationRepository extends JpaRepository<JobApplication, Long> {
     List<JobApplication> findByEmailOrderByAppliedAtDesc(String email);
     List<JobApplication> findAllByOrderByAppliedAtDesc();
+    List<JobApplication> findByManagerIdOrderByAppliedAtDesc(Long managerId);
+    List<JobApplication> findByUserIdOrderByAppliedAtDesc(Long userId);
 }

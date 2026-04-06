@@ -1,7 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, computed, inject, signal } from '@angular/core';
+import { Component, DestroyRef, OnInit, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { interval } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { AppShellComponent } from '../components/app-shell.component';
 import { NewsItem } from '../models';
 import { ApiService } from '../services/api.service';
@@ -86,6 +88,7 @@ export class NewsPageComponent implements OnInit {
   private readonly api = inject(ApiService);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
+  private readonly destroyRef = inject(DestroyRef);
 
   readonly news = signal<NewsItem[]>([]);
   readonly selectedNewsId = signal<number | null>(null);
@@ -105,6 +108,12 @@ export class NewsPageComponent implements OnInit {
       this.selectedNewsId.set(Number.isFinite(focus) && focus > 0 ? focus : null);
     });
     this.loadNews();
+
+    interval(20000).pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
+      if (this.auth.user()) {
+        this.loadNews();
+      }
+    });
   }
 
   loadNews(): void {

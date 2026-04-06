@@ -26,6 +26,7 @@ public class JobOffer {
     private LocalDate openingDate;
     private LocalDate closingDate;
     private String salaryRange;
+    private String project;
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
@@ -53,4 +54,6 @@ public class JobOffer {
     public void setClosingDate(LocalDate closingDate) { this.closingDate = closingDate; }
     public String getSalaryRange() { return salaryRange; }
     public void setSalaryRange(String salaryRange) { this.salaryRange = salaryRange; }
+    public String getProject() { return project; }
+    public void setProject(String project) { this.project = project; }
 }

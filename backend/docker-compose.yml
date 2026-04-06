@@ -1,4 +1,5 @@
-﻿version: '3.9'
+version: "3.9"
+
 services:
   postgres:
     image: postgres:15
@@ -19,11 +20,86 @@ services:
     environment:
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: admin
-      KC_DB: dev-file
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://postgres:5432/vermeg_sirh
+      KC_DB_USERNAME: vermeg
+      KC_DB_PASSWORD: vermeg123
+    depends_on:
+      - postgres
     ports:
       - "8080:8080"
     volumes:
       - ./keycloak/realm-vermeg.json:/opt/keycloak/data/import/realm-vermeg.json:ro
+
+  employee-service:
+    build:
+      context: ./employee-service
+    container_name: employee-service
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/vermeg_sirh
+      SPRING_DATASOURCE_USERNAME: vermeg
+      SPRING_DATASOURCE_PASSWORD: vermeg123
+      KEYCLOAK_ISSUER_URI: http://keycloak:8080/realms/vermeg-sirh
+      KEYCLOAK_SERVER_URL: http://keycloak:8080
+      KEYCLOAK_TOKEN_URL: http://keycloak:8080/realms/vermeg-sirh/protocol/openid-connect/token
+    depends_on:
+      - postgres
+      - keycloak
+    ports:
+      - "8082:8082"
+
+  recruitment-service:
+    build:
+      context: ./recruitment-service
+    container_name: recruitment-service
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/vermeg_sirh
+      SPRING_DATASOURCE_USERNAME: vermeg
+      SPRING_DATASOURCE_PASSWORD: vermeg123
+      KEYCLOAK_ISSUER_URI: http://keycloak:8080/realms/vermeg-sirh
+      EMPLOYEE_SERVICE_URL: http://employee-service:8082
+    depends_on:
+      - postgres
+      - keycloak
+    ports:
+      - "8083:8083"
+
+  approval-service:
+    build:
+      context: ./approval-service
+    container_name: approval-service
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/vermeg_sirh
+      SPRING_DATASOURCE_USERNAME: vermeg
+      SPRING_DATASOURCE_PASSWORD: vermeg123
+      KEYCLOAK_ISSUER_URI: http://keycloak:8080/realms/vermeg-sirh
+    depends_on:
+      - postgres
+      - keycloak
+    ports:
+      - "8084:8084"
+
+  api-gateway:
+    build:
+      context: ./api-gateway
+    container_name: api-gateway
+    environment:
+      KEYCLOAK_ISSUER_URI: http://keycloak:8080/realms/vermeg-sirh
+    depends_on:
+      - employee-service
+      - recruitment-service
+      - approval-service
+    ports:
+      - "8081:8081"
+
+  frontend:
+    build:
+      context: ../front
+    container_name: frontend
+    depends_on:
+      - api-gateway
+    ports:
+      - "5173:80"
 
 volumes:
   pg_data:

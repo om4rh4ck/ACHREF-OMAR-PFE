@@ -7,4 +7,7 @@ import java.util.List;
 
 public interface JobOfferRepository extends JpaRepository<JobOffer, Long> {
     List<JobOffer> findByStatusOrderByCreatedAtDesc(String status);
+    List<JobOffer> findByTypeAndStatusOrderByCreatedAtDesc(String type, String status);
+    List<JobOffer> findByTypeAndDepartmentAndStatusOrderByCreatedAtDesc(String type, String department, String status);
+    List<JobOffer> findByRecruiterIdOrderByCreatedAtDesc(Long recruiterId);
 }

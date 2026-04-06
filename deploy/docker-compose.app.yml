@@ -1,0 +1,66 @@
+version: "3.9"
+
+services:
+  employee-service:
+    image: ${DOCKERHUB_USER}/vermeg-employee-service:${TAG}
+    container_name: vermeg-${STACK}-employee-service
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/vermeg_sirh
+      SPRING_DATASOURCE_USERNAME: vermeg
+      SPRING_DATASOURCE_PASSWORD: vermeg123
+      KEYCLOAK_ISSUER_URI: http://keycloak:8080/realms/vermeg-sirh
+      KEYCLOAK_SERVER_URL: http://keycloak:8080
+      KEYCLOAK_TOKEN_URL: http://keycloak:8080/realms/vermeg-sirh/protocol/openid-connect/token
+    networks:
+      vermeg-net:
+        aliases:
+          - employee-${STACK}
+
+  recruitment-service:
+    image: ${DOCKERHUB_USER}/vermeg-recruitment-service:${TAG}
+    container_name: vermeg-${STACK}-recruitment-service
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/vermeg_sirh
+      SPRING_DATASOURCE_USERNAME: vermeg
+      SPRING_DATASOURCE_PASSWORD: vermeg123
+      KEYCLOAK_ISSUER_URI: http://keycloak:8080/realms/vermeg-sirh
+      EMPLOYEE_SERVICE_URL: http://employee-${STACK}:8082
+    networks:
+      vermeg-net:
+        aliases:
+          - recruitment-${STACK}
+
+  approval-service:
+    image: ${DOCKERHUB_USER}/vermeg-approval-service:${TAG}
+    container_name: vermeg-${STACK}-approval-service
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/vermeg_sirh
+      SPRING_DATASOURCE_USERNAME: vermeg
+      SPRING_DATASOURCE_PASSWORD: vermeg123
+      KEYCLOAK_ISSUER_URI: http://keycloak:8080/realms/vermeg-sirh
+    networks:
+      vermeg-net:
+        aliases:
+          - approval-${STACK}
+
+  api-gateway:
+    image: ${DOCKERHUB_USER}/vermeg-api-gateway:${TAG}
+    container_name: vermeg-${STACK}-api-gateway
+    environment:
+      KEYCLOAK_ISSUER_URI: http://keycloak:8080/realms/vermeg-sirh
+    networks:
+      vermeg-net:
+        aliases:
+          - api-gateway-${STACK}
+
+  frontend:
+    image: ${DOCKERHUB_USER}/vermeg-frontend:${TAG}
+    container_name: vermeg-${STACK}-frontend
+    networks:
+      vermeg-net:
+        aliases:
+          - frontend-${STACK}
+
+networks:
+  vermeg-net:
+    external: true

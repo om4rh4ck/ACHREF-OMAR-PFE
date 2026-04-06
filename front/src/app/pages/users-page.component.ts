@@ -64,6 +64,14 @@ import { AuthService } from '../services/auth.service';
                   <option *ngFor="let mgr of managers()" [ngValue]="mgr.id">{{ mgr.full_name }}</option>
                 </select>
               </div>
+              <div class="mb-3" *ngIf="newUser.role === 'MANAGER'">
+                <label class="form-label">Projet</label>
+                <input type="text" class="form-control app-input" [(ngModel)]="newUser.project" name="newProject" placeholder="Projet" />
+              </div>
+              <div class="mb-3" *ngIf="newUser.role === 'MANAGER'">
+                <label class="form-label">Budget</label>
+                <input type="number" class="form-control app-input" [(ngModel)]="newUser.budget" name="newBudget" placeholder="Budget" />
+              </div>
               <p class="text-danger small mb-2" *ngIf="addUserError">{{ addUserError }}</p>
               <button class="primary-btn w-100" type="submit">
                 <span class="btn-icon"><app-ui-icon name="users" /></span>
@@ -122,10 +130,13 @@ import { AuthService } from '../services/auth.service';
                       <option *ngFor="let c of contractTypes()" [ngValue]="c.name">{{ c.name }}</option>
                     </select>
                     <input class="form-control app-input" type="number" *ngIf="user.role === 'EMPLOYEE'" [(ngModel)]="draftSalaries[user.id]" [name]="'salary-' + user.id" placeholder="Salaire" />
+                    <input class="form-control app-input" type="text" *ngIf="user.role === 'MANAGER'" [(ngModel)]="draftProjects[user.id]" [name]="'project-' + user.id" placeholder="Projet" />
+                    <input class="form-control app-input" type="number" *ngIf="user.role === 'MANAGER'" [(ngModel)]="draftBudgets[user.id]" [name]="'budget-' + user.id" placeholder="Budget" />
                     <button class="primary-btn" type="button" (click)="saveProfile(user.id)">
                       <span class="btn-icon"><app-ui-icon name="users" /></span>
                       Mettre a jour
                     </button>
+                    <span class="text-danger small" *ngIf="profileErrors[user.id]">{{ profileErrors[user.id] }}</span>
                   </div>
                 </td>
               </tr>
@@ -262,8 +273,11 @@ export class UsersPageComponent implements OnInit {
   draftManagers: Record<number, number | null> = {};
   draftContracts: Record<number, string> = {};
   draftSalaries: Record<number, number | null> = {};
+  draftProjects: Record<number, string> = {};
+  draftBudgets: Record<number, number | null> = {};
+  profileErrors: Record<number, string> = {};
   showAddUser = false;
-  newUser = { email: '', full_name: '', password: '', role: 'EMPLOYEE', department: '', manager_id: null as number | null };
+  newUser = { email: '', full_name: '', password: '', role: 'EMPLOYEE', department: '', manager_id: null as number | null, project: '', budget: null as number | null };
   addUserError = '';
   readonly departments = signal<{ id: number; name: string; description?: string }[]>([]);
   readonly positions = signal<{ id: number; title: string; department?: string }[]>([]);
@@ -298,11 +312,13 @@ export class UsersPageComponent implements OnInit {
       password: this.newUser.password,
       role: this.newUser.role,
       department: this.newUser.department?.trim(),
-      manager_id: this.newUser.role === 'EMPLOYEE' ? this.newUser.manager_id : null
+      manager_id: this.newUser.role === 'EMPLOYEE' ? this.newUser.manager_id : null,
+      project: this.newUser.role === 'MANAGER' ? this.newUser.project?.trim() : undefined,
+      budget: this.newUser.role === 'MANAGER' ? this.newUser.budget ?? null : null
     }).subscribe({
       next: () => {
         this.showAddUser = false;
-        this.newUser = { email: '', full_name: '', password: '', role: 'EMPLOYEE', department: '', manager_id: null };
+        this.newUser = { email: '', full_name: '', password: '', role: 'EMPLOYEE', department: '', manager_id: null, project: '', budget: null };
         this.loadUsers();
       },
       error: (err) => {
@@ -334,6 +350,14 @@ export class UsersPageComponent implements OnInit {
         }, {});
         this.draftSalaries = safe.reduce<Record<number, number | null>>((acc, user) => {
           acc[user.id] = user.salary ?? null;
+          return acc;
+        }, {});
+        this.draftProjects = safe.reduce<Record<number, string>>((acc, user) => {
+          acc[user.id] = user.project ?? '';
+          return acc;
+        }, {});
+        this.draftBudgets = safe.reduce<Record<number, number | null>>((acc, user) => {
+          acc[user.id] = user.budget ?? null;
           return acc;
         }, {});
       },
@@ -407,10 +431,14 @@ export class UsersPageComponent implements OnInit {
   }
 
   saveProfile(id: number): void {
+    this.profileErrors[id] = '';
     let department = this.draftDepartments[id];
     const managerId = this.draftManagers[id] ?? null;
     const contractType = this.draftContracts[id] ?? '';
     const salary = this.draftSalaries[id] ?? null;
+    const project = this.draftProjects[id] ?? '';
+    const budget = this.draftBudgets[id] ?? null;
+    const user = this.users().find((u) => u.id === id);
     if (managerId && !department) {
       const manager = this.users().find((u) => u.id === managerId);
       if (manager?.department) {
@@ -418,8 +446,26 @@ export class UsersPageComponent implements OnInit {
         this.draftDepartments[id] = manager.department;
       }
     }
-    this.api.updateUser(id, { department, manager_id: managerId, contract_type: contractType || null, salary }).subscribe({
-      next: () => this.loadUsers()
+    if (!department && user?.department) {
+      department = user.department;
+      this.draftDepartments[id] = user.department;
+    }
+    if (user?.role === 'MANAGER' && (!department || !department.trim())) {
+      this.profileErrors[id] = 'Departement requis pour manager';
+      return;
+    }
+    this.api.updateUser(id, {
+      department,
+      manager_id: managerId,
+      contract_type: contractType || null,
+      salary,
+      project: project || null,
+      budget
+    }).subscribe({
+      next: () => this.loadUsers(),
+      error: (err) => {
+        this.profileErrors[id] = err.error?.error || 'Mise a jour impossible';
+      }
     });
   }
 

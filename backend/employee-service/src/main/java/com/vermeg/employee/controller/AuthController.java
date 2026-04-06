@@ -12,6 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClient;
@@ -90,17 +91,21 @@ public class AuthController {
     @GetMapping("/me")
     public ResponseEntity<?> me(Authentication authentication) {
         String email = authentication.getName();
+        String roleFromToken = roleFromAuth(authentication);
         Employee employee = employeeRepository.findByEmail(email).orElseGet(() -> {
             Employee e = new Employee();
             e.setEmail(email);
             e.setFullName(email);
-            e.setRole("EMPLOYEE");
+            e.setRole(roleFromToken == null || roleFromToken.isBlank() ? "EMPLOYEE" : roleFromToken);
             return employeeRepository.save(e);
         });
+        if (roleFromToken != null && !roleFromToken.isBlank() && !roleFromToken.equals(employee.getRole())) {
+            employee.setRole(roleFromToken);
+        }
         if (!"CANDIDATE".equals(employee.getRole()) && (employee.getDepartment() == null || employee.getDepartment().isBlank())) {
             employee.setDepartment("Non defini");
-            employeeRepository.save(employee);
         }
+        employeeRepository.save(employee);
         return ResponseEntity.ok(Map.of("user", toUserMap(employee)));
     }
 
@@ -112,6 +117,8 @@ public class AuthController {
         String fullName = Objects.toString(payload.get("full_name"), email).trim();
         String role = Objects.toString(payload.get("role"), "EMPLOYEE").toUpperCase();
         String department = Objects.toString(payload.get("department"), "").trim();
+        String project = Objects.toString(payload.getOrDefault("project", ""), "").trim();
+        Double budget = payload.get("budget") == null ? null : Double.valueOf(Objects.toString(payload.get("budget")));
         Long managerId = payload.get("manager_id") == null ? null : Long.parseLong(Objects.toString(payload.get("manager_id")));
         if (email.isBlank() || password.isBlank()) {
             return ResponseEntity.badRequest().body(Map.of("error", "Email et mot de passe requis"));
@@ -152,6 +159,10 @@ public class AuthController {
             emp.setRole(role);
             emp.setDepartment(department);
             emp.setManagerId("MANAGER".equals(role) ? null : managerId);
+            if ("MANAGER".equals(role)) {
+                emp.setProject(project);
+                emp.setBudget(budget);
+            }
             if (emp.getLeaveBalance() == null) emp.setLeaveBalance(25);
             if (emp.getTotalHours() == null) emp.setTotalHours(0);
             employeeRepository.save(emp);
@@ -287,6 +298,8 @@ public class AuthController {
         user.put("manager_id", e.getManagerId());
         user.put("salary", e.getSalary());
         user.put("contract_type", e.getContractType());
+        user.put("project", e.getProject());
+        user.put("budget", e.getBudget());
         user.put("avatar_url", e.getAvatarUrl());
         return user;
     }
@@ -314,6 +327,13 @@ public class AuthController {
             }
         }
         return "EMPLOYEE";
+    }
+
+    private String roleFromAuth(Authentication authentication) {
+        if (authentication instanceof JwtAuthenticationToken jwtAuth) {
+            return extractRole(jwtAuth.getTokenAttributes());
+        }
+        return null;
     }
 
     private String stringClaim(Map<String, Object> claims, String key, String fallback) {

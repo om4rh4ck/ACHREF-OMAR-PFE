@@ -4,6 +4,8 @@ server:
 spring:
   application:
     name: api-gateway
+  codec:
+    max-in-memory-size: 20MB
   security:
     oauth2:
       resourceserver:
@@ -15,8 +17,7 @@ spring:
         corsConfigurations:
           '[/**]':
             allowedOrigins:
-              - "http://localhost:5173"
-              - "http://localhost:4200"
+              - "*"
             allowedMethods:
               - GET
               - POST
@@ -27,15 +28,15 @@ spring:
               - "*"
       routes:
         - id: employee-service
-          uri: http://localhost:8082
+          uri: http://employee-service:8082
           predicates:
             - Path=/api/auth/**,/api/employees/**,/api/leaves/**,/api/documents/**,/api/salaries/**,/api/messages/**,/api/news/**,/api/notifications/**,/api/stats/**,/api/hr-admins/**,/api/departments/**,/api/positions/**,/api/users/**,/api/contract-types/**,/api/team/**
         - id: recruitment-service
-          uri: http://localhost:8083
+          uri: http://recruitment-service:8083
           predicates:
             - Path=/api/recruitment/**,/api/public/jobs/**,/api/jobs/**,/api/applications/**,/api/interviews/**
         - id: approval-service
-          uri: http://localhost:8084
+          uri: http://approval-service:8084
           predicates:
             - Path=/api/approvals/**
 

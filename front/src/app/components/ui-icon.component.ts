@@ -113,6 +113,43 @@ import { Component, Input } from '@angular/core';
         <path d="M4 12h11"></path>
         <path d="M13 4h3a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3h-3"></path>
       </ng-container>
+      <ng-container *ngSwitchCase="'menu'">
+        <path d="M4 6h16"></path>
+        <path d="M4 12h16"></path>
+        <path d="M4 18h10"></path>
+      </ng-container>
+      <ng-container *ngSwitchCase="'sun'">
+        <circle cx="12" cy="12" r="4"></circle>
+        <path d="M12 2v2"></path>
+        <path d="M12 20v2"></path>
+        <path d="M2 12h2"></path>
+        <path d="M20 12h2"></path>
+        <path d="M4.9 4.9l1.4 1.4"></path>
+        <path d="M17.7 17.7l1.4 1.4"></path>
+        <path d="M17.7 6.3l1.4-1.4"></path>
+        <path d="M4.9 19.1l1.4-1.4"></path>
+      </ng-container>
+      <ng-container *ngSwitchCase="'moon'">
+        <path d="M20.5 14.2A8 8 0 1 1 9.8 3.5a6.5 6.5 0 0 0 10.7 10.7z"></path>
+      </ng-container>
+      <ng-container *ngSwitchCase="'trend-up'">
+        <path d="M4 16l6-6 4 4 6-6"></path>
+        <path d="M14 8h6v6"></path>
+      </ng-container>
+      <ng-container *ngSwitchCase="'trend-down'">
+        <path d="M4 8l6 6 4-4 6 6"></path>
+        <path d="M14 16h6v-6"></path>
+      </ng-container>
+      <ng-container *ngSwitchCase="'project'">
+        <rect x="3" y="7" width="18" height="12" rx="2"></rect>
+        <path d="M8 7V5.5A1.5 1.5 0 0 1 9.5 4h5A1.5 1.5 0 0 1 16 5.5V7"></path>
+        <path d="M7.5 12h9"></path>
+      </ng-container>
+      <ng-container *ngSwitchCase="'budget'">
+        <rect x="3" y="6" width="18" height="12" rx="2"></rect>
+        <path d="M7 10h6"></path>
+        <circle cx="16.5" cy="12" r="1.5"></circle>
+      </ng-container>
       <ng-container *ngSwitchDefault>
         <circle cx="12" cy="12" r="8"></circle>
       </ng-container>

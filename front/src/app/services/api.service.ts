@@ -51,7 +51,18 @@ export class ApiService {
     return this.http.put<User>(`/api/users/${id}/role`, { role });
   }
 
-  updateUser(id: number, payload: { department?: string; position?: string; manager_id?: number | null; salary?: number | null; contract_type?: string | null }): Observable<User> {
+  updateUser(
+    id: number,
+    payload: {
+      department?: string;
+      position?: string;
+      manager_id?: number | null;
+      salary?: number | null;
+      contract_type?: string | null;
+      project?: string | null;
+      budget?: number | null;
+    }
+  ): Observable<User> {
     return this.http.put<User>(`/api/users/${id}`, payload);
   }
 
@@ -83,7 +94,16 @@ export class ApiService {
     return this.http.post<{ id: number; name: string; description?: string }>('/api/contract-types', payload);
   }
 
-  createUser(payload: { email: string; full_name: string; password: string; role: string; department?: string; manager_id?: number | null }): Observable<{ user: User }> {
+  createUser(payload: {
+    email: string;
+    full_name: string;
+    password: string;
+    role: string;
+    department?: string;
+    manager_id?: number | null;
+    project?: string;
+    budget?: number | null;
+  }): Observable<{ user: User }> {
     return this.http.post<{ user: User }>('/api/auth/admin/create-user', payload);
   }
 

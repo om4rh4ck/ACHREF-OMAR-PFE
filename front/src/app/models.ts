@@ -19,6 +19,8 @@ export interface User {
   salary?: number;
   contract_type?: string;
   contractType?: string;
+  project?: string;
+  budget?: number;
 }
 
 export interface JobOffer {
@@ -34,6 +36,7 @@ export interface JobOffer {
   opening_date?: string;
   closing_date: string;
   salary_range: string;
+  project?: string;
 }
 
 export interface Application {

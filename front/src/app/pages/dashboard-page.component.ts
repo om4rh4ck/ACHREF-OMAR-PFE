@@ -35,7 +35,12 @@ import { Application, Interview, NewsItem, NotificationItem, Stats, User } from 
           <div class="hero-kpi-card">
             <span class="kpi-icon"><app-ui-icon name="jobs" /></span>
             <span class="hero-kpi-label">Offres visibles</span>
-            <strong>{{ stats()?.openJobs ?? 0 }}</strong>
+            <ng-container *ngIf="!statsLoading(); else kpiSkeleton">
+              <strong>{{ jobsCount() }}</strong>
+            </ng-container>
+            <ng-template #kpiSkeleton>
+              <span class="skeleton" style="height:28px;width:64px;display:inline-block;"></span>
+            </ng-template>
           </div>
         </div>
       </section>
@@ -44,31 +49,34 @@ import { Application, Interview, NewsItem, NotificationItem, Stats, User } from 
         <div class="col-xl-3 col-md-6">
           <article class="metric-card metric-card-accent h-100">
             <span class="metric-icon"><app-ui-icon [name]="cardOneIcon" /></span>
-            <span class="metric-value">{{ cardOneValue }}</span>
+            <span class="metric-value" *ngIf="!statsLoading(); else metricSkeleton">{{ cardOneValue }}</span>
             <span class="metric-label">{{ cardOneLabel }}</span>
           </article>
         </div>
         <div class="col-xl-3 col-md-6">
           <article class="metric-card h-100">
             <span class="metric-icon"><app-ui-icon [name]="cardTwoIcon" /></span>
-            <span class="metric-value">{{ cardTwoValue }}</span>
+            <span class="metric-value" *ngIf="!statsLoading(); else metricSkeleton">{{ cardTwoValue }}</span>
             <span class="metric-label">{{ cardTwoLabel }}</span>
           </article>
         </div>
         <div class="col-xl-3 col-md-6">
           <article class="metric-card h-100">
             <span class="metric-icon"><app-ui-icon [name]="cardThreeIcon" /></span>
-            <span class="metric-value">{{ cardThreeValue }}</span>
+            <span class="metric-value" *ngIf="!statsLoading(); else metricSkeleton">{{ cardThreeValue }}</span>
             <span class="metric-label">{{ cardThreeLabel }}</span>
           </article>
         </div>
         <div class="col-xl-3 col-md-6">
           <article class="metric-card h-100">
             <span class="metric-icon"><app-ui-icon [name]="cardFourIcon" /></span>
-            <span class="metric-value">{{ cardFourValue }}</span>
+            <span class="metric-value" *ngIf="!statsLoading(); else metricSkeleton">{{ cardFourValue }}</span>
             <span class="metric-label">{{ cardFourLabel }}</span>
           </article>
         </div>
+        <ng-template #metricSkeleton>
+          <span class="skeleton" style="height:34px;width:84px;display:inline-block;"></span>
+        </ng-template>
       </div>
 
       <div class="row g-4 mt-3">
@@ -254,6 +262,9 @@ export class DashboardPageComponent implements OnInit {
   readonly user = this.auth.user();
 
   readonly stats = signal<Stats | null>(null);
+  readonly statsLoading = signal(true);
+  readonly jobsCount = signal(0);
+  readonly applicationsCount = signal(0);
   readonly news = signal<NewsItem[]>([]);
   readonly team = signal<User[]>([]);
   readonly teamStats = signal<{ teamSize: number; pendingLeaves: number; performanceAvg: string; trainingCompletion: string } | null>(null);
@@ -295,25 +306,44 @@ export class DashboardPageComponent implements OnInit {
     if (this.user?.role === 'EMPLOYEE') return 'salary';
     return 'users';
   }
-  get cardTwoLabel(): string { return this.user?.role === 'EMPLOYEE' ? 'Conges disponibles' : 'Offres ouvertes'; }
-  get cardTwoValue(): string | number { return this.user?.role === 'EMPLOYEE' ? `${this.user?.leave_balance ?? 25} j` : this.stats()?.openJobs ?? 0; }
-  get cardTwoIcon(): string { return this.user?.role === 'EMPLOYEE' ? 'leave' : 'jobs'; }
+  get cardTwoLabel(): string {
+    if (this.user?.role === 'MANAGER') return 'Projet';
+    return this.user?.role === 'EMPLOYEE' ? 'Conges disponibles' : 'Offres ouvertes';
+  }
+  get cardTwoValue(): string | number {
+    if (this.user?.role === 'MANAGER') return this.user?.project || 'Non defini';
+    return this.user?.role === 'EMPLOYEE' ? `${this.user?.leave_balance ?? 25} j` : this.jobsCount();
+  }
+  get cardTwoIcon(): string {
+    if (this.user?.role === 'MANAGER') return 'project';
+    return this.user?.role === 'EMPLOYEE' ? 'leave' : 'jobs';
+  }
   get cardThreeLabel(): string { return this.user?.role === 'MANAGER' ? 'Mon equipe' : 'Candidatures'; }
-  get cardThreeValue(): string | number { return this.user?.role === 'MANAGER' ? this.team().length : this.stats()?.totalApplications ?? this.applications().length; }
+  get cardThreeValue(): string | number {
+    if (this.user?.role === 'MANAGER') return this.team().length;
+    if (this.user?.role === 'HR_ADMIN' || this.user?.role === 'RECRUITER') return this.applicationsCount();
+    return this.applications().length;
+  }
   get cardThreeIcon(): string { return this.user?.role === 'MANAGER' ? 'team' : 'applications'; }
   get cardFourLabel(): string {
     if (this.user?.role === 'HR_ADMIN') return 'Mobilite interne';
     if (this.user?.role === 'EMPLOYEE') return 'Contrat';
+    if (this.user?.role === 'MANAGER') return 'Budget';
     return 'Role';
   }
   get cardFourValue(): string | number {
     if (this.user?.role === 'HR_ADMIN') return this.stats()?.mobilityRate ?? '18%';
     if (this.user?.role === 'EMPLOYEE') return this.user?.contract_type || this.user?.contractType || 'Non defini';
+    if (this.user?.role === 'MANAGER') {
+      const budget = this.user?.budget;
+      return budget !== null && budget !== undefined ? `${budget} DT` : 'Non defini';
+    }
     return this.user?.role ?? '-';
   }
   get cardFourIcon(): string {
     if (this.user?.role === 'HR_ADMIN') return 'mobility';
     if (this.user?.role === 'EMPLOYEE') return 'contract';
+    if (this.user?.role === 'MANAGER') return 'budget';
     return 'role';
   }
 
@@ -369,7 +399,7 @@ export class DashboardPageComponent implements OnInit {
 
   get priorityTwoValue(): string | number {
     if (this.user?.role === 'HR_ADMIN' || this.user?.role === 'MANAGER' || this.user?.role === 'RECRUITER') return this.interviews().length;
-    return this.stats()?.openJobs ?? 0;
+    return this.jobsCount();
   }
 
   get priorityTwoText(): string {
@@ -409,11 +439,21 @@ export class DashboardPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.api.getStats().subscribe({ next: (stats) => this.stats.set(stats), error: () => this.stats.set(null) });
+    this.api.getStats().subscribe({
+      next: (stats) => {
+        this.stats.set(stats);
+        this.statsLoading.set(false);
+      },
+      error: () => {
+        this.stats.set(null);
+        this.statsLoading.set(false);
+      }
+    });
     this.api.getNews().subscribe({ next: (items) => this.news.set(items), error: () => this.news.set([]) });
     interval(10000).pipe(startWith(0), takeUntilDestroyed(this.destroyRef)).subscribe(() => {
       this.loadMessageCount();
       this.loadNotifications();
+      this.loadDashboardCounts();
     });
 
     if (this.user?.role === 'MANAGER' || this.user?.role === 'RECRUITER') {
@@ -428,6 +468,8 @@ export class DashboardPageComponent implements OnInit {
     if (this.user?.role === 'HR_ADMIN' || this.user?.role === 'MANAGER' || this.user?.role === 'RECRUITER' || this.user?.role === 'CANDIDATE') {
       this.api.getInterviews().subscribe({ next: (items) => this.interviews.set(items), error: () => this.interviews.set([]) });
     }
+
+    this.loadDashboardCounts();
   }
 
   candidateInterviews(): Interview[] {
@@ -477,6 +519,25 @@ export class DashboardPageComponent implements OnInit {
         this.unreadNotifications.set(0);
       }
     });
+  }
+
+  private loadDashboardCounts(): void {
+    if (this.user?.role === 'HR_ADMIN' || this.user?.role === 'RECRUITER' || this.user?.role === 'MANAGER') {
+      this.api.getJobs().subscribe({ next: (items) => this.jobsCount.set(items.length), error: () => this.jobsCount.set(0) });
+      this.api.getApplications().subscribe({ next: (items) => this.applicationsCount.set(items.length), error: () => this.applicationsCount.set(0) });
+      return;
+    }
+
+    if (this.user?.role === 'EMPLOYEE' || this.user?.role === 'CANDIDATE') {
+      this.api.getVisibleJobs().subscribe({ next: (items) => this.jobsCount.set(items.length), error: () => this.jobsCount.set(0) });
+      if (this.user?.role === 'CANDIDATE') {
+        this.api.getApplications().subscribe({ next: (items) => this.applicationsCount.set(items.length), error: () => this.applicationsCount.set(0) });
+      }
+      return;
+    }
+
+    this.jobsCount.set(0);
+    this.applicationsCount.set(0);
   }
   openNews(id: number): void {
     this.router.navigate(['/news'], { queryParams: { focus: id } });

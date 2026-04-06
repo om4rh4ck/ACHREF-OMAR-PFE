@@ -1,7 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, computed, inject, signal } from '@angular/core';
+import { Component, DestroyRef, OnInit, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { interval } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { AppShellComponent } from '../components/app-shell.component';
 import { UiIconComponent } from '../components/ui-icon.component';
 import { Message, User } from '../models';
@@ -163,6 +165,7 @@ export class MessagesPageComponent implements OnInit {
   readonly auth = inject(AuthService);
   private readonly api = inject(ApiService);
   private readonly route = inject(ActivatedRoute);
+  private readonly destroyRef = inject(DestroyRef);
 
   readonly messages = signal<Message[]>([]);
   readonly recipients = signal<User[]>([]);
@@ -231,6 +234,12 @@ export class MessagesPageComponent implements OnInit {
       this.pendingReceiverId = Number.isFinite(id) && id > 0 ? id : null;
     });
     this.loadData();
+
+    interval(15000).pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
+      if (this.auth.user()) {
+        this.loadData();
+      }
+    });
   }
 
   loadData(): void {

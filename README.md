@@ -16,10 +16,10 @@ Application SIRH (PFE) avec frontend Angular standalone et backend microservices
 - Gateway: Spring Cloud Gateway
 - Securite: Keycloak (OAuth2/OIDC)
 - Base de donnees: PostgreSQL
-- Conteneurs: Docker Compose (Postgres + Keycloak)
+- Conteneurs: Docker Compose (stack complete)
 
 ## 3. Architecture (ports)
-- Frontend Angular dev server: `5173`
+- Frontend (Nginx): `5173`
 - Keycloak: `8080`
 - API Gateway: `8081`
 - Employee Service: `8082`
@@ -31,40 +31,50 @@ Application SIRH (PFE) avec frontend Angular standalone et backend microservices
 - Node.js 20+ et npm
 - Java 17+
 - Maven 3.9+
-- Docker Desktop
-- PowerShell (Windows)
+- Docker (WSL2 ou Docker Desktop)
+- PowerShell (Windows) ou terminal WSL
 
 ## 5. Installation
+Le frontend est dans `front/`.
+
+Pour un lancement Docker complet, pas besoin de `npm install`.
+
+## 6. Lancement complet (Docker Compose)
 Depuis la racine du projet:
 
-```powershell
-npm install
-```
-
-## 6. Lancement complet (Windows)
-### Etape A - Infrastructure (Postgres + Keycloak)
-```powershell
+```bash
+docker compose -f backend/docker-compose.yml build
 docker compose -f backend/docker-compose.yml up -d
 ```
 
-### Etape B - Microservices Spring
+### Commandes de demarrage (Windows + WSL)
+1. Ouvrir WSL Ubuntu (depuis PowerShell):
 ```powershell
-powershell -ExecutionPolicy Bypass -File backend/run-all.ps1
+wsl -d Ubuntu
 ```
 
-Option: avec infra en meme temps
-```powershell
-powershell -ExecutionPolicy Bypass -File backend/run-all.ps1 -StartInfra
+2. Aller au projet:
+```bash
+cd /mnt/c/Users/TNLT1670/Downloads/projet/SIRH-PFE-VERMEG-main-main
 ```
 
-### Etape C - Frontend
-Dans un nouveau terminal:
-```powershell
-npm run dev
+3. Lancer les conteneurs:
+```bash
+docker compose -f backend/docker-compose.yml up -d
+```
+
+4. Verifier l'etat:
+```bash
+docker compose -f backend/docker-compose.yml ps
+```
+
+5. Arreter:
+```bash
+docker compose -f backend/docker-compose.yml down
 ```
 
 ## 7. Initialisation des donnees (seed)
-Une fois les services demarres au moins une fois:
+Si tu veux des donnees demo (offres, users, etc.):
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File backend/seed.ps1
@@ -78,12 +88,23 @@ powershell -ExecutionPolicy Bypass -File backend/seed.ps1
 - `candidate@vermeg.com / candidate123` (si cree dans Keycloak/seed)
 
 ## 9. URLs utiles
+### Si Docker Desktop/localhost OK
 - Application: `http://localhost:5173`
 - Keycloak: `http://localhost:8080`
 - Gateway health: `http://localhost:8081/actuator/health`
 
+### Si Docker tourne uniquement dans WSL (sans Desktop)
+Utiliser l’IP WSL:
+```bash
+hostname -I
+```
+Exemple:
+- Application: `http://<IP_WSL>:5173`
+- Keycloak: `http://<IP_WSL>:8080`
+- Gateway health: `http://<IP_WSL>:8081/actuator/health`
+
 ## 10. Structure du projet
-- `src/`: frontend Angular
+- `front/`: frontend Angular
 - `backend/api-gateway`: Gateway
 - `backend/employee-service`: RH employe / auth adapter
 - `backend/recruitment-service`: offres, candidatures, entretiens
@@ -118,9 +139,48 @@ git push
 - Ajoute une courte video (1-2 min) montrant le lancement local
 
 ## 12. Depannage rapide
-- Erreur proxy Angular `/api/... ECONNREFUSED`:
-  les services `8081-8084` sont arretes, relance `backend/run-all.ps1`
-- Keycloak inaccessible:
-  relancer `docker compose -f backend/docker-compose.yml up -d`
+- Backend indisponible:
+  `docker compose -f backend/docker-compose.yml up -d`
 - Donnees vides:
   executer `backend/seed.ps1`
+- WSL sans Docker Desktop:
+  utiliser l’IP WSL au lieu de `localhost`
+
+## 13. CI/CD (GitHub + DockerHub + Blue/Green)
+
+### Secrets GitHub a creer
+Dans `Settings > Secrets and variables > Actions`:
+- `DOCKERHUB_USERNAME`
+- `DOCKERHUB_TOKEN`
+- `SONAR_HOST_URL` (optionnel)
+- `SONAR_TOKEN` (optionnel)
+- `SSH_HOST` (optionnel)
+- `SSH_USER` (optionnel)
+- `SSH_KEY` (optionnel)
+- `DEPLOY_PATH` (optionnel, ex: `/opt/vermeg`)
+
+### Pipeline CI
+Fichier: `.github/workflows/ci.yml`
+- Build parallele des microservices
+- Build du frontend
+- Scan SonarQube (si secrets presentes)
+
+### Pipeline CD
+Fichier: `.github/workflows/cd.yml`
+- Trigger sur tag `vX.Y.Z`
+- Build & push images DockerHub
+- Deploy via SSH (optionnel)
+
+### Blue/Green (Docker Compose)
+Le dossier `deploy/` contient:
+- `docker-compose.base.yml` (postgres + keycloak)
+- `docker-compose.app.yml` (services applicatifs)
+- `docker-compose.router.yml` (nginx reverse proxy)
+- `blue.env` / `green.env` (stack + tag + dockerhub user)
+- `blue-green.sh` (switch automatique)
+
+#### Deploiement manuel (serveur)
+```bash
+chmod +x deploy/blue-green.sh
+./deploy/blue-green.sh v1.0.0
+```

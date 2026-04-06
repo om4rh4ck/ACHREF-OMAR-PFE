@@ -1,6 +1,7 @@
 ﻿{
   "realm": "vermeg-sirh",
   "enabled": true,
+  "verifyEmail": false,
   "registrationAllowed": true,
   "loginWithEmailAllowed": true,
   "duplicateEmailsAllowed": false,
@@ -39,37 +40,45 @@
     {
       "username": "admin@vermeg.com",
       "enabled": true,
+      "emailVerified": true,
       "email": "admin@vermeg.com",
       "firstName": "Admin",
       "lastName": "VERMEG",
       "credentials": [{ "type": "password", "value": "admin123", "temporary": false }],
+      "requiredActions": [],
       "realmRoles": ["HR_ADMIN"]
     },
     {
       "username": "manager@vermeg.com",
       "enabled": true,
+      "emailVerified": true,
       "email": "manager@vermeg.com",
       "firstName": "Marc",
       "lastName": "Manager",
       "credentials": [{ "type": "password", "value": "manager123", "temporary": false }],
+      "requiredActions": [],
       "realmRoles": ["MANAGER"]
     },
     {
       "username": "recruiter@vermeg.com",
       "enabled": true,
+      "emailVerified": true,
       "email": "recruiter@vermeg.com",
       "firstName": "Rita",
       "lastName": "Recruteur",
       "credentials": [{ "type": "password", "value": "recruiter123", "temporary": false }],
+      "requiredActions": [],
       "realmRoles": ["RECRUITER"]
     },
     {
       "username": "employee@vermeg.com",
       "enabled": true,
+      "emailVerified": true,
       "email": "employee@vermeg.com",
       "firstName": "Eric",
       "lastName": "Employe",
       "credentials": [{ "type": "password", "value": "employee123", "temporary": false }],
+      "requiredActions": [],
       "realmRoles": ["EMPLOYEE"]
     }
   ]

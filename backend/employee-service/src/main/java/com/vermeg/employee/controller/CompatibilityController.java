@@ -2,16 +2,23 @@ package com.vermeg.employee.controller;
 
 import com.vermeg.employee.model.*;
 import com.vermeg.employee.repository.*;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.MediaType;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.RestClient;
 
 import java.util.*;
 
 @RestController
 public class CompatibilityController {
 
+    private final RestClient restClient = RestClient.create();
     private final EmployeeRepository employeeRepository;
     private final MessageRepository messageRepository;
     private final NewsRepository newsRepository;
@@ -21,6 +28,15 @@ public class CompatibilityController {
     private final PositionRepository positionRepository;
     private final LeaveRequestRepository leaveRequestRepository;
     private final DocumentRequestRepository documentRequestRepository;
+
+    @Value("${app.keycloak.server-url}")
+    private String keycloakServerUrl;
+    @Value("${app.keycloak.realm}")
+    private String keycloakRealm;
+    @Value("${app.keycloak.admin-user}")
+    private String keycloakAdminUser;
+    @Value("${app.keycloak.admin-password}")
+    private String keycloakAdminPassword;
 
     public CompatibilityController(
             EmployeeRepository employeeRepository,
@@ -240,7 +256,13 @@ public class CompatibilityController {
             if ("MANAGER".equals(role)) {
                 u.setManagerId(null);
             }
-            return ResponseEntity.ok(employeeRepository.save(u));
+            Employee saved = employeeRepository.save(u);
+            try {
+                syncKeycloakRole(saved.getEmail(), role);
+            } catch (Exception ex) {
+                return ResponseEntity.status(500).body(Map.of("error", "Mise a jour Keycloak impossible"));
+            }
+            return ResponseEntity.ok(saved);
         }).orElse(ResponseEntity.notFound().build());
     }
 
@@ -281,9 +303,19 @@ public class CompatibilityController {
             String contractType = payload.containsKey("contract_type")
                     ? Objects.toString(payload.get("contract_type"), u.getContractType())
                     : u.getContractType();
-            Double salary = payload.containsKey("salary")
-                    ? Double.valueOf(Objects.toString(payload.get("salary")))
-                    : u.getSalary();
+            Double salary = u.getSalary();
+            if (payload.containsKey("salary")) {
+                String raw = Objects.toString(payload.get("salary"), "").trim();
+                salary = raw.isBlank() ? null : Double.valueOf(raw);
+            }
+            String project = payload.containsKey("project")
+                    ? Objects.toString(payload.get("project"), u.getProject())
+                    : u.getProject();
+            Double budget = u.getBudget();
+            if (payload.containsKey("budget")) {
+                String raw = Objects.toString(payload.get("budget"), "").trim();
+                budget = raw.isBlank() ? null : Double.valueOf(raw);
+            }
             boolean managerProvided = payload.containsKey("manager_id");
             Long managerId = managerProvided && payload.get("manager_id") == null
                     ? null
@@ -313,6 +345,8 @@ public class CompatibilityController {
 
             if ("MANAGER".equals(u.getRole())) {
                 managerId = null;
+                u.setProject(project);
+                u.setBudget(budget);
             }
 
             u.setDepartment(department);
@@ -338,6 +372,76 @@ public class CompatibilityController {
     private Employee current(Authentication authentication) {
         if (authentication == null) return null;
         return employeeRepository.findByEmail(authentication.getName()).orElse(null);
+    }
+
+    private void syncKeycloakRole(String email, String role) {
+        String adminToken = adminToken();
+        String userId = findKeycloakUserId(adminToken, email);
+        if (userId == null) {
+            throw new IllegalStateException("User Keycloak introuvable");
+        }
+
+        List<Map<String, Object>> currentRoles = restClient.get()
+                .uri(keycloakServerUrl + "/admin/realms/" + keycloakRealm + "/users/" + userId + "/role-mappings/realm")
+                .header("Authorization", "Bearer " + adminToken)
+                .retrieve()
+                .body(new ParameterizedTypeReference<List<Map<String, Object>>>() {});
+
+        List<String> managed = List.of("HR_ADMIN", "MANAGER", "RECRUITER", "EMPLOYEE", "CANDIDATE");
+        List<Map<String, Object>> toRemove = new ArrayList<>();
+        if (currentRoles != null) {
+            for (Map<String, Object> r : currentRoles) {
+                Object name = r.get("name");
+                if (name != null && managed.contains(name.toString())) {
+                    toRemove.add(r);
+                }
+            }
+        }
+
+        if (!toRemove.isEmpty()) {
+            restClient.method(HttpMethod.DELETE)
+                    .uri(keycloakServerUrl + "/admin/realms/" + keycloakRealm + "/users/" + userId + "/role-mappings/realm")
+                    .header("Authorization", "Bearer " + adminToken)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body(toRemove)
+                    .retrieve()
+                    .toBodilessEntity();
+        }
+
+        Map<String, Object> roleRep = restClient.get()
+                .uri(keycloakServerUrl + "/admin/realms/" + keycloakRealm + "/roles/" + role)
+                .header("Authorization", "Bearer " + adminToken)
+                .retrieve()
+                .body(new ParameterizedTypeReference<Map<String, Object>>() {});
+
+        restClient.post()
+                .uri(keycloakServerUrl + "/admin/realms/" + keycloakRealm + "/users/" + userId + "/role-mappings/realm")
+                .header("Authorization", "Bearer " + adminToken)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(List.of(roleRep))
+                .retrieve()
+                .toBodilessEntity();
+    }
+
+    private String adminToken() {
+        Map<String, Object> tokenResp = restClient.post()
+                .uri(keycloakServerUrl + "/realms/master/protocol/openid-connect/token")
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .body("grant_type=password&client_id=admin-cli&username=" + keycloakAdminUser + "&password=" + keycloakAdminPassword)
+                .retrieve()
+                .body(new ParameterizedTypeReference<Map<String, Object>>() {});
+        return (String) tokenResp.get("access_token");
+    }
+
+    private String findKeycloakUserId(String adminToken, String email) {
+        List<Map<String, Object>> users = restClient.get()
+                .uri(keycloakServerUrl + "/admin/realms/" + keycloakRealm + "/users?username=" + email)
+                .header("Authorization", "Bearer " + adminToken)
+                .retrieve()
+                .body(new ParameterizedTypeReference<List<Map<String, Object>>>() {});
+        if (users == null || users.isEmpty()) return null;
+        Object id = users.get(0).get("id");
+        return id == null ? null : id.toString();
     }
 
     private Map<String, Object> userLite(Employee e) {

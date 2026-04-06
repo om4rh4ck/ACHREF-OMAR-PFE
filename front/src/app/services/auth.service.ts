@@ -1,5 +1,5 @@
 import { Injectable, computed, inject, signal } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { User } from '../models';
@@ -13,7 +13,7 @@ export class AuthService {
   private readonly clientId = 'vermeg-frontend';
 
   readonly token = signal<string | null>(localStorage.getItem('token'));
-  readonly user = signal<User | null>(null);
+  readonly user = signal<User | null>(this.readCachedUser());
   readonly loading = signal<boolean>(true);
   readonly isAuthenticated = computed(() => !!this.token() && !!this.user());
 
@@ -27,8 +27,13 @@ export class AuthService {
     try {
       const response = await firstValueFrom(this.http.get<{ user: User }>('/api/auth/me'));
       this.user.set(response.user);
-    } catch {
-      this.logout(false);
+      this.cacheUser(response.user);
+    } catch (err) {
+      if (err instanceof HttpErrorResponse) {
+        if (err.status === 401 || err.status === 403) {
+          this.logout(false);
+        }
+      }
     } finally {
       this.loading.set(false);
     }
@@ -42,6 +47,7 @@ export class AuthService {
     localStorage.setItem('token', response.token);
     this.token.set(response.token);
     this.user.set(response.user);
+    this.cacheUser(response.user);
     return response.user;
   }
 
@@ -54,6 +60,7 @@ export class AuthService {
       localStorage.setItem('token', response.token);
       this.token.set(response.token);
       this.user.set(response.user);
+      this.cacheUser(response.user);
       return response.user;
     }
     return null;
@@ -61,6 +68,7 @@ export class AuthService {
 
   logout(navigate = true): void {
     localStorage.removeItem('token');
+    localStorage.removeItem('user');
     this.token.set(null);
     this.user.set(null);
     if (navigate) {
@@ -101,5 +109,57 @@ export class AuthService {
       default:
         return '/';
     }
+  }
+
+  private cacheUser(user: User): void {
+    try {
+      localStorage.setItem('user', JSON.stringify(user));
+    } catch {
+      // ignore cache errors
+    }
+  }
+
+  private userFromToken(token: string): User | null {
+    try {
+      const payload = token.split('.')[1];
+      if (!payload) return null;
+      const json = JSON.parse(atob(payload.replace(/-/g, '+').replace(/_/g, '/'))) as Record<string, unknown>;
+      const email = (json['email'] as string | undefined) || (json['preferred_username'] as string | undefined) || '';
+      const fullName = (json['name'] as string | undefined) || email || 'Utilisateur';
+      let role = 'EMPLOYEE';
+      const realmAccess = json['realm_access'] as { roles?: string[] } | undefined;
+      const roles = realmAccess?.roles ?? [];
+      if (roles.includes('HR_ADMIN')) role = 'HR_ADMIN';
+      else if (roles.includes('MANAGER')) role = 'MANAGER';
+      else if (roles.includes('RECRUITER')) role = 'RECRUITER';
+      else if (roles.includes('CANDIDATE')) role = 'CANDIDATE';
+      else if (roles.includes('EMPLOYEE')) role = 'EMPLOYEE';
+      return {
+        id: 0,
+        email,
+        full_name: fullName,
+        role
+      } as User;
+    } catch {
+      return null;
+    }
+  }
+
+  private readCachedUserFromToken(): User | null {
+    const token = localStorage.getItem('token');
+    if (!token) return null;
+    return this.userFromToken(token);
+  }
+
+  private readCachedUser(): User | null {
+    const raw = localStorage.getItem('user');
+    if (raw) {
+      try {
+        return JSON.parse(raw) as User;
+      } catch {
+        return this.readCachedUserFromToken();
+      }
+    }
+    return this.readCachedUserFromToken();
   }
 }
