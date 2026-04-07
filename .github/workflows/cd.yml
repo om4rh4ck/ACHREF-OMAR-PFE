@@ -70,5 +70,9 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             cd ${{ secrets.DEPLOY_PATH }}
-            chmod +x deploy/blue-green.sh
-            ./deploy/blue-green.sh "${{ github.ref_name }}"
+            chmod +x deploy/blue-green.sh deploy/rolling.sh
+            if [ "${{ secrets.DEPLOY_STRATEGY }}" = "rolling" ]; then
+              ./deploy/rolling.sh "${{ github.ref_name }}"
+            else
+              ./deploy/blue-green.sh "${{ github.ref_name }}"
+            fi

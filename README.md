@@ -158,6 +158,7 @@ Dans `Settings > Secrets and variables > Actions`:
 - `SSH_USER` (optionnel)
 - `SSH_KEY` (optionnel)
 - `DEPLOY_PATH` (optionnel, ex: `/opt/vermeg`)
+- `DEPLOY_STRATEGY` (optionnel: `blue` par defaut, ou `rolling`)
 
 ### Pipeline CI
 Fichier: `.github/workflows/ci.yml`
@@ -170,6 +171,8 @@ Fichier: `.github/workflows/cd.yml`
 - Trigger sur tag `vX.Y.Z`
 - Build & push images DockerHub
 - Deploy via SSH (optionnel)
+  - Strategie `blue` (Blue/Green) par defaut
+  - Strategie `rolling` si `DEPLOY_STRATEGY=rolling`
 
 ### Blue/Green (Docker Compose)
 Le dossier `deploy/` contient:
@@ -183,4 +186,16 @@ Le dossier `deploy/` contient:
 ```bash
 chmod +x deploy/blue-green.sh
 ./deploy/blue-green.sh v1.0.0
+```
+
+#### Deploiement manuel (rolling)
+```bash
+chmod +x deploy/rolling.sh
+./deploy/rolling.sh v1.0.0
+```
+
+### Versioning semantique (tag)
+```bash
+git tag v1.0.0
+git push origin v1.0.0
 ```
