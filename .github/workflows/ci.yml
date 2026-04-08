@@ -58,6 +58,7 @@ jobs:
   sonar:
     runs-on: ubuntu-latest
     needs: [backend-build, frontend-build]
+    if: ${{ github.event_name == 'push' }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -69,26 +70,18 @@ jobs:
           java-version: "21"
           cache: maven
 
-      - name: Sonar disabled (missing secrets)
-        if: ${{ secrets.SONAR_TOKEN == '' || secrets.SONAR_HOST_URL == '' }}
-        run: echo "SonarQube skipped: missing SONAR_TOKEN or SONAR_HOST_URL secrets."
-
       - name: SonarQube (Maven) - employee-service
         working-directory: backend/employee-service
-        if: ${{ secrets.SONAR_TOKEN != '' && secrets.SONAR_HOST_URL != '' }}
         run: mvn -q -DskipTests -Dsonar.projectKey=vermeg-employee -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} -Dsonar.login=${{ secrets.SONAR_TOKEN }} sonar:sonar
 
       - name: SonarQube (Maven) - recruitment-service
         working-directory: backend/recruitment-service
-        if: ${{ secrets.SONAR_TOKEN != '' && secrets.SONAR_HOST_URL != '' }}
         run: mvn -q -DskipTests -Dsonar.projectKey=vermeg-recruitment -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} -Dsonar.login=${{ secrets.SONAR_TOKEN }} sonar:sonar
 
       - name: SonarQube (Maven) - approval-service
         working-directory: backend/approval-service
-        if: ${{ secrets.SONAR_TOKEN != '' && secrets.SONAR_HOST_URL != '' }}
         run: mvn -q -DskipTests -Dsonar.projectKey=vermeg-approval -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} -Dsonar.login=${{ secrets.SONAR_TOKEN }} sonar:sonar
 
       - name: SonarQube (Maven) - api-gateway
         working-directory: backend/api-gateway
-        if: ${{ secrets.SONAR_TOKEN != '' && secrets.SONAR_HOST_URL != '' }}
         run: mvn -q -DskipTests -Dsonar.projectKey=vermeg-gateway -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} -Dsonar.login=${{ secrets.SONAR_TOKEN }} sonar:sonar
