@@ -23,6 +23,9 @@ echo "Target stack: $TARGET"
 
 docker network create vermeg-net >/dev/null 2>&1 || true
 
+# Ensure base services don't conflict with previous runs
+docker rm -f vermeg-postgres vermeg-keycloak >/dev/null 2>&1 || true
+
 docker compose -f "$ROOT_DIR/docker-compose.base.yml" up -d
 
 if [ "$TARGET" = "blue" ]; then

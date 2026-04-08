@@ -62,62 +62,18 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
-      - name: Set up JDK
-        uses: actions/setup-java@v4
         with:
-          distribution: temurin
-          java-version: "21"
-          cache: maven
+          fetch-depth: 0
 
-      - name: SonarQube (Maven) - employee-service
-        working-directory: backend/employee-service
+      - name: SonarCloud scan (single project)
+        uses: SonarSource/sonarcloud-github-action@v2
+        if: ${{ secrets.SONAR_TOKEN != '' && secrets.SONAR_PROJECT_KEY != '' && secrets.SONAR_ORG != '' && secrets.SONAR_HOST_URL != '' }}
         env:
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_ORG: ${{ secrets.SONAR_ORG }}
-        run: |
-          if [ -z "$SONAR_TOKEN" ] || [ -z "$SONAR_HOST_URL" ] || [ -z "$SONAR_ORG" ]; then
-            echo "SonarQube skipped: missing SONAR_TOKEN, SONAR_HOST_URL, or SONAR_ORG."
-            exit 0
-          fi
-          mvn -q -DskipTests -Dsonar.projectKey=vermeg-employee -Dsonar.organization="$SONAR_ORG" -Dsonar.host.url="$SONAR_HOST_URL" -Dsonar.login="$SONAR_TOKEN" sonar:sonar
-
-      - name: SonarQube (Maven) - recruitment-service
-        working-directory: backend/recruitment-service
-        env:
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_ORG: ${{ secrets.SONAR_ORG }}
-        run: |
-          if [ -z "$SONAR_TOKEN" ] || [ -z "$SONAR_HOST_URL" ] || [ -z "$SONAR_ORG" ]; then
-            echo "SonarQube skipped: missing SONAR_TOKEN, SONAR_HOST_URL, or SONAR_ORG."
-            exit 0
-          fi
-          mvn -q -DskipTests -Dsonar.projectKey=vermeg-recruitment -Dsonar.organization="$SONAR_ORG" -Dsonar.host.url="$SONAR_HOST_URL" -Dsonar.login="$SONAR_TOKEN" sonar:sonar
-
-      - name: SonarQube (Maven) - approval-service
-        working-directory: backend/approval-service
-        env:
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_ORG: ${{ secrets.SONAR_ORG }}
-        run: |
-          if [ -z "$SONAR_TOKEN" ] || [ -z "$SONAR_HOST_URL" ] || [ -z "$SONAR_ORG" ]; then
-            echo "SonarQube skipped: missing SONAR_TOKEN, SONAR_HOST_URL, or SONAR_ORG."
-            exit 0
-          fi
-          mvn -q -DskipTests -Dsonar.projectKey=vermeg-approval -Dsonar.organization="$SONAR_ORG" -Dsonar.host.url="$SONAR_HOST_URL" -Dsonar.login="$SONAR_TOKEN" sonar:sonar
-
-      - name: SonarQube (Maven) - api-gateway
-        working-directory: backend/api-gateway
-        env:
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_ORG: ${{ secrets.SONAR_ORG }}
-        run: |
-          if [ -z "$SONAR_TOKEN" ] || [ -z "$SONAR_HOST_URL" ] || [ -z "$SONAR_ORG" ]; then
-            echo "SonarQube skipped: missing SONAR_TOKEN, SONAR_HOST_URL, or SONAR_ORG."
-            exit 0
-          fi
-          mvn -q -DskipTests -Dsonar.projectKey=vermeg-gateway -Dsonar.organization="$SONAR_ORG" -Dsonar.host.url="$SONAR_HOST_URL" -Dsonar.login="$SONAR_TOKEN" sonar:sonar
+        with:
+          args: >
+            -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
+            -Dsonar.organization=${{ secrets.SONAR_ORG }}
+            -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }}
+            -Dsonar.sources=backend,front
+            -Dsonar.exclusions=**/target/**,**/dist/**,**/node_modules/**,**/.angular/**,**/coverage/**

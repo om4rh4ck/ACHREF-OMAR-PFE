@@ -12,6 +12,7 @@ if [ ! -f "$ENV_FILE" ]; then
 fi
 
 docker network create vermeg-net >/dev/null 2>&1 || true
+docker rm -f vermeg-postgres vermeg-keycloak >/dev/null 2>&1 || true
 docker compose -f "$ROOT_DIR/docker-compose.base.yml" up -d
 
 DOCKERHUB_USER="$(grep -E '^DOCKERHUB_USER=' "$ENV_FILE" | cut -d= -f2)"
