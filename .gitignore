@@ -10,3 +10,4 @@ coverage/
 backend/logs/
 backend/**/target/
 *.db
+actions-runner/

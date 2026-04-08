@@ -58,24 +58,19 @@ jobs:
             ${{ secrets.DOCKERHUB_USERNAME }}/vermeg-${{ matrix.image.name }}:latest
 
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     needs: build-and-push
+    env:
+      DEPLOY_STRATEGY: ${{ secrets.DEPLOY_STRATEGY }}
     steps:
-      - name: Deploy via SSH
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_KEY }}
-          script: |
-            if [ -z "${{ secrets.SSH_HOST }}" ] || [ -z "${{ secrets.SSH_USER }}" ] || [ -z "${{ secrets.SSH_KEY }}" ] || [ -z "${{ secrets.DEPLOY_PATH }}" ]; then
-              echo "Deploy skipped: missing SSH secrets (SSH_HOST/SSH_USER/SSH_KEY/DEPLOY_PATH)."
-              exit 0
-            fi
-            cd ${{ secrets.DEPLOY_PATH }}
-            chmod +x deploy/blue-green.sh deploy/rolling.sh
-            if [ "${{ secrets.DEPLOY_STRATEGY }}" = "rolling" ]; then
-              ./deploy/rolling.sh "${{ github.ref_name }}"
-            else
-              ./deploy/blue-green.sh "${{ github.ref_name }}"
-            fi
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Deploy (self-hosted)
+        run: |
+          chmod +x deploy/blue-green.sh deploy/rolling.sh
+          if [ "$DEPLOY_STRATEGY" = "rolling" ]; then
+            ./deploy/rolling.sh "${{ github.ref_name }}"
+          else
+            ./deploy/blue-green.sh "${{ github.ref_name }}"
+          fi
