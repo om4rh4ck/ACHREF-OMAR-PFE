@@ -72,16 +72,48 @@ jobs:
 
       - name: SonarQube (Maven) - employee-service
         working-directory: backend/employee-service
-        run: mvn -q -DskipTests -Dsonar.projectKey=vermeg-employee -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} -Dsonar.login=${{ secrets.SONAR_TOKEN }} sonar:sonar
+        env:
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          if [ -z "$SONAR_TOKEN" ] || [ -z "$SONAR_HOST_URL" ]; then
+            echo "SonarQube skipped: missing SONAR_TOKEN or SONAR_HOST_URL."
+            exit 0
+          fi
+          mvn -q -DskipTests -Dsonar.projectKey=vermeg-employee -Dsonar.host.url="$SONAR_HOST_URL" -Dsonar.login="$SONAR_TOKEN" sonar:sonar
 
       - name: SonarQube (Maven) - recruitment-service
         working-directory: backend/recruitment-service
-        run: mvn -q -DskipTests -Dsonar.projectKey=vermeg-recruitment -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} -Dsonar.login=${{ secrets.SONAR_TOKEN }} sonar:sonar
+        env:
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          if [ -z "$SONAR_TOKEN" ] || [ -z "$SONAR_HOST_URL" ]; then
+            echo "SonarQube skipped: missing SONAR_TOKEN or SONAR_HOST_URL."
+            exit 0
+          fi
+          mvn -q -DskipTests -Dsonar.projectKey=vermeg-recruitment -Dsonar.host.url="$SONAR_HOST_URL" -Dsonar.login="$SONAR_TOKEN" sonar:sonar
 
       - name: SonarQube (Maven) - approval-service
         working-directory: backend/approval-service
-        run: mvn -q -DskipTests -Dsonar.projectKey=vermeg-approval -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} -Dsonar.login=${{ secrets.SONAR_TOKEN }} sonar:sonar
+        env:
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          if [ -z "$SONAR_TOKEN" ] || [ -z "$SONAR_HOST_URL" ]; then
+            echo "SonarQube skipped: missing SONAR_TOKEN or SONAR_HOST_URL."
+            exit 0
+          fi
+          mvn -q -DskipTests -Dsonar.projectKey=vermeg-approval -Dsonar.host.url="$SONAR_HOST_URL" -Dsonar.login="$SONAR_TOKEN" sonar:sonar
 
       - name: SonarQube (Maven) - api-gateway
         working-directory: backend/api-gateway
-        run: mvn -q -DskipTests -Dsonar.projectKey=vermeg-gateway -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} -Dsonar.login=${{ secrets.SONAR_TOKEN }} sonar:sonar
+        env:
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          if [ -z "$SONAR_TOKEN" ] || [ -z "$SONAR_HOST_URL" ]; then
+            echo "SonarQube skipped: missing SONAR_TOKEN or SONAR_HOST_URL."
+            exit 0
+          fi
+          mvn -q -DskipTests -Dsonar.projectKey=vermeg-gateway -Dsonar.host.url="$SONAR_HOST_URL" -Dsonar.login="$SONAR_TOKEN" sonar:sonar
