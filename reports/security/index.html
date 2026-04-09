@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>VERMEG SECURITY REVIEW</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app">
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="brand-mark">/</div>
+          <div class="brand-text">
+            <div class="brand-title">VERMEG</div>
+            <div class="brand-subtitle">SECURITY REVIEW</div>
+          </div>
+        </div>
+        <nav class="menu">
+          <a class="menu-item active" href="#overview">
+            <span class="menu-icon">🛡️</span>
+            <span class="menu-text">Overview</span>
+          </a>
+          <a class="menu-item" href="#owasp">
+            <span class="menu-icon">🔎</span>
+            <span class="menu-text">OWASP</span>
+          </a>
+          <a class="menu-item" href="#trivy">
+            <span class="menu-icon">🐳</span>
+            <span class="menu-text">Trivy</span>
+          </a>
+          <a class="menu-item" href="#snyk">
+            <span class="menu-icon">🧪</span>
+            <span class="menu-text">Snyk</span>
+          </a>
+          <a class="menu-item" href="#npm">
+            <span class="menu-icon">📦</span>
+            <span class="menu-text">npm audit</span>
+          </a>
+        </nav>
+        <div class="sidebar-footer">
+          <div class="badge">Derniere mise a jour</div>
+          <div class="small muted" id="last-updated">-</div>
+        </div>
+      </aside>
+
+      <main class="content">
+        <header class="topbar">
+          <div>
+            <div class="eyebrow">SECURITY CENTER</div>
+            <h1>VERMEG SECURITY REVIEW</h1>
+            <p class="subtitle">Dashboard de securite unifie pour OWASP, Trivy et Snyk.</p>
+          </div>
+          <div class="topbar-actions">
+            <button class="chip">Critical: 0</button>
+            <button class="chip">High: 0</button>
+            <button class="chip">Medium: 0</button>
+            <button class="chip">Low: 0</button>
+          </div>
+        </header>
+
+        <section id="overview" class="grid">
+          <div class="card">
+            <div class="card-icon">🛡️</div>
+            <div class="card-title">Couverture securite</div>
+            <div class="card-value">3/3</div>
+            <div class="card-caption">OWASP + Trivy + Snyk</div>
+          </div>
+          <div class="card">
+            <div class="card-icon">📦</div>
+            <div class="card-title">Dependances</div>
+            <div class="card-value">Scan OK</div>
+            <div class="card-caption">Java + npm</div>
+          </div>
+          <div class="card">
+            <div class="card-icon">🐳</div>
+            <div class="card-title">Images Docker</div>
+            <div class="card-value">5</div>
+            <div class="card-caption">services scannes</div>
+          </div>
+          <div class="card">
+            <div class="card-icon">⚡</div>
+            <div class="card-title">Dernier scan</div>
+            <div class="card-value" id="scan-date">-</div>
+            <div class="card-caption">date locale</div>
+          </div>
+        </section>
+
+        <section class="panel" id="owasp">
+          <div class="panel-header">
+            <h2>OWASP Dependency-Check</h2>
+            <span class="pill">Java + npm</span>
+          </div>
+          <p class="panel-text">Rapport des vulnerabilites des dependances Maven.</p>
+          <div class="links">
+            <a class="link-button" href="dependency-check-employee-service.html">Employee Service</a>
+            <a class="link-button" href="dependency-check-recruitment-service.html">Recruitment Service</a>
+            <a class="link-button" href="dependency-check-approval-service.html">Approval Service</a>
+            <a class="link-button" href="dependency-check-api-gateway.html">API Gateway</a>
+          </div>
+        </section>
+
+        <section class="panel" id="trivy">
+          <div class="panel-header">
+            <h2>Trivy Image Scan</h2>
+            <span class="pill">Docker Images</span>
+          </div>
+          <p class="panel-text">Scan des images Docker de tous les services.</p>
+          <div class="links">
+            <a class="link-button" href="trivy-employee-service.html">Employee Service</a>
+            <a class="link-button" href="trivy-recruitment-service.html">Recruitment Service</a>
+            <a class="link-button" href="trivy-approval-service.html">Approval Service</a>
+            <a class="link-button" href="trivy-api-gateway.html">API Gateway</a>
+            <a class="link-button" href="trivy-frontend.html">Frontend</a>
+          </div>
+        </section>
+
+        <section class="panel" id="snyk">
+          <div class="panel-header">
+            <h2>Snyk Continuous Analysis</h2>
+            <span class="pill">CI/CD</span>
+          </div>
+          <p class="panel-text">Analyse continue des dependances et packages.</p>
+          <div class="links">
+            <a class="link-button" href="snyk-backend.txt">Snyk Backend</a>
+            <a class="link-button" href="snyk-frontend.txt">Snyk Frontend</a>
+          </div>
+        </section>
+
+        <section class="panel" id="npm">
+          <div class="panel-header">
+            <h2>npm audit</h2>
+            <span class="pill">Frontend</span>
+          </div>
+          <p class="panel-text">Rapport npm audit du frontend Angular.</p>
+          <div class="links">
+            <a class="link-button" href="npm-audit.txt">Ouvrir npm audit</a>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script>
+      const now = new Date();
+      const dateText = now.toLocaleString("fr-FR");
+      const scanDate = document.getElementById("scan-date");
+      const lastUpdated = document.getElementById("last-updated");
+      if (scanDate) scanDate.textContent = dateText;
+      if (lastUpdated) lastUpdated.textContent = dateText;
+    </script>
+  </body>
+</html>

@@ -8,6 +8,7 @@ on:
 jobs:
   backend-build:
     runs-on: ubuntu-latest
+    if: ${{ github.event_name != 'push' || !contains(github.event.head_commit.message, '[skip ci]') }}
     strategy:
       fail-fast: false
       matrix:
@@ -35,6 +36,7 @@ jobs:
 
   frontend-build:
     runs-on: ubuntu-latest
+    if: ${{ github.event_name != 'push' || !contains(github.event.head_commit.message, '[skip ci]') }}
     defaults:
       run:
         working-directory: front
@@ -58,7 +60,7 @@ jobs:
   sonar:
     runs-on: ubuntu-latest
     needs: [backend-build, frontend-build]
-    if: ${{ github.event_name == 'push' }}
+    if: ${{ github.event_name == 'push' && !contains(github.event.head_commit.message, '[skip ci]') }}
     env:
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       SONAR_PROJECT_KEY: ${{ secrets.SONAR_PROJECT_KEY }}
@@ -82,3 +84,108 @@ jobs:
             -Dsonar.host.url=${{ env.SONAR_HOST_URL }}
             -Dsonar.sources=backend,front
             -Dsonar.exclusions=**/target/**,**/dist/**,**/node_modules/**,**/.angular/**,**/coverage/**
+
+  security-reports:
+    runs-on: ubuntu-latest
+    needs: [backend-build, frontend-build]
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' && !contains(github.event.head_commit.message, '[skip ci]') }}
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Prepare reports folder
+        run: |
+          mkdir -p reports/security
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+          cache: maven
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+          cache-dependency-path: front/package-lock.json
+
+      - name: OWASP Dependency-Check (employee-service)
+        working-directory: backend/employee-service
+        run: mvn -q -DskipTests org.owasp:dependency-check-maven:8.4.0:check -Dformat=HTML -DoutputDirectory=../../reports/security -DreportName=dependency-check-employee-service
+
+      - name: OWASP Dependency-Check (recruitment-service)
+        working-directory: backend/recruitment-service
+        run: mvn -q -DskipTests org.owasp:dependency-check-maven:8.4.0:check -Dformat=HTML -DoutputDirectory=../../reports/security -DreportName=dependency-check-recruitment-service
+
+      - name: OWASP Dependency-Check (approval-service)
+        working-directory: backend/approval-service
+        run: mvn -q -DskipTests org.owasp:dependency-check-maven:8.4.0:check -Dformat=HTML -DoutputDirectory=../../reports/security -DreportName=dependency-check-approval-service
+
+      - name: OWASP Dependency-Check (api-gateway)
+        working-directory: backend/api-gateway
+        run: mvn -q -DskipTests org.owasp:dependency-check-maven:8.4.0:check -Dformat=HTML -DoutputDirectory=../../reports/security -DreportName=dependency-check-api-gateway
+
+      - name: npm audit (frontend)
+        working-directory: front
+        run: |
+          npm ci
+          npm audit > ../reports/security/npm-audit.txt || true
+
+      - name: Install Trivy
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y wget
+          wget -qO- https://github.com/aquasecurity/trivy/releases/download/v0.50.2/trivy_0.50.2_Linux-64bit.tar.gz | tar -xz
+          sudo mv trivy /usr/local/bin/trivy
+
+      - name: Build images for Trivy scan
+        run: |
+          docker build -t vermeg-employee-service:scan -f backend/employee-service/Dockerfile backend/employee-service
+          docker build -t vermeg-recruitment-service:scan -f backend/recruitment-service/Dockerfile backend/recruitment-service
+          docker build -t vermeg-approval-service:scan -f backend/approval-service/Dockerfile backend/approval-service
+          docker build -t vermeg-api-gateway:scan -f backend/api-gateway/Dockerfile backend/api-gateway
+          docker build -t vermeg-frontend:scan -f front/Dockerfile front
+
+      - name: Trivy image scan (employee-service)
+        run: trivy image --format html -o reports/security/trivy-employee-service.html vermeg-employee-service:scan || true
+
+      - name: Trivy image scan (recruitment-service)
+        run: trivy image --format html -o reports/security/trivy-recruitment-service.html vermeg-recruitment-service:scan || true
+
+      - name: Trivy image scan (approval-service)
+        run: trivy image --format html -o reports/security/trivy-approval-service.html vermeg-approval-service:scan || true
+
+      - name: Trivy image scan (api-gateway)
+        run: trivy image --format html -o reports/security/trivy-api-gateway.html vermeg-api-gateway:scan || true
+
+      - name: Trivy image scan (frontend)
+        run: trivy image --format html -o reports/security/trivy-frontend.html vermeg-frontend:scan || true
+
+      - name: Snyk (backend + frontend)
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        run: |
+          if [ -z "$SNYK_TOKEN" ]; then
+            echo "SNYK_TOKEN manquant, scan ignore." > reports/security/snyk-backend.txt
+            echo "SNYK_TOKEN manquant, scan ignore." > reports/security/snyk-frontend.txt
+            exit 0
+          fi
+          npm install -g snyk
+          snyk auth "$SNYK_TOKEN"
+          cd backend/employee-service && snyk test > ../../reports/security/snyk-backend.txt || true
+          cd ../../front && snyk test > ../reports/security/snyk-frontend.txt || true
+
+      - name: Commit reports
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add reports/security
+          git diff --staged --quiet && echo "No report changes" && exit 0
+          git commit -m "chore: update security reports [skip ci]"
+          git push

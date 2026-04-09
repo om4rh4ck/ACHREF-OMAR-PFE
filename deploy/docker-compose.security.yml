@@ -1,0 +1,8 @@
+services:
+  security-dashboard:
+    image: nginx:alpine
+    container_name: vermeg-security-dashboard
+    ports:
+      - "8099:80"
+    volumes:
+      - ../reports/security:/usr/share/nginx/html:ro
