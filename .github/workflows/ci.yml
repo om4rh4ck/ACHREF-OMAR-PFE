@@ -91,6 +91,8 @@ jobs:
     if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' && !contains(github.event.head_commit.message, '[skip ci]') }}
     permissions:
       contents: write
+    env:
+      NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -115,21 +117,35 @@ jobs:
           cache: "npm"
           cache-dependency-path: front/package-lock.json
 
+      - name: OWASP skipped (missing NVD_API_KEY)
+        if: ${{ env.NVD_API_KEY == '' }}
+        run: |
+          cat > reports/security/dependency-check-employee-service.html <<'EOF'
+          <html><body><h1>OWASP Dependency-Check</h1><p>NVD_API_KEY manquant. Ajoutez le secret NVD_API_KEY pour générer un vrai rapport.</p></body></html>
+          EOF
+          cp reports/security/dependency-check-employee-service.html reports/security/dependency-check-recruitment-service.html
+          cp reports/security/dependency-check-employee-service.html reports/security/dependency-check-approval-service.html
+          cp reports/security/dependency-check-employee-service.html reports/security/dependency-check-api-gateway.html
+
       - name: OWASP Dependency-Check (employee-service)
+        if: ${{ env.NVD_API_KEY != '' }}
         working-directory: backend/employee-service
-        run: mvn -q -DskipTests org.owasp:dependency-check-maven:8.4.0:check -Dformat=HTML -DoutputDirectory=../../reports/security -DreportName=dependency-check-employee-service
+        run: mvn -q -DskipTests org.owasp:dependency-check-maven:8.4.0:check -Dformat=HTML -DoutputDirectory=../../reports/security -DreportName=dependency-check-employee-service -DnvdApiKey=${{ env.NVD_API_KEY }}
 
       - name: OWASP Dependency-Check (recruitment-service)
+        if: ${{ env.NVD_API_KEY != '' }}
         working-directory: backend/recruitment-service
-        run: mvn -q -DskipTests org.owasp:dependency-check-maven:8.4.0:check -Dformat=HTML -DoutputDirectory=../../reports/security -DreportName=dependency-check-recruitment-service
+        run: mvn -q -DskipTests org.owasp:dependency-check-maven:8.4.0:check -Dformat=HTML -DoutputDirectory=../../reports/security -DreportName=dependency-check-recruitment-service -DnvdApiKey=${{ env.NVD_API_KEY }}
 
       - name: OWASP Dependency-Check (approval-service)
+        if: ${{ env.NVD_API_KEY != '' }}
         working-directory: backend/approval-service
-        run: mvn -q -DskipTests org.owasp:dependency-check-maven:8.4.0:check -Dformat=HTML -DoutputDirectory=../../reports/security -DreportName=dependency-check-approval-service
+        run: mvn -q -DskipTests org.owasp:dependency-check-maven:8.4.0:check -Dformat=HTML -DoutputDirectory=../../reports/security -DreportName=dependency-check-approval-service -DnvdApiKey=${{ env.NVD_API_KEY }}
 
       - name: OWASP Dependency-Check (api-gateway)
+        if: ${{ env.NVD_API_KEY != '' }}
         working-directory: backend/api-gateway
-        run: mvn -q -DskipTests org.owasp:dependency-check-maven:8.4.0:check -Dformat=HTML -DoutputDirectory=../../reports/security -DreportName=dependency-check-api-gateway
+        run: mvn -q -DskipTests org.owasp:dependency-check-maven:8.4.0:check -Dformat=HTML -DoutputDirectory=../../reports/security -DreportName=dependency-check-api-gateway -DnvdApiKey=${{ env.NVD_API_KEY }}
 
       - name: npm audit (frontend)
         working-directory: front
