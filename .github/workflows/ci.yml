@@ -371,15 +371,71 @@ jobs:
             org.opencontainers.image.created=${{ steps.meta.outputs.BUILD_DATE }}
             org.opencontainers.image.revision=${{ github.sha }}
 
-  deploy-ssh:
+  semantic-versioning:
     runs-on: ubuntu-latest
     needs: [docker-push]
     if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' && !contains(github.event.head_commit.message, '[skip ci]') }}
+    outputs:
+      version: ${{ steps.semver.outputs.version }}
+      tag: ${{ steps.semver.outputs.tag }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Get latest tag
+        id: latesttag
+        run: |
+          TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
+          echo "tag=$TAG" >> $GITHUB_OUTPUT
+
+      - name: Calculate next version
+        id: semver
+        env:
+          CURRENT_TAG: ${{ steps.latesttag.outputs.tag }}
+          COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
+        run: |
+          CURRENT_TAG="${CURRENT_TAG#v}"
+          IFS='.' read -r MAJOR MINOR PATCH <<< "$CURRENT_TAG"
+          
+          if echo "$COMMIT_MESSAGE" | grep -q "BREAKING\|major\|breaking"; then
+            MAJOR=$((MAJOR + 1))
+            MINOR=0
+            PATCH=0
+          elif echo "$COMMIT_MESSAGE" | grep -q "feat:\|feature"; then
+            MINOR=$((MINOR + 1))
+            PATCH=0
+          else
+            PATCH=$((PATCH + 1))
+          fi
+          
+          VERSION="$MAJOR.$MINOR.$PATCH"
+          TAG="v$VERSION"
+          
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "tag=$TAG" >> $GITHUB_OUTPUT
+          echo "📌 Next version: $TAG"
+
+      - name: Create Git tag
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git tag -a ${{ steps.semver.outputs.tag }} -m "Release ${{ steps.semver.outputs.tag }}"
+          git push origin ${{ steps.semver.outputs.tag }}
+
+  deploy-ssh:
+    runs-on: ubuntu-latest
+    needs: [semantic-versioning]
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' && !contains(github.event.head_commit.message, '[skip ci]') }}
+    env:
+      DEPLOY_VERSION: ${{ needs.semantic-versioning.outputs.version }}
+      DEPLOY_TAG: ${{ needs.semantic-versioning.outputs.tag }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: SSH Deploy via private key
+      - name: Deploy with Blue/Green strategy
         uses: appleboy/ssh-action@master
         continue-on-error: true
         with:
@@ -389,6 +445,40 @@ jobs:
           script: |
             cd ${{ secrets.DEPLOY_PATH }}
             git pull origin master
-            docker compose -f backend/docker-compose.yml pull
-            docker compose -f backend/docker-compose.yml up -d
-            echo "✅ Deployment completed at $(date)"
+            git fetch --tags
+            
+            echo "🚀 Deploying version: ${{ env.DEPLOY_VERSION }}"
+            echo "📌 Tag: ${{ env.DEPLOY_TAG }}"
+            
+            # Execute Blue/Green deployment
+            bash deploy/blue-green.sh ${{ env.DEPLOY_TAG }}
+            
+            echo "⏳ Waiting for services..."
+            sleep 10
+            
+            # Health checks
+            echo "🔍 Running health checks..."
+            
+            FRONTEND_URL="http://localhost:5173"
+            KEYCLOAK_URL="http://localhost:8080"
+            GATEWAY_URL="http://localhost:8081/actuator/health"
+            
+            for url in "$FRONTEND_URL" "$KEYCLOAK_URL" "$GATEWAY_URL"; do
+              echo "Checking: $url"
+              if curl -sf "$url" > /dev/null 2>&1; then
+                echo "✅ $url is healthy"
+              else
+                echo "⚠️ $url is not responding yet"
+              fi
+            done
+            
+            echo "✅ Blue/Green deployment completed!"
+            echo "✅ Version: ${{ env.DEPLOY_VERSION }}"
+            echo "✅ Deployed at: $(date)"
+
+      - name: Notify deployment
+        if: success()
+        run: |
+          echo "🎉 Successfully deployed version ${{ env.DEPLOY_VERSION }}"
+          echo "📌 Git tag: ${{ env.DEPLOY_TAG }}"
+          echo "🔗 Commit: ${{ github.sha }}"
