@@ -1,0 +1,154 @@
+# npm audit report
+
+@angular/compiler  19.0.0-next.0 - 19.2.19
+Severity: high
+Angular vulnerable to XSS in i18n attribute bindings - https://github.com/advisories/GHSA-g93w-mfhg-p222
+fix available via `npm audit fix`
+node_modules/@angular/compiler
+  @angular/compiler-cli  19.0.0-next.0 - 19.2.19
+  Depends on vulnerable versions of @angular/compiler
+  node_modules/@angular/compiler-cli
+  @angular/platform-browser-dynamic  19.0.0-next.0 - 19.2.19
+  Depends on vulnerable versions of @angular/common
+  Depends on vulnerable versions of @angular/compiler
+  Depends on vulnerable versions of @angular/core
+  Depends on vulnerable versions of @angular/platform-browser
+  node_modules/@angular/platform-browser-dynamic
+
+@angular/core  19.0.0-next.0 - 19.2.19
+Severity: high
+Angular vulnerable to XSS in i18n attribute bindings - https://github.com/advisories/GHSA-g93w-mfhg-p222
+fix available via `npm audit fix`
+node_modules/@angular/core
+  @angular/animations  19.0.0-next.0 - 19.2.19
+  Depends on vulnerable versions of @angular/common
+  Depends on vulnerable versions of @angular/core
+  node_modules/@angular/animations
+  @angular/common  19.0.0-next.0 - 19.2.19
+  Depends on vulnerable versions of @angular/core
+  node_modules/@angular/common
+    @angular/forms  4.4.0-RC.0 - 4.4.0 || 19.0.0-next.0 - 19.2.19
+    Depends on vulnerable versions of @angular/common
+    Depends on vulnerable versions of @angular/core
+    Depends on vulnerable versions of @angular/platform-browser
+    node_modules/@angular/forms
+  @angular/platform-browser  19.0.0-next.0 - 19.2.19
+  Depends on vulnerable versions of @angular/animations
+  Depends on vulnerable versions of @angular/common
+  Depends on vulnerable versions of @angular/core
+  node_modules/@angular/platform-browser
+  @angular/router  10.0.0-next.0 - 10.0.0-rc.1 || 19.0.0-next.0 - 19.2.19
+  Depends on vulnerable versions of @angular/common
+  Depends on vulnerable versions of @angular/core
+  Depends on vulnerable versions of @angular/platform-browser
+  node_modules/@angular/router
+
+brace-expansion  2.0.0 - 2.0.2
+Severity: moderate
+brace-expansion: Zero-step sequence causes process hang and memory exhaustion - https://github.com/advisories/GHSA-f886-m6hf-6m8v
+fix available via `npm audit fix`
+node_modules/brace-expansion
+
+node-forge  <=1.3.3
+Severity: high
+Forge has a basicConstraints bypass in its certificate chain verification (RFC 5280 violation) - https://github.com/advisories/GHSA-2328-f5f3-gj25
+Forge has signature forgery in Ed25519 due to missing S > L check - https://github.com/advisories/GHSA-q67f-28xg-22rw
+Forge has Denial of Service via Infinite Loop in BigInteger.modInverse() with Zero Input - https://github.com/advisories/GHSA-5m6q-g25r-mvwx
+Forge has signature forgery in RSA-PKCS due to ASN.1 extra field   - https://github.com/advisories/GHSA-ppp5-5v6c-4jwp
+fix available via `npm audit fix`
+node_modules/node-forge
+
+path-to-regexp  <0.1.13
+Severity: high
+path-to-regexp vulnerable to Regular Expression Denial of Service via multiple route parameters - https://github.com/advisories/GHSA-37ch-88jc-xwx2
+fix available via `npm audit fix`
+node_modules/path-to-regexp
+
+picomatch  <=2.3.1 || 4.0.0 - 4.0.3
+Severity: high
+Picomatch: Method Injection in POSIX Character Classes causes incorrect Glob Matching - https://github.com/advisories/GHSA-3v7f-55p6-f55p
+Picomatch: Method Injection in POSIX Character Classes causes incorrect Glob Matching - https://github.com/advisories/GHSA-3v7f-55p6-f55p
+Picomatch has a ReDoS vulnerability via extglob quantifiers - https://github.com/advisories/GHSA-c2c7-rcm5-vvqj
+Picomatch has a ReDoS vulnerability via extglob quantifiers - https://github.com/advisories/GHSA-c2c7-rcm5-vvqj
+fix available via `npm audit fix`
+node_modules/@angular-devkit/build-angular/node_modules/picomatch
+node_modules/@angular-devkit/core/node_modules/picomatch
+node_modules/@angular/build/node_modules/picomatch
+node_modules/anymatch/node_modules/picomatch
+node_modules/micromatch/node_modules/picomatch
+node_modules/picomatch
+node_modules/webpack-dev-server/node_modules/picomatch
+  @angular-devkit/build-angular  <=20.3.21 || 21.0.0-next.0 - 21.2.4 || 22.0.0-next.0 - 22.0.0-next.3
+  Depends on vulnerable versions of @angular-devkit/architect
+  Depends on vulnerable versions of @angular-devkit/build-webpack
+  Depends on vulnerable versions of @angular-devkit/core
+  Depends on vulnerable versions of @angular/build
+  Depends on vulnerable versions of copy-webpack-plugin
+  Depends on vulnerable versions of picomatch
+  node_modules/@angular-devkit/build-angular
+  @angular-devkit/core  17.2.0-next.0 - 19.2.22 || 20.0.0-next.0 - 20.3.21 || 21.0.0-next.0 - 21.2.4 || 22.0.0-next.0 - 22.0.0-next.3
+  Depends on vulnerable versions of picomatch
+  node_modules/@angular-devkit/core
+    @angular-devkit/architect  0.1000.0-next.0 - 0.1000.0-rc.1 || 0.1702.0-next.0 - 0.1902.22 || 0.2000.0-next.0 - 0.2003.21 || 0.2100.0-next.0 - 0.2102.4 || 0.2200.0-next.0 - 0.2200.0-next.3
+    Depends on vulnerable versions of @angular-devkit/core
+    node_modules/@angular-devkit/architect
+      @angular-devkit/build-webpack  0.1702.0-next.0 - 0.1902.22 || 0.2000.0-next.0 - 0.2003.21 || 0.2100.0-next.0 - 0.2102.4 || 0.2200.0-next.0 - 0.2200.0-next.3
+      Depends on vulnerable versions of @angular-devkit/architect
+      node_modules/@angular-devkit/build-webpack
+    @angular-devkit/schematics  17.2.0-next.0 - 19.2.22 || 20.0.0-next.0 - 20.3.21 || 21.0.0-next.0 - 21.2.4 || 22.0.0-next.0 - 22.0.0-next.3
+    Depends on vulnerable versions of @angular-devkit/core
+    node_modules/@angular-devkit/schematics
+    @angular/cli  6.2.9 || 7.3.0-beta.0 - 20.3.21 || 21.0.0-next.0 - 21.2.4 || 22.0.0-next.0 - 22.0.0-next.3
+    Depends on vulnerable versions of @angular-devkit/architect
+    Depends on vulnerable versions of @angular-devkit/core
+    Depends on vulnerable versions of @angular-devkit/schematics
+    Depends on vulnerable versions of @schematics/angular
+    Depends on vulnerable versions of pacote
+    node_modules/@angular/cli
+    @schematics/angular  17.2.0-next.0 - 19.2.22 || 20.0.0-next.0 - 20.3.21 || 21.0.0-next.0 - 21.2.4 || 22.0.0-next.0 - 22.0.0-next.3
+    Depends on vulnerable versions of @angular-devkit/core
+    Depends on vulnerable versions of @angular-devkit/schematics
+    node_modules/@schematics/angular
+  @angular/build  <=19.2.23 || 20.0.0-next.0 - 20.3.21 || 21.0.0-next.0 - 21.2.4 || 22.0.0-next.0 - 22.0.0-next.3
+  Depends on vulnerable versions of @angular-devkit/architect
+  Depends on vulnerable versions of picomatch
+  Depends on vulnerable versions of vite
+  node_modules/@angular/build
+
+serialize-javascript  <=7.0.4
+Severity: high
+Serialize JavaScript is Vulnerable to RCE via RegExp.flags and Date.prototype.toISOString() - https://github.com/advisories/GHSA-5c6j-r48x-rmvq
+Serialize JavaScript has CPU Exhaustion Denial of Service via crafted array-like objects - https://github.com/advisories/GHSA-qj8w-gfj5-8c6v
+fix available via `npm audit fix`
+node_modules/serialize-javascript
+  copy-webpack-plugin  4.3.0 - 13.0.1
+  Depends on vulnerable versions of serialize-javascript
+  node_modules/copy-webpack-plugin
+
+tar  <=7.5.10
+Severity: high
+node-tar Vulnerable to Arbitrary File Creation/Overwrite via Hardlink Path Traversal - https://github.com/advisories/GHSA-34x7-hfp2-rc4v
+node-tar is Vulnerable to Arbitrary File Overwrite and Symlink Poisoning via Insufficient Path Sanitization - https://github.com/advisories/GHSA-8qq5-rm4j-mr97
+Arbitrary File Read/Write via Hardlink Target Escape Through Symlink Chain in node-tar Extraction - https://github.com/advisories/GHSA-83g3-92jg-28cx
+tar has Hardlink Path Traversal via Drive-Relative Linkpath - https://github.com/advisories/GHSA-qffp-2rhf-9h96
+node-tar Symlink Path Traversal via Drive-Relative Linkpath - https://github.com/advisories/GHSA-9ppj-qmqm-q256
+Race Condition in node-tar Path Reservations via Unicode Ligature Collisions on macOS APFS - https://github.com/advisories/GHSA-r6q2-hw4h-h46w
+fix available via `npm audit fix`
+node_modules/cacache/node_modules/tar
+node_modules/node-gyp/node_modules/tar
+node_modules/tar
+  pacote  5.0.0 - 19.0.1 || 20.0.0 || 21.0.0
+  Depends on vulnerable versions of tar
+  node_modules/pacote
+
+vite  <=6.4.1
+Severity: high
+Vite Vulnerable to Path Traversal in Optimized Deps `.map` Handling - https://github.com/advisories/GHSA-4w7w-66w2-5vf9
+Vite Vulnerable to Arbitrary File Read via Vite Dev Server WebSocket - https://github.com/advisories/GHSA-p9ff-h696-f583
+fix available via `npm audit fix`
+node_modules/vite
+
+26 vulnerabilities (7 moderate, 19 high)
+
+To address all issues, run:
+  npm audit fix
