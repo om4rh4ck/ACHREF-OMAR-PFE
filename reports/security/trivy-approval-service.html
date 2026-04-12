@@ -3,9 +3,9 @@
   "Trivy": {
     "Version": "0.69.3"
   },
-  "ReportID": "019d8237-6a62-7d24-ba5e-3af0bce23199",
-  "CreatedAt": "2026-04-12T15:02:43.042862748Z",
-  "ArtifactID": "sha256:b37bf7f76f09cda6cd356bbfc6c99df66dae3330203f4e8a1489be66d4620fd3",
+  "ReportID": "019d8245-8edd-74bc-bb2e-8cdef2b57648",
+  "CreatedAt": "2026-04-12T15:18:09.885312686Z",
+  "ArtifactID": "sha256:07b6e1b9b5eac13bc3a7c4c6d6f8693e16d7734d4e8a61cbeb1f53f8b438c37d",
   "ArtifactName": "vermeg-approval-service:scan",
   "ArtifactType": "container_image",
   "Metadata": {
@@ -14,15 +14,15 @@
       "Family": "alpine",
       "Name": "3.23.3"
     },
-    "ImageID": "sha256:d8ac2b830f9fcb9759bc5e6dabbfdab68d8d37a7954232842eecad5daf793273",
+    "ImageID": "sha256:36080b8a652071d961a559358d2d21a9890c7766a431812d6bd673e38093e1cc",
     "DiffIDs": [
       "sha256:989e799e634906e94dc9a5ee2ee26fc92ad260522990f26e707861a5f52bf64e",
       "sha256:9c3a5d3bc1d986297ccf3222aa60d30955e70ea5170e9b7a44b206a316dd18f0",
       "sha256:fcf55ba1acd31da88b4f0e40192024dbac904cc053f591c7138a3dc35bd01521",
       "sha256:967afb1d17e55b6045d16eb964e3bfed1bd9aec5d884810c9445692b65c65a84",
       "sha256:941f874f7c102bce088fde230ea317a7b02be558a484956f414d5e721278f6b4",
-      "sha256:e9058eb47f7a9ed5ae3bcd25a3bb94eb7d4ae3217376c7ce75ecb4cc10595840",
-      "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+      "sha256:33cd3663fcc7ad1226002014163f0ea4e1f94d54f46bcc1523f620ddca472b18",
+      "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
     ],
     "RepoTags": [
       "vermeg-approval-service:scan"
@@ -30,7 +30,7 @@
     "Reference": "vermeg-approval-service:scan",
     "ImageConfig": {
       "architecture": "amd64",
-      "created": "2026-04-12T15:01:19.953891912Z",
+      "created": "2026-04-12T15:16:47.055315322Z",
       "history": [
         {
           "created": "2026-01-28T01:18:04Z",
@@ -94,23 +94,23 @@
           "empty_layer": true
         },
         {
-          "created": "2026-04-12T15:00:21Z",
+          "created": "2026-04-12T15:15:56Z",
           "created_by": "WORKDIR /app",
           "comment": "buildkit.dockerfile.v0"
         },
         {
-          "created": "2026-04-12T15:01:19Z",
+          "created": "2026-04-12T15:16:47Z",
           "created_by": "COPY /app/target/*.jar app.jar # buildkit",
           "comment": "buildkit.dockerfile.v0"
         },
         {
-          "created": "2026-04-12T15:01:19Z",
+          "created": "2026-04-12T15:16:47Z",
           "created_by": "EXPOSE map[8084/tcp:{}]",
           "comment": "buildkit.dockerfile.v0",
           "empty_layer": true
         },
         {
-          "created": "2026-04-12T15:01:19Z",
+          "created": "2026-04-12T15:16:47Z",
           "created_by": "ENTRYPOINT [\"java\" \"-jar\" \"app.jar\"]",
           "comment": "buildkit.dockerfile.v0",
           "empty_layer": true
@@ -125,8 +125,8 @@
           "sha256:fcf55ba1acd31da88b4f0e40192024dbac904cc053f591c7138a3dc35bd01521",
           "sha256:967afb1d17e55b6045d16eb964e3bfed1bd9aec5d884810c9445692b65c65a84",
           "sha256:941f874f7c102bce088fde230ea317a7b02be558a484956f414d5e721278f6b4",
-          "sha256:e9058eb47f7a9ed5ae3bcd25a3bb94eb7d4ae3217376c7ce75ecb4cc10595840",
-          "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+          "sha256:33cd3663fcc7ad1226002014163f0ea4e1f94d54f46bcc1523f620ddca472b18",
+          "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
         ]
       },
       "config": {
@@ -172,11 +172,11 @@
       },
       {
         "Size": 1536,
-        "DiffID": "sha256:e9058eb47f7a9ed5ae3bcd25a3bb94eb7d4ae3217376c7ce75ecb4cc10595840"
+        "DiffID": "sha256:33cd3663fcc7ad1226002014163f0ea4e1f94d54f46bcc1523f620ddca472b18"
       },
       {
         "Size": 55621632,
-        "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+        "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
       }
     ]
   },
@@ -3574,7 +3574,7 @@
             "Name": "Alpine Secdb",
             "URL": "https://secdb.alpinelinux.org/"
           },
-          "Fingerprint": "sha256:25119015901f85f7efaa1b15fe17afc7b0dadc1c3c8b7d9943876ecca034cdb9",
+          "Fingerprint": "sha256:5d2285b19ff646b0f963cb123456a03a6561bd74c357b5d3e5d0aac9a88f7277",
           "Title": "gnutls: gnutls: Remote Denial of Service via crafted ClientHello with invalid PSK binder",
           "Description": "A flaw was found in gnutls. A remote, unauthenticated attacker can exploit this vulnerability by sending a specially crafted ClientHello message with an invalid Pre-Shared Key (PSK) binder value during the TLS handshake. This can lead to a NULL pointer dereference, causing the server to crash and resulting in a remote Denial of Service (DoS) condition.",
           "Severity": "HIGH",
@@ -3619,7 +3619,7 @@
             "Name": "Alpine Secdb",
             "URL": "https://secdb.alpinelinux.org/"
           },
-          "Fingerprint": "sha256:d9fb981f1da3702e23afa4481154714d5c385569807dda05cc170604536f4598",
+          "Fingerprint": "sha256:fe77ce73e5ec96533fb39830afccd7402b6ec4e8e6bf217cd991ef887c3af744",
           "Title": "gnutls: GnuTLS: Denial of Service via excessive resource consumption during certificate verification",
           "Description": "A flaw was found in GnuTLS. This vulnerability allows a denial of service (DoS) by excessive CPU (Central Processing Unit) and memory consumption via specially crafted malicious certificates containing a large number of name constraints and subject alternative names (SANs).",
           "Severity": "MEDIUM",
@@ -3692,7 +3692,7 @@
             "Name": "Alpine Secdb",
             "URL": "https://secdb.alpinelinux.org/"
           },
-          "Fingerprint": "sha256:f1383ab554f80a01b89b802ca248d7bee96bd938ba0e1cb80df5eaa1ebc33d80",
+          "Fingerprint": "sha256:4fec37da681f5aff436a5df98aaf91368b91084f89cdc1537b7ef68fdc790304",
           "Title": "openssl: OpenSSL: Denial of Service due to NULL pointer dereference in CMS EnvelopedData processing",
           "Description": "Issue summary: During processing of a crafted CMS EnvelopedData message\nwith KeyTransportRecipientInfo a NULL pointer dereference can happen.\n\nImpact summary: Applications that process attacker-controlled CMS data may\ncrash before authentication or cryptographic operations occur resulting in\nDenial of Service.\n\nWhen a CMS EnvelopedData message that uses KeyTransportRecipientInfo with\nRSA-OAEP encryption is processed, the optional parameters field of\nRSA-OAEP SourceFunc algorithm identifier is examined without checking\nfor its presence. This results in a NULL pointer dereference if the field\nis missing.\n\nApplications and services that call CMS_decrypt() on untrusted input\n(e.g., S/MIME processing or CMS-based protocols) are vulnerable.\n\nThe FIPS modules in 3.6, 3.5, 3.4, 3.3 and 3.0 are not affected by this\nissue, as the affected code is outside the OpenSSL FIPS module boundary.",
           "Severity": "HIGH",
@@ -3747,7 +3747,7 @@
             "Name": "Alpine Secdb",
             "URL": "https://secdb.alpinelinux.org/"
           },
-          "Fingerprint": "sha256:0eabaa89abcfd60edf20355ec698f2646c67192ae1f0cbcd7543580b518d5407",
+          "Fingerprint": "sha256:aae8cb57f4ba380db9aa0e971a8da89469aa7853dd97742ea7fcf41741862919",
           "Title": "openssl: openssl: Information Disclosure from Uninitialized Memory via Invalid RSA Public Key",
           "Description": "Issue summary: Applications using RSASVE key encapsulation to establish\na secret encryption key can send contents of an uninitialized memory buffer to\na malicious peer.\n\nImpact summary: The uninitialized buffer might contain sensitive data from the\nprevious execution of the application process which leads to sensitive data\nleakage to an attacker.\n\nRSA_public_encrypt() returns the number of bytes written on success and -1\non error. The affected code tests only whether the return value is non-zero.\nAs a result, if RSA encryption fails, encapsulation can still return success to\nthe caller, set the output lengths, and leave the caller to use the contents of\nthe ciphertext buffer as if a valid KEM ciphertext had been produced.\n\nIf applications use EVP_PKEY_encapsulate() with RSA/RSASVE on an\nattacker-supplied invalid RSA public key without first validating that key,\nthen this may cause stale or uninitialized contents of the caller-provided\nciphertext buffer to be disclosed to the attacker in place of the KEM\nciphertext.\n\nAs a workaround calling EVP_PKEY_public_check() or\nEVP_PKEY_public_check_quick() before EVP_PKEY_encapsulate() will mitigate\nthe issue.\n\nThe FIPS modules in 3.6, 3.5, 3.4, 3.3, 3.1 and 3.0 are affected by this issue.",
           "Severity": "MEDIUM",
@@ -3801,7 +3801,7 @@
             "Name": "Alpine Secdb",
             "URL": "https://secdb.alpinelinux.org/"
           },
-          "Fingerprint": "sha256:185456c438054ae6d4739a0a849b34abbb03e3c4f79901a080dbcb1799a19103",
+          "Fingerprint": "sha256:c3b89ce5cda979860c116298be44d2e32827c77099ca5bfb4ea8fe0a8d43506f",
           "Title": "openssl: OpenSSL TLS 1.3 server may choose unexpected key agreement group",
           "Description": "Issue summary: An OpenSSL TLS 1.3 server may fail to negotiate the expected\npreferred key exchange group when its key exchange group configuration includes\nthe default by using the 'DEFAULT' keyword.\n\nImpact summary: A less preferred key exchange may be used even when a more\npreferred group is supported by both client and server, if the group\nwas not included among the client's initial predicated keyshares.\nThis will sometimes be the case with the new hybrid post-quantum groups,\nif the client chooses to defer their use until specifically requested by\nthe server.\n\nIf an OpenSSL TLS 1.3 server's configuration uses the 'DEFAULT' keyword to\ninterpolate the built-in default group list into its own configuration, perhaps\nadding or removing specific elements, then an implementation defect causes the\n'DEFAULT' list to lose its 'tuple' structure, and all server-supported groups\nwere treated as a single sufficiently secure 'tuple', with the server not\nsending a Hello Retry Request (HRR) even when a group in a more preferred tuple\nwas mutually supported.\n\nAs a result, the client and server might fail to negotiate a mutually supported\npost-quantum key agreement group, such as 'X25519MLKEM768', if the client's\nconfiguration results in only 'classical' groups (such as 'X25519' being the\nonly ones in the client's initial keyshare prediction).\n\nOpenSSL 3.5 and later support a new syntax for selecting the most preferred TLS\n1.3 key agreement group on TLS servers.  The old syntax had a single 'flat'\nlist of groups, and treated all the supported groups as sufficiently secure.\nIf any of the keyshares predicted by the client were supported by the server\nthe most preferred among these was selected, even if other groups supported by\nthe client, but not included in the list of predicted keyshares would have been\nmore preferred, if included.\n\nThe new syntax partitions the groups into distinct 'tuples' of roughly\nequivalent security.  Within each tuple the most preferred group included among\nthe client's predicted keyshares is chosen, but if the client supports a group\nfrom a more preferred tuple, but did not predict any corresponding keyshares,\nthe server will ask the client to retry the ClientHello (by issuing a Hello\nRetry Request or HRR) with the most preferred mutually supported group.\n\nThe above works as expected when the server's configuration uses the built-in\ndefault group list, or explicitly defines its own list by directly defining the\nvarious desired groups and group 'tuples'.\n\nNo OpenSSL FIPS modules are affected by this issue, the code in question lies\noutside the FIPS boundary.\n\nOpenSSL 3.6 and 3.5 are vulnerable to this issue.\n\nOpenSSL 3.6 users should upgrade to OpenSSL 3.6.2 once it is released.\nOpenSSL 3.5 users should upgrade to OpenSSL 3.5.6 once it is released.\n\nOpenSSL 3.4, 3.3, 3.0, 1.0.2 and 1.1.1 are not affected by this issue.",
           "Severity": "LOW",
@@ -3852,7 +3852,7 @@
             "Name": "Alpine Secdb",
             "URL": "https://secdb.alpinelinux.org/"
           },
-          "Fingerprint": "sha256:b88cc7033c80af5a4ed49f37b912789389464303f6584e44e8736d688f9d1170",
+          "Fingerprint": "sha256:a7f2d00e13f8252533b04c9a377b2fc9d243801410e3ed489b824b8c5a4fe43c",
           "Title": "Issue summary: An uncommon configuration of clients performing DANE TL ...",
           "Description": "Issue summary: An uncommon configuration of clients performing DANE TLSA-based\nserver authentication, when paired with uncommon server DANE TLSA records, may\nresult in a use-after-free and/or double-free on the client side.\n\nImpact summary: A use after free can have a range of potential consequences\nsuch as the corruption of valid data, crashes or execution of arbitrary code.\n\nHowever, the issue only affects clients that make use of TLSA records with both\nthe PKIX-TA(0/PKIX-EE(1) certificate usages and the DANE-TA(2) certificate\nusage.\n\nBy far the most common deployment of DANE is in SMTP MTAs for which RFC7672\nrecommends that clients treat as 'unusable' any TLSA records that have the PKIX\ncertificate usages.  These SMTP (or other similar) clients are not vulnerable\nto this issue.  Conversely, any clients that support only the PKIX usages, and\nignore the DANE-TA(2) usage are also not vulnerable.\n\nThe client would also need to be communicating with a server that publishes a\nTLSA RRset with both types of TLSA records.\n\nNo FIPS modules are affected by this issue, the problem code is outside the\nFIPS module boundary.",
           "Severity": "LOW",
@@ -3898,7 +3898,7 @@
             "Name": "Alpine Secdb",
             "URL": "https://secdb.alpinelinux.org/"
           },
-          "Fingerprint": "sha256:4f6c40cdfb93fbcbcd36cb965ab4317efac35d4c0ddc2a554ed68378912fb8bc",
+          "Fingerprint": "sha256:34127c9ae9e68c6030f74c1d6268407b948587f2b3f4e60189633e482e5281a3",
           "Title": "Issue summary: When a delta CRL that contains a Delta CRL Indicator ex ...",
           "Description": "Issue summary: When a delta CRL that contains a Delta CRL Indicator extension\nis processed a NULL pointer dereference might happen if the required CRL\nNumber extension is missing.\n\nImpact summary: A NULL pointer dereference can trigger a crash which\nleads to a Denial of Service for an application.\n\nWhen CRL processing and delta CRL processing is enabled during X.509\ncertificate verification, the delta CRL processing does not check\nwhether the CRL Number extension is NULL before dereferencing it.\nWhen a malformed delta CRL file is being processed, this parameter\ncan be NULL, causing a NULL pointer dereference.\n\nExploiting this issue requires the X509_V_FLAG_USE_DELTAS flag to be enabled in\nthe verification context, the certificate being verified to contain a\nfreshestCRL extension or the base CRL to have the EXFLAG_FRESHEST flag set, and\nan attacker to provide a malformed CRL to an application that processes it.\n\nThe vulnerability is limited to Denial of Service and cannot be escalated to\nachieve code execution or memory disclosure. For that reason the issue was\nassessed as Low severity according to our Security Policy.\n\nThe FIPS modules in 3.6, 3.5, 3.4, 3.3 and 3.0 are not affected by this issue,\nas the affected code is outside the OpenSSL FIPS module boundary.",
           "Severity": "LOW",
@@ -3944,7 +3944,7 @@
             "Name": "Alpine Secdb",
             "URL": "https://secdb.alpinelinux.org/"
           },
-          "Fingerprint": "sha256:6a210fb2d7156a56674db3145a05ca7a0ca155d1320dbf6e6012f87b6cd079eb",
+          "Fingerprint": "sha256:1e197d13469d4dd6b3a571d94271f4059f0e36699536901e2b7b427cd8748033",
           "Title": "Issue summary: During processing of a crafted CMS EnvelopedData messag ...",
           "Description": "Issue summary: During processing of a crafted CMS EnvelopedData message\nwith KeyAgreeRecipientInfo a NULL pointer dereference can happen.\n\nImpact summary: Applications that process attacker-controlled CMS data may\ncrash before authentication or cryptographic operations occur resulting in\nDenial of Service.\n\nWhen a CMS EnvelopedData message that uses KeyAgreeRecipientInfo is\nprocessed, the optional parameters field of KeyEncryptionAlgorithmIdentifier\nis examined without checking for its presence. This results in a NULL\npointer dereference if the field is missing.\n\nApplications and services that call CMS_decrypt() on untrusted input\n(e.g., S/MIME processing or CMS-based protocols) are vulnerable.\n\nThe FIPS modules in 3.6, 3.5, 3.4, 3.3 and 3.0 are not affected by this\nissue, as the affected code is outside the OpenSSL FIPS module boundary.",
           "Severity": "LOW",
@@ -3990,7 +3990,7 @@
             "Name": "Alpine Secdb",
             "URL": "https://secdb.alpinelinux.org/"
           },
-          "Fingerprint": "sha256:8d09430f8861491c7c792f75e4afb46894c275e6a74e5ed36d5f41e76a38faae",
+          "Fingerprint": "sha256:f7a064cbf16e86cc4ab525520395ffcf9fc9d5d685a932a236bca79abf064891",
           "Title": "Issue summary: Converting an excessively large OCTET STRING value to a ...",
           "Description": "Issue summary: Converting an excessively large OCTET STRING value to\na hexadecimal string leads to a heap buffer overflow on 32 bit platforms.\n\nImpact summary: A heap buffer overflow may lead to a crash or possibly\nan attacker controlled code execution or other undefined behavior.\n\nIf an attacker can supply a crafted X.509 certificate with an excessively\nlarge OCTET STRING value in extensions such as the Subject Key Identifier\n(SKID) or Authority Key Identifier (AKID) which are being converted to hex,\nthe size of the buffer needed for the result is calculated as multiplication\nof the input length by 3. On 32 bit platforms, this multiplication may overflow\nresulting in the allocation of a smaller buffer and a heap buffer overflow.\n\nApplications and services that print or log contents of untrusted X.509\ncertificates are vulnerable to this issue. As the certificates would have\nto have sizes of over 1 Gigabyte, printing or logging such certificates\nis a fairly unlikely operation and only 32 bit platforms are affected,\nthis issue was assigned Low severity.\n\nThe FIPS modules in 3.6, 3.5, 3.4, 3.3 and 3.0 are not affected by this\nissue, as the affected code is outside the OpenSSL FIPS module boundary.",
           "Severity": "LOW",
@@ -4036,7 +4036,7 @@
             "Name": "Alpine Secdb",
             "URL": "https://secdb.alpinelinux.org/"
           },
-          "Fingerprint": "sha256:7f538bfadcefd163a8569a2da0f4a0c79da4885d034f44ff6ae2761dfe1c7eae",
+          "Fingerprint": "sha256:a58f5c282348308569d1bca429b484d6a2978fbcd63c322bbbd4d01c4ecbc7d5",
           "Title": "libexpat: libexpat: Denial of Service due to NULL pointer dereference",
           "Description": "libexpat before 2.7.5 allows a NULL pointer dereference with empty external parameter entity content.",
           "Severity": "MEDIUM",
@@ -4089,7 +4089,7 @@
             "Name": "Alpine Secdb",
             "URL": "https://secdb.alpinelinux.org/"
           },
-          "Fingerprint": "sha256:8ee3459263f08172c39fcf4b1a368838cbcb73f745f5864cdf28f1fdbd21b911",
+          "Fingerprint": "sha256:6323a451008e7b9616921405f18c704254c0665e273910a30c4570afe34c86d8",
           "Title": "libexpat: libexpat: Denial of Service via infinite loop in DTD content parsing",
           "Description": "libexpat before 2.7.5 allows an infinite loop while parsing DTD content.",
           "Severity": "MEDIUM",
@@ -4144,7 +4144,7 @@
             "Name": "Alpine Secdb",
             "URL": "https://secdb.alpinelinux.org/"
           },
-          "Fingerprint": "sha256:3520fc7ad5fcc091ae003bf2f7bdb187bd76c9a839ac7194bcf1261388e4a599",
+          "Fingerprint": "sha256:5d6132263a86f1c655d30949ec097ae4416145177864b7bed807cda4e0a2f8e7",
           "Title": "libexpat: libexpat: Denial of Service via NULL pointer dereference after out-of-memory condition",
           "Description": "libexpat before 2.7.5 allows a NULL pointer dereference in the function setContext on retry after an earlier ouf-of-memory condition.",
           "Severity": "MEDIUM",
@@ -4197,7 +4197,7 @@
             "Name": "Alpine Secdb",
             "URL": "https://secdb.alpinelinux.org/"
           },
-          "Fingerprint": "sha256:fb8d0758d1e0a01146dbbeb3f47aeae0bbf2d8924cf1d46a1f651ad48d305f0e",
+          "Fingerprint": "sha256:7e720bf5cd3ab90e1cd32450bb8c9c79b843c1f793266f935a57c86a950584bc",
           "Title": "libpng: LIBPNG has a heap buffer overflow in png_set_quantize",
           "Description": "LIBPNG is a reference library for use in applications that read, create, and manipulate PNG (Portable Network Graphics) raster image files. Prior to 1.6.55, an out-of-bounds read vulnerability exists in the png_set_quantize() API function. When the function is called with no histogram and the number of colors in the palette is more than twice the maximum supported by the user's display, certain palettes will cause the function to enter into an infinite loop that reads past the end of an internal heap-allocated buffer. The images that trigger this vulnerability are valid per the PNG specification. This vulnerability is fixed in 1.6.55.",
           "Severity": "HIGH",
@@ -4275,7 +4275,7 @@
             "Name": "Alpine Secdb",
             "URL": "https://secdb.alpinelinux.org/"
           },
-          "Fingerprint": "sha256:b84ae61dbcecb3b29b6aa03457c1935fef4092e9e804c2c19c4bcce4e618e315",
+          "Fingerprint": "sha256:c70bd5d99b05a0c5030c8fc5583d47e08b877d6f5219a3e50e905e63c81cd9b3",
           "Title": "libpng: libpng: Arbitrary code execution due to use-after-free vulnerability",
           "Description": "LIBPNG is a reference library for use in applications that read, create, and manipulate PNG (Portable Network Graphics) raster image files. In versions 1.2.1 through 1.6.55, `png_set_tRNS` and `png_set_PLTE` each alias a heap-allocated buffer between `png_struct` and `png_info`, sharing a single allocation across two structs with independent lifetimes. The `trans_alpha` aliasing has been present since at least libpng 1.0, and the `palette` aliasing since at least 1.2.1. Both affect all prior release lines `png_set_tRNS` sets `png_ptr-\u003etrans_alpha = info_ptr-\u003etrans_alpha` (256-byte buffer) and `png_set_PLTE` sets `info_ptr-\u003epalette = png_ptr-\u003epalette` (768-byte buffer). In both cases, calling `png_free_data` (with `PNG_FREE_TRNS` or `PNG_FREE_PLTE`) frees the buffer through `info_ptr` while the corresponding `png_ptr` pointer remains dangling. Subsequent row-transform functions dereference and, in some code paths, write to the freed memory. A second call to `png_set_tRNS` or `png_set_PLTE` has the same effect, because both functions call `png_free_data` internally before reallocating the `info_ptr` buffer. Version 1.6.56 fixes the issue.",
           "Severity": "HIGH",
@@ -4327,7 +4327,7 @@
             "Name": "Alpine Secdb",
             "URL": "https://secdb.alpinelinux.org/"
           },
-          "Fingerprint": "sha256:69d414b3ec33bf57f357b1a22db1297b1e549b48d8b422e3dafdfd411895e84a",
+          "Fingerprint": "sha256:fb305e2e8fec7571f1497d3c2e409b4c6c90baa805fe18c18463d346ff5d705b",
           "Title": "libpng: libpng: Information disclosure and denial of service via out-of-bounds read/write in Neon palette expansion",
           "Description": "LIBPNG is a reference library for use in applications that read, create, and manipulate PNG (Portable Network Graphics) raster image files. In versions 1.6.36 through 1.6.55, an out-of-bounds read and write exists in libpng's ARM/AArch64 Neon-optimized palette expansion path. When expanding 8-bit paletted rows to RGB or RGBA, the Neon loop processes a final partial chunk without verifying that enough input pixels remain. Because the implementation works backward from the end of the row, the final iteration dereferences pointers before the start of the row buffer (OOB read) and writes expanded pixel data to the same underflowed positions (OOB write). This is reachable via normal decoding of attacker-controlled PNG input if Neon is enabled. Version 1.6.56 fixes the issue.",
           "Severity": "HIGH",
@@ -4377,7 +4377,7 @@
             "Name": "Alpine Secdb",
             "URL": "https://secdb.alpinelinux.org/"
           },
-          "Fingerprint": "sha256:0d4c5aaac177866b12bf079095de6a52b27e5a5ca8ec0774b9f58cfea15c8ca1",
+          "Fingerprint": "sha256:41c7e90539979b106f4fa57ad3f9ead9460a647b59e9069d1ad16a33f61a5f72",
           "Title": "LIBPNG is a reference library for use in applications that read, creat ...",
           "Description": "LIBPNG is a reference library for use in applications that read, create, and manipulate PNG (Portable Network Graphics) raster image files. From 1.0.9 to before 1.6.57, passing a pointer obtained from png_get_PLTE, png_get_tRNS, or png_get_hIST back into the corresponding setter on the same png_struct/png_info pair causes the setter to read from freed memory and copy its contents into the replacement buffer. The setter frees the internal buffer before copying from the caller-supplied pointer, which now dangles. The freed region may contain stale data (producing silently corrupted chunk metadata) or data from subsequent heap allocations (leaking unrelated heap contents into the chunk struct). This vulnerability is fixed in 1.6.57.",
           "Severity": "UNKNOWN",
@@ -4414,7 +4414,7 @@
             "Name": "Alpine Secdb",
             "URL": "https://secdb.alpinelinux.org/"
           },
-          "Fingerprint": "sha256:3b47573cef205f9bdf931a37b82228220529315acaf0790f1db22d262d5c128e",
+          "Fingerprint": "sha256:669c408df9a99f5390696f00690440658905ac361f442c2d3716617a21390680",
           "Title": "openssl: OpenSSL: Denial of Service due to NULL pointer dereference in CMS EnvelopedData processing",
           "Description": "Issue summary: During processing of a crafted CMS EnvelopedData message\nwith KeyTransportRecipientInfo a NULL pointer dereference can happen.\n\nImpact summary: Applications that process attacker-controlled CMS data may\ncrash before authentication or cryptographic operations occur resulting in\nDenial of Service.\n\nWhen a CMS EnvelopedData message that uses KeyTransportRecipientInfo with\nRSA-OAEP encryption is processed, the optional parameters field of\nRSA-OAEP SourceFunc algorithm identifier is examined without checking\nfor its presence. This results in a NULL pointer dereference if the field\nis missing.\n\nApplications and services that call CMS_decrypt() on untrusted input\n(e.g., S/MIME processing or CMS-based protocols) are vulnerable.\n\nThe FIPS modules in 3.6, 3.5, 3.4, 3.3 and 3.0 are not affected by this\nissue, as the affected code is outside the OpenSSL FIPS module boundary.",
           "Severity": "HIGH",
@@ -4469,7 +4469,7 @@
             "Name": "Alpine Secdb",
             "URL": "https://secdb.alpinelinux.org/"
           },
-          "Fingerprint": "sha256:60def5499353ca97faa660c0bbee0419139c247facd6dd533972885a654c7194",
+          "Fingerprint": "sha256:436c54d639a61a1963cc5833aef23b0a59f5c3879f24cb4984d9f16af50264ca",
           "Title": "openssl: openssl: Information Disclosure from Uninitialized Memory via Invalid RSA Public Key",
           "Description": "Issue summary: Applications using RSASVE key encapsulation to establish\na secret encryption key can send contents of an uninitialized memory buffer to\na malicious peer.\n\nImpact summary: The uninitialized buffer might contain sensitive data from the\nprevious execution of the application process which leads to sensitive data\nleakage to an attacker.\n\nRSA_public_encrypt() returns the number of bytes written on success and -1\non error. The affected code tests only whether the return value is non-zero.\nAs a result, if RSA encryption fails, encapsulation can still return success to\nthe caller, set the output lengths, and leave the caller to use the contents of\nthe ciphertext buffer as if a valid KEM ciphertext had been produced.\n\nIf applications use EVP_PKEY_encapsulate() with RSA/RSASVE on an\nattacker-supplied invalid RSA public key without first validating that key,\nthen this may cause stale or uninitialized contents of the caller-provided\nciphertext buffer to be disclosed to the attacker in place of the KEM\nciphertext.\n\nAs a workaround calling EVP_PKEY_public_check() or\nEVP_PKEY_public_check_quick() before EVP_PKEY_encapsulate() will mitigate\nthe issue.\n\nThe FIPS modules in 3.6, 3.5, 3.4, 3.3, 3.1 and 3.0 are affected by this issue.",
           "Severity": "MEDIUM",
@@ -4523,7 +4523,7 @@
             "Name": "Alpine Secdb",
             "URL": "https://secdb.alpinelinux.org/"
           },
-          "Fingerprint": "sha256:3d457bcba94b0ff8f3fa4c62a79d710be262622a67202af10333d9f6a25e8af1",
+          "Fingerprint": "sha256:a7f8035286589b4eaec738075365acc4195367323a12430733c72e5ac6b889d3",
           "Title": "openssl: OpenSSL TLS 1.3 server may choose unexpected key agreement group",
           "Description": "Issue summary: An OpenSSL TLS 1.3 server may fail to negotiate the expected\npreferred key exchange group when its key exchange group configuration includes\nthe default by using the 'DEFAULT' keyword.\n\nImpact summary: A less preferred key exchange may be used even when a more\npreferred group is supported by both client and server, if the group\nwas not included among the client's initial predicated keyshares.\nThis will sometimes be the case with the new hybrid post-quantum groups,\nif the client chooses to defer their use until specifically requested by\nthe server.\n\nIf an OpenSSL TLS 1.3 server's configuration uses the 'DEFAULT' keyword to\ninterpolate the built-in default group list into its own configuration, perhaps\nadding or removing specific elements, then an implementation defect causes the\n'DEFAULT' list to lose its 'tuple' structure, and all server-supported groups\nwere treated as a single sufficiently secure 'tuple', with the server not\nsending a Hello Retry Request (HRR) even when a group in a more preferred tuple\nwas mutually supported.\n\nAs a result, the client and server might fail to negotiate a mutually supported\npost-quantum key agreement group, such as 'X25519MLKEM768', if the client's\nconfiguration results in only 'classical' groups (such as 'X25519' being the\nonly ones in the client's initial keyshare prediction).\n\nOpenSSL 3.5 and later support a new syntax for selecting the most preferred TLS\n1.3 key agreement group on TLS servers.  The old syntax had a single 'flat'\nlist of groups, and treated all the supported groups as sufficiently secure.\nIf any of the keyshares predicted by the client were supported by the server\nthe most preferred among these was selected, even if other groups supported by\nthe client, but not included in the list of predicted keyshares would have been\nmore preferred, if included.\n\nThe new syntax partitions the groups into distinct 'tuples' of roughly\nequivalent security.  Within each tuple the most preferred group included among\nthe client's predicted keyshares is chosen, but if the client supports a group\nfrom a more preferred tuple, but did not predict any corresponding keyshares,\nthe server will ask the client to retry the ClientHello (by issuing a Hello\nRetry Request or HRR) with the most preferred mutually supported group.\n\nThe above works as expected when the server's configuration uses the built-in\ndefault group list, or explicitly defines its own list by directly defining the\nvarious desired groups and group 'tuples'.\n\nNo OpenSSL FIPS modules are affected by this issue, the code in question lies\noutside the FIPS boundary.\n\nOpenSSL 3.6 and 3.5 are vulnerable to this issue.\n\nOpenSSL 3.6 users should upgrade to OpenSSL 3.6.2 once it is released.\nOpenSSL 3.5 users should upgrade to OpenSSL 3.5.6 once it is released.\n\nOpenSSL 3.4, 3.3, 3.0, 1.0.2 and 1.1.1 are not affected by this issue.",
           "Severity": "LOW",
@@ -4574,7 +4574,7 @@
             "Name": "Alpine Secdb",
             "URL": "https://secdb.alpinelinux.org/"
           },
-          "Fingerprint": "sha256:939d360cdd225d1a3d1f1a5763e42a99f6281f16ceb3991e20c52a81b9e71f88",
+          "Fingerprint": "sha256:5c677c96b312363ac3453d34e4c7b2b68704df4cb99a2e2f4acb859b915f1620",
           "Title": "Issue summary: An uncommon configuration of clients performing DANE TL ...",
           "Description": "Issue summary: An uncommon configuration of clients performing DANE TLSA-based\nserver authentication, when paired with uncommon server DANE TLSA records, may\nresult in a use-after-free and/or double-free on the client side.\n\nImpact summary: A use after free can have a range of potential consequences\nsuch as the corruption of valid data, crashes or execution of arbitrary code.\n\nHowever, the issue only affects clients that make use of TLSA records with both\nthe PKIX-TA(0/PKIX-EE(1) certificate usages and the DANE-TA(2) certificate\nusage.\n\nBy far the most common deployment of DANE is in SMTP MTAs for which RFC7672\nrecommends that clients treat as 'unusable' any TLSA records that have the PKIX\ncertificate usages.  These SMTP (or other similar) clients are not vulnerable\nto this issue.  Conversely, any clients that support only the PKIX usages, and\nignore the DANE-TA(2) usage are also not vulnerable.\n\nThe client would also need to be communicating with a server that publishes a\nTLSA RRset with both types of TLSA records.\n\nNo FIPS modules are affected by this issue, the problem code is outside the\nFIPS module boundary.",
           "Severity": "LOW",
@@ -4620,7 +4620,7 @@
             "Name": "Alpine Secdb",
             "URL": "https://secdb.alpinelinux.org/"
           },
-          "Fingerprint": "sha256:f827777d652522c9e16ec0b2628c4e21de6bc1d5bacce0bb1d299c6d4cf7ffbe",
+          "Fingerprint": "sha256:8b05d3a5b026a94f1820b4922b23a89be1649f0f8b94394a2b75250256d9abaf",
           "Title": "Issue summary: When a delta CRL that contains a Delta CRL Indicator ex ...",
           "Description": "Issue summary: When a delta CRL that contains a Delta CRL Indicator extension\nis processed a NULL pointer dereference might happen if the required CRL\nNumber extension is missing.\n\nImpact summary: A NULL pointer dereference can trigger a crash which\nleads to a Denial of Service for an application.\n\nWhen CRL processing and delta CRL processing is enabled during X.509\ncertificate verification, the delta CRL processing does not check\nwhether the CRL Number extension is NULL before dereferencing it.\nWhen a malformed delta CRL file is being processed, this parameter\ncan be NULL, causing a NULL pointer dereference.\n\nExploiting this issue requires the X509_V_FLAG_USE_DELTAS flag to be enabled in\nthe verification context, the certificate being verified to contain a\nfreshestCRL extension or the base CRL to have the EXFLAG_FRESHEST flag set, and\nan attacker to provide a malformed CRL to an application that processes it.\n\nThe vulnerability is limited to Denial of Service and cannot be escalated to\nachieve code execution or memory disclosure. For that reason the issue was\nassessed as Low severity according to our Security Policy.\n\nThe FIPS modules in 3.6, 3.5, 3.4, 3.3 and 3.0 are not affected by this issue,\nas the affected code is outside the OpenSSL FIPS module boundary.",
           "Severity": "LOW",
@@ -4666,7 +4666,7 @@
             "Name": "Alpine Secdb",
             "URL": "https://secdb.alpinelinux.org/"
           },
-          "Fingerprint": "sha256:6bd269c59bbf507ced81c533e7da729dd1840133dcd9df795dcfc5c35719ca11",
+          "Fingerprint": "sha256:e7cc7892c8145cf26de157299113cc8351b3e6219c8ff1631b6dd73ac71e1854",
           "Title": "Issue summary: During processing of a crafted CMS EnvelopedData messag ...",
           "Description": "Issue summary: During processing of a crafted CMS EnvelopedData message\nwith KeyAgreeRecipientInfo a NULL pointer dereference can happen.\n\nImpact summary: Applications that process attacker-controlled CMS data may\ncrash before authentication or cryptographic operations occur resulting in\nDenial of Service.\n\nWhen a CMS EnvelopedData message that uses KeyAgreeRecipientInfo is\nprocessed, the optional parameters field of KeyEncryptionAlgorithmIdentifier\nis examined without checking for its presence. This results in a NULL\npointer dereference if the field is missing.\n\nApplications and services that call CMS_decrypt() on untrusted input\n(e.g., S/MIME processing or CMS-based protocols) are vulnerable.\n\nThe FIPS modules in 3.6, 3.5, 3.4, 3.3 and 3.0 are not affected by this\nissue, as the affected code is outside the OpenSSL FIPS module boundary.",
           "Severity": "LOW",
@@ -4712,7 +4712,7 @@
             "Name": "Alpine Secdb",
             "URL": "https://secdb.alpinelinux.org/"
           },
-          "Fingerprint": "sha256:db6f7b9566f47d1301fa7392926e8ad16f54159046589212bd055fff886cd9ce",
+          "Fingerprint": "sha256:bd772d6035c7402a3cfbbacbf07b6c9826fbb42b8f481a5ac0058759cafd3a6d",
           "Title": "Issue summary: Converting an excessively large OCTET STRING value to a ...",
           "Description": "Issue summary: Converting an excessively large OCTET STRING value to\na hexadecimal string leads to a heap buffer overflow on 32 bit platforms.\n\nImpact summary: A heap buffer overflow may lead to a crash or possibly\nan attacker controlled code execution or other undefined behavior.\n\nIf an attacker can supply a crafted X.509 certificate with an excessively\nlarge OCTET STRING value in extensions such as the Subject Key Identifier\n(SKID) or Authority Key Identifier (AKID) which are being converted to hex,\nthe size of the buffer needed for the result is calculated as multiplication\nof the input length by 3. On 32 bit platforms, this multiplication may overflow\nresulting in the allocation of a smaller buffer and a heap buffer overflow.\n\nApplications and services that print or log contents of untrusted X.509\ncertificates are vulnerable to this issue. As the certificates would have\nto have sizes of over 1 Gigabyte, printing or logging such certificates\nis a fairly unlikely operation and only 32 bit platforms are affected,\nthis issue was assigned Low severity.\n\nThe FIPS modules in 3.6, 3.5, 3.4, 3.3 and 3.0 are not affected by this\nissue, as the affected code is outside the OpenSSL FIPS module boundary.",
           "Severity": "LOW",
@@ -4757,7 +4757,7 @@
             "Name": "Alpine Secdb",
             "URL": "https://secdb.alpinelinux.org/"
           },
-          "Fingerprint": "sha256:c2ad0d2313a0df86772ea7b71a0592e2cc93001b1c12511c5788a04ad982e6d8",
+          "Fingerprint": "sha256:3ca07c7ffaf95c9aa04e46b4c26751805fae4a440b2b0ba81d0885cb8bc8aab3",
           "Title": "An issue was discovered in musl libc 0.7.10 through 1.2.6. Stack-based ...",
           "Description": "An issue was discovered in musl libc 0.7.10 through 1.2.6. Stack-based memory corruption can occur during qsort of very large arrays, due to incorrectly implemented double-word primitives. The number of elements must exceed about seven million, i.e., the 32nd Leonardo number on 32-bit platforms (or the 64th Leonardo number on 64-bit platforms, which is not practical).",
           "Severity": "UNKNOWN",
@@ -4792,7 +4792,7 @@
             "Name": "Alpine Secdb",
             "URL": "https://secdb.alpinelinux.org/"
           },
-          "Fingerprint": "sha256:82802184bc509e21fa6f3225c25629bf9a434bcdcc266ba6a84987f1b012dda7",
+          "Fingerprint": "sha256:cd2cabfe69115362a884ad6b59ebeb5bcde3473adb613c2842e9855768ee2057",
           "Title": "A security flaw has been discovered in musl libc up to 1.2.6. Affected ...",
           "Description": "A security flaw has been discovered in musl libc up to 1.2.6. Affected is the function iconv of the file src/locale/iconv.c of the component GB18030 4-byte Decoder. Performing a manipulation results in inefficient algorithmic complexity. The attack must be initiated from a local position. To fix this issue, it is recommended to deploy a patch.",
           "Severity": "UNKNOWN",
@@ -4831,7 +4831,7 @@
             "Name": "Alpine Secdb",
             "URL": "https://secdb.alpinelinux.org/"
           },
-          "Fingerprint": "sha256:70645e6c92de0811592f697264333246a2b34835443335dfba43f7135503de00",
+          "Fingerprint": "sha256:b09d889c010805a933b635682a7794cf761af2d3459a2aa82326dec2f22b384e",
           "Title": "An issue was discovered in musl libc 0.7.10 through 1.2.6. Stack-based ...",
           "Description": "An issue was discovered in musl libc 0.7.10 through 1.2.6. Stack-based memory corruption can occur during qsort of very large arrays, due to incorrectly implemented double-word primitives. The number of elements must exceed about seven million, i.e., the 32nd Leonardo number on 32-bit platforms (or the 64th Leonardo number on 64-bit platforms, which is not practical).",
           "Severity": "UNKNOWN",
@@ -4866,7 +4866,7 @@
             "Name": "Alpine Secdb",
             "URL": "https://secdb.alpinelinux.org/"
           },
-          "Fingerprint": "sha256:c0905a426a2774f40126ce19e26e91c6115aa8f462b0ed4950d4d27414f73595",
+          "Fingerprint": "sha256:e8992627ccedfbdd9c4da26454fba46ae2a216b96d704d0933b2ffce1292318d",
           "Title": "A security flaw has been discovered in musl libc up to 1.2.6. Affected ...",
           "Description": "A security flaw has been discovered in musl libc up to 1.2.6. Affected is the function iconv of the file src/locale/iconv.c of the component GB18030 4-byte Decoder. Performing a manipulation results in inefficient algorithmic complexity. The attack must be initiated from a local position. To fix this issue, it is recommended to deploy a patch.",
           "Severity": "UNKNOWN",
@@ -4905,7 +4905,7 @@
             "Name": "Alpine Secdb",
             "URL": "https://secdb.alpinelinux.org/"
           },
-          "Fingerprint": "sha256:cc3a2f2b44cc0e9a54cf1448c01341c11825452ebe1ba171a3f1f549c0ec457c",
+          "Fingerprint": "sha256:54b234b0d3625e47bb8e9a8e6ae0456e325ffc0d08c823d2711fd243c1e9b6f6",
           "Title": "openssl: OpenSSL: Denial of Service due to NULL pointer dereference in CMS EnvelopedData processing",
           "Description": "Issue summary: During processing of a crafted CMS EnvelopedData message\nwith KeyTransportRecipientInfo a NULL pointer dereference can happen.\n\nImpact summary: Applications that process attacker-controlled CMS data may\ncrash before authentication or cryptographic operations occur resulting in\nDenial of Service.\n\nWhen a CMS EnvelopedData message that uses KeyTransportRecipientInfo with\nRSA-OAEP encryption is processed, the optional parameters field of\nRSA-OAEP SourceFunc algorithm identifier is examined without checking\nfor its presence. This results in a NULL pointer dereference if the field\nis missing.\n\nApplications and services that call CMS_decrypt() on untrusted input\n(e.g., S/MIME processing or CMS-based protocols) are vulnerable.\n\nThe FIPS modules in 3.6, 3.5, 3.4, 3.3 and 3.0 are not affected by this\nissue, as the affected code is outside the OpenSSL FIPS module boundary.",
           "Severity": "HIGH",
@@ -4960,7 +4960,7 @@
             "Name": "Alpine Secdb",
             "URL": "https://secdb.alpinelinux.org/"
           },
-          "Fingerprint": "sha256:470e145446a9da1256c00c4de7ca11ff3f0a96aaf894c41cec283538920f2948",
+          "Fingerprint": "sha256:dffbc3dcc55acf59d578c92c8744fb7894f2d8c308bf5d0196001e1ea0b47530",
           "Title": "openssl: openssl: Information Disclosure from Uninitialized Memory via Invalid RSA Public Key",
           "Description": "Issue summary: Applications using RSASVE key encapsulation to establish\na secret encryption key can send contents of an uninitialized memory buffer to\na malicious peer.\n\nImpact summary: The uninitialized buffer might contain sensitive data from the\nprevious execution of the application process which leads to sensitive data\nleakage to an attacker.\n\nRSA_public_encrypt() returns the number of bytes written on success and -1\non error. The affected code tests only whether the return value is non-zero.\nAs a result, if RSA encryption fails, encapsulation can still return success to\nthe caller, set the output lengths, and leave the caller to use the contents of\nthe ciphertext buffer as if a valid KEM ciphertext had been produced.\n\nIf applications use EVP_PKEY_encapsulate() with RSA/RSASVE on an\nattacker-supplied invalid RSA public key without first validating that key,\nthen this may cause stale or uninitialized contents of the caller-provided\nciphertext buffer to be disclosed to the attacker in place of the KEM\nciphertext.\n\nAs a workaround calling EVP_PKEY_public_check() or\nEVP_PKEY_public_check_quick() before EVP_PKEY_encapsulate() will mitigate\nthe issue.\n\nThe FIPS modules in 3.6, 3.5, 3.4, 3.3, 3.1 and 3.0 are affected by this issue.",
           "Severity": "MEDIUM",
@@ -5014,7 +5014,7 @@
             "Name": "Alpine Secdb",
             "URL": "https://secdb.alpinelinux.org/"
           },
-          "Fingerprint": "sha256:eafeb08655856e7c97551d92a11146bbde8b38c88e11c95a5ea63c58beb91736",
+          "Fingerprint": "sha256:27b83ca3ad9235c3fb0ac914bcfaf4947e070753429711ad75c348a65499638f",
           "Title": "openssl: OpenSSL TLS 1.3 server may choose unexpected key agreement group",
           "Description": "Issue summary: An OpenSSL TLS 1.3 server may fail to negotiate the expected\npreferred key exchange group when its key exchange group configuration includes\nthe default by using the 'DEFAULT' keyword.\n\nImpact summary: A less preferred key exchange may be used even when a more\npreferred group is supported by both client and server, if the group\nwas not included among the client's initial predicated keyshares.\nThis will sometimes be the case with the new hybrid post-quantum groups,\nif the client chooses to defer their use until specifically requested by\nthe server.\n\nIf an OpenSSL TLS 1.3 server's configuration uses the 'DEFAULT' keyword to\ninterpolate the built-in default group list into its own configuration, perhaps\nadding or removing specific elements, then an implementation defect causes the\n'DEFAULT' list to lose its 'tuple' structure, and all server-supported groups\nwere treated as a single sufficiently secure 'tuple', with the server not\nsending a Hello Retry Request (HRR) even when a group in a more preferred tuple\nwas mutually supported.\n\nAs a result, the client and server might fail to negotiate a mutually supported\npost-quantum key agreement group, such as 'X25519MLKEM768', if the client's\nconfiguration results in only 'classical' groups (such as 'X25519' being the\nonly ones in the client's initial keyshare prediction).\n\nOpenSSL 3.5 and later support a new syntax for selecting the most preferred TLS\n1.3 key agreement group on TLS servers.  The old syntax had a single 'flat'\nlist of groups, and treated all the supported groups as sufficiently secure.\nIf any of the keyshares predicted by the client were supported by the server\nthe most preferred among these was selected, even if other groups supported by\nthe client, but not included in the list of predicted keyshares would have been\nmore preferred, if included.\n\nThe new syntax partitions the groups into distinct 'tuples' of roughly\nequivalent security.  Within each tuple the most preferred group included among\nthe client's predicted keyshares is chosen, but if the client supports a group\nfrom a more preferred tuple, but did not predict any corresponding keyshares,\nthe server will ask the client to retry the ClientHello (by issuing a Hello\nRetry Request or HRR) with the most preferred mutually supported group.\n\nThe above works as expected when the server's configuration uses the built-in\ndefault group list, or explicitly defines its own list by directly defining the\nvarious desired groups and group 'tuples'.\n\nNo OpenSSL FIPS modules are affected by this issue, the code in question lies\noutside the FIPS boundary.\n\nOpenSSL 3.6 and 3.5 are vulnerable to this issue.\n\nOpenSSL 3.6 users should upgrade to OpenSSL 3.6.2 once it is released.\nOpenSSL 3.5 users should upgrade to OpenSSL 3.5.6 once it is released.\n\nOpenSSL 3.4, 3.3, 3.0, 1.0.2 and 1.1.1 are not affected by this issue.",
           "Severity": "LOW",
@@ -5065,7 +5065,7 @@
             "Name": "Alpine Secdb",
             "URL": "https://secdb.alpinelinux.org/"
           },
-          "Fingerprint": "sha256:5eb8c86ebb5d182cb90c46376922e4dcb010c8e7769f287657356c2cc23952ae",
+          "Fingerprint": "sha256:eb6b988caad7c93170809bce8d9fbecec34dedf31cc0e958da634454e6efd78a",
           "Title": "Issue summary: An uncommon configuration of clients performing DANE TL ...",
           "Description": "Issue summary: An uncommon configuration of clients performing DANE TLSA-based\nserver authentication, when paired with uncommon server DANE TLSA records, may\nresult in a use-after-free and/or double-free on the client side.\n\nImpact summary: A use after free can have a range of potential consequences\nsuch as the corruption of valid data, crashes or execution of arbitrary code.\n\nHowever, the issue only affects clients that make use of TLSA records with both\nthe PKIX-TA(0/PKIX-EE(1) certificate usages and the DANE-TA(2) certificate\nusage.\n\nBy far the most common deployment of DANE is in SMTP MTAs for which RFC7672\nrecommends that clients treat as 'unusable' any TLSA records that have the PKIX\ncertificate usages.  These SMTP (or other similar) clients are not vulnerable\nto this issue.  Conversely, any clients that support only the PKIX usages, and\nignore the DANE-TA(2) usage are also not vulnerable.\n\nThe client would also need to be communicating with a server that publishes a\nTLSA RRset with both types of TLSA records.\n\nNo FIPS modules are affected by this issue, the problem code is outside the\nFIPS module boundary.",
           "Severity": "LOW",
@@ -5111,7 +5111,7 @@
             "Name": "Alpine Secdb",
             "URL": "https://secdb.alpinelinux.org/"
           },
-          "Fingerprint": "sha256:55861c1232780971aa595c96d23b7658ce8e1844955394131b75561b8f5b1fad",
+          "Fingerprint": "sha256:29cac63a8147d17551486816951a73ecffd6eb5c7083540dcc728550f2da4a88",
           "Title": "Issue summary: When a delta CRL that contains a Delta CRL Indicator ex ...",
           "Description": "Issue summary: When a delta CRL that contains a Delta CRL Indicator extension\nis processed a NULL pointer dereference might happen if the required CRL\nNumber extension is missing.\n\nImpact summary: A NULL pointer dereference can trigger a crash which\nleads to a Denial of Service for an application.\n\nWhen CRL processing and delta CRL processing is enabled during X.509\ncertificate verification, the delta CRL processing does not check\nwhether the CRL Number extension is NULL before dereferencing it.\nWhen a malformed delta CRL file is being processed, this parameter\ncan be NULL, causing a NULL pointer dereference.\n\nExploiting this issue requires the X509_V_FLAG_USE_DELTAS flag to be enabled in\nthe verification context, the certificate being verified to contain a\nfreshestCRL extension or the base CRL to have the EXFLAG_FRESHEST flag set, and\nan attacker to provide a malformed CRL to an application that processes it.\n\nThe vulnerability is limited to Denial of Service and cannot be escalated to\nachieve code execution or memory disclosure. For that reason the issue was\nassessed as Low severity according to our Security Policy.\n\nThe FIPS modules in 3.6, 3.5, 3.4, 3.3 and 3.0 are not affected by this issue,\nas the affected code is outside the OpenSSL FIPS module boundary.",
           "Severity": "LOW",
@@ -5157,7 +5157,7 @@
             "Name": "Alpine Secdb",
             "URL": "https://secdb.alpinelinux.org/"
           },
-          "Fingerprint": "sha256:b694c4c17e240ff545b05c4a6bd98f31336b761b0532168e90c31e533e1978e3",
+          "Fingerprint": "sha256:130d0dcc8a2c2a493cde97c48e73791552e7186f9a20b1c01b8280c6df08cbab",
           "Title": "Issue summary: During processing of a crafted CMS EnvelopedData messag ...",
           "Description": "Issue summary: During processing of a crafted CMS EnvelopedData message\nwith KeyAgreeRecipientInfo a NULL pointer dereference can happen.\n\nImpact summary: Applications that process attacker-controlled CMS data may\ncrash before authentication or cryptographic operations occur resulting in\nDenial of Service.\n\nWhen a CMS EnvelopedData message that uses KeyAgreeRecipientInfo is\nprocessed, the optional parameters field of KeyEncryptionAlgorithmIdentifier\nis examined without checking for its presence. This results in a NULL\npointer dereference if the field is missing.\n\nApplications and services that call CMS_decrypt() on untrusted input\n(e.g., S/MIME processing or CMS-based protocols) are vulnerable.\n\nThe FIPS modules in 3.6, 3.5, 3.4, 3.3 and 3.0 are not affected by this\nissue, as the affected code is outside the OpenSSL FIPS module boundary.",
           "Severity": "LOW",
@@ -5203,7 +5203,7 @@
             "Name": "Alpine Secdb",
             "URL": "https://secdb.alpinelinux.org/"
           },
-          "Fingerprint": "sha256:2fc8aa63e52dd7d1f010000b5c8ca7b3b4da1ba69b90b1264d87ac92beb40eeb",
+          "Fingerprint": "sha256:4b99e5364c42cc2dc63aee76d151fe24ab2c3a188c84c302bae2dccdc6b2ff6a",
           "Title": "Issue summary: Converting an excessively large OCTET STRING value to a ...",
           "Description": "Issue summary: Converting an excessively large OCTET STRING value to\na hexadecimal string leads to a heap buffer overflow on 32 bit platforms.\n\nImpact summary: A heap buffer overflow may lead to a crash or possibly\nan attacker controlled code execution or other undefined behavior.\n\nIf an attacker can supply a crafted X.509 certificate with an excessively\nlarge OCTET STRING value in extensions such as the Subject Key Identifier\n(SKID) or Authority Key Identifier (AKID) which are being converted to hex,\nthe size of the buffer needed for the result is calculated as multiplication\nof the input length by 3. On 32 bit platforms, this multiplication may overflow\nresulting in the allocation of a smaller buffer and a heap buffer overflow.\n\nApplications and services that print or log contents of untrusted X.509\ncertificates are vulnerable to this issue. As the certificates would have\nto have sizes of over 1 Gigabyte, printing or logging such certificates\nis a fairly unlikely operation and only 32 bit platforms are affected,\nthis issue was assigned Low severity.\n\nThe FIPS modules in 3.6, 3.5, 3.4, 3.3 and 3.0 are not affected by this\nissue, as the affected code is outside the OpenSSL FIPS module boundary.",
           "Severity": "LOW",
@@ -5249,7 +5249,7 @@
             "Name": "Alpine Secdb",
             "URL": "https://secdb.alpinelinux.org/"
           },
-          "Fingerprint": "sha256:adf33dfab42e533a7255d27ca7be606fc6fcc6d71cb656daf6cbdf7450d74512",
+          "Fingerprint": "sha256:e6a57dd759bab7e08c2e59f705c005ab856591838043b8fac5223b65d0c8f012",
           "Title": "zlib: zlib: Arbitrary code execution via buffer overflow in untgz utility",
           "Description": "zlib versions up to and including 1.3.1.2 include a global buffer overflow in the untgz utility located under contrib/untgz. The vulnerability is limited to the standalone demonstration utility and does not affect the core zlib compression library. The flaw occurs when a user executes the untgz command with an excessively long archive name supplied via the command line, leading to an out-of-bounds write in a fixed-size global buffer.",
           "Severity": "HIGH",
@@ -5304,7 +5304,7 @@
             "Name": "Alpine Secdb",
             "URL": "https://secdb.alpinelinux.org/"
           },
-          "Fingerprint": "sha256:5ee85bb83427300cbbe5f3a6927a08abca628c24cc194846c8d387a66e176fad",
+          "Fingerprint": "sha256:0915a3d0c5fd27cd2be60e1eead91038e67fbe85caafc543bb8add97fd894ff0",
           "Title": "zlib: zlib: Denial of Service via infinite loop in CRC32 combine functions",
           "Description": "zlib before 1.3.2 allows CPU consumption via crc32_combine64 and crc32_combine_gen64 because x2nmodp can do right shifts within a loop that has no termination condition.",
           "Severity": "MEDIUM",
@@ -5355,7 +5355,7 @@
           },
           "Version": "1.4.14",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "FilePath": "app/app.jar/BOOT-INF/lib/logback-classic-1.4.14.jar",
           "AnalyzedBy": "jar"
@@ -5368,7 +5368,7 @@
           },
           "Version": "1.4.14",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "FilePath": "app/app.jar/BOOT-INF/lib/logback-core-1.4.14.jar",
           "AnalyzedBy": "jar"
@@ -5381,7 +5381,7 @@
           },
           "Version": "2.15.4",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "FilePath": "app/app.jar/BOOT-INF/lib/jackson-annotations-2.15.4.jar",
           "AnalyzedBy": "jar"
@@ -5394,7 +5394,7 @@
           },
           "Version": "2.15.4",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "FilePath": "app/app.jar/BOOT-INF/lib/jackson-core-2.15.4.jar",
           "AnalyzedBy": "jar"
@@ -5407,7 +5407,7 @@
           },
           "Version": "2.15.4",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "FilePath": "app/app.jar/BOOT-INF/lib/jackson-databind-2.15.4.jar",
           "AnalyzedBy": "jar"
@@ -5420,7 +5420,7 @@
           },
           "Version": "2.15.4",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "FilePath": "app/app.jar/BOOT-INF/lib/jackson-dataformat-yaml-2.15.4.jar",
           "AnalyzedBy": "jar"
@@ -5433,7 +5433,7 @@
           },
           "Version": "2.15.4",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "FilePath": "app/app.jar/BOOT-INF/lib/jackson-datatype-jdk8-2.15.4.jar",
           "AnalyzedBy": "jar"
@@ -5446,7 +5446,7 @@
           },
           "Version": "2.15.4",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "FilePath": "app/app.jar/BOOT-INF/lib/jackson-datatype-jsr310-2.15.4.jar",
           "AnalyzedBy": "jar"
@@ -5459,7 +5459,7 @@
           },
           "Version": "2.15.4",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "FilePath": "app/app.jar/BOOT-INF/lib/jackson-module-parameter-names-2.15.4.jar",
           "AnalyzedBy": "jar"
@@ -5472,7 +5472,7 @@
           },
           "Version": "1.6.0",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "FilePath": "app/app.jar/BOOT-INF/lib/classmate-1.6.0.jar",
           "AnalyzedBy": "jar"
@@ -5485,7 +5485,7 @@
           },
           "Version": "1.0-1",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "FilePath": "app/app.jar/BOOT-INF/lib/jcip-annotations-1.0-1.jar",
           "AnalyzedBy": "jar"
@@ -5498,7 +5498,7 @@
           },
           "Version": "2.9.1",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "FilePath": "app/app.jar/BOOT-INF/lib/nimbus-jose-jwt-9.24.4.jar",
           "AnalyzedBy": "jar"
@@ -5511,7 +5511,7 @@
           },
           "Version": "9.24.4",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "FilePath": "app/app.jar/BOOT-INF/lib/nimbus-jose-jwt-9.24.4.jar",
           "AnalyzedBy": "jar"
@@ -5524,7 +5524,7 @@
           },
           "Version": "4.1.2",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "FilePath": "app/app.jar/BOOT-INF/lib/istack-commons-runtime-4.1.2.jar",
           "AnalyzedBy": "jar"
@@ -5537,7 +5537,7 @@
           },
           "Version": "1.0.0",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "FilePath": "app/app.jar",
           "AnalyzedBy": "jar"
@@ -5550,7 +5550,7 @@
           },
           "Version": "5.0.1",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "FilePath": "app/app.jar/BOOT-INF/lib/HikariCP-5.0.1.jar",
           "AnalyzedBy": "jar"
@@ -5563,7 +5563,7 @@
           },
           "Version": "1.12.5",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "FilePath": "app/app.jar/BOOT-INF/lib/micrometer-commons-1.12.5.jar",
           "AnalyzedBy": "jar"
@@ -5576,7 +5576,7 @@
           },
           "Version": "1.12.5",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "FilePath": "app/app.jar/BOOT-INF/lib/micrometer-observation-1.12.5.jar",
           "AnalyzedBy": "jar"
@@ -5589,7 +5589,7 @@
           },
           "Version": "3.1.2",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "FilePath": "app/app.jar/BOOT-INF/lib/jandex-3.1.2.jar",
           "AnalyzedBy": "jar"
@@ -5602,7 +5602,7 @@
           },
           "Version": "2.2.21",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "FilePath": "app/app.jar/BOOT-INF/lib/swagger-annotations-jakarta-2.2.21.jar",
           "AnalyzedBy": "jar"
@@ -5615,7 +5615,7 @@
           },
           "Version": "2.2.21",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "FilePath": "app/app.jar/BOOT-INF/lib/swagger-core-jakarta-2.2.21.jar",
           "AnalyzedBy": "jar"
@@ -5628,7 +5628,7 @@
           },
           "Version": "2.2.21",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "FilePath": "app/app.jar/BOOT-INF/lib/swagger-models-jakarta-2.2.21.jar",
           "AnalyzedBy": "jar"
@@ -5641,7 +5641,7 @@
           },
           "Version": "2.1.3",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "FilePath": "app/app.jar/BOOT-INF/lib/jakarta.activation-api-2.1.3.jar",
           "AnalyzedBy": "jar"
@@ -5654,7 +5654,7 @@
           },
           "Version": "2.1.1",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "FilePath": "app/app.jar/BOOT-INF/lib/jakarta.annotation-api-2.1.1.jar",
           "AnalyzedBy": "jar"
@@ -5667,7 +5667,7 @@
           },
           "Version": "2.0.1",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "FilePath": "app/app.jar/BOOT-INF/lib/jakarta.inject-api-2.0.1.jar",
           "AnalyzedBy": "jar"
@@ -5680,7 +5680,7 @@
           },
           "Version": "3.1.0",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "FilePath": "app/app.jar/BOOT-INF/lib/jakarta.persistence-api-3.1.0.jar",
           "AnalyzedBy": "jar"
@@ -5693,7 +5693,7 @@
           },
           "Version": "2.0.1",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "FilePath": "app/app.jar/BOOT-INF/lib/jakarta.transaction-api-2.0.1.jar",
           "AnalyzedBy": "jar"
@@ -5706,7 +5706,7 @@
           },
           "Version": "3.0.2",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "FilePath": "app/app.jar/BOOT-INF/lib/jakarta.validation-api-3.0.2.jar",
           "AnalyzedBy": "jar"
@@ -5719,7 +5719,7 @@
           },
           "Version": "4.0.2",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "FilePath": "app/app.jar/BOOT-INF/lib/jakarta.xml.bind-api-4.0.2.jar",
           "AnalyzedBy": "jar"
@@ -5732,7 +5732,7 @@
           },
           "Version": "1.14.13",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "FilePath": "app/app.jar/BOOT-INF/lib/byte-buddy-1.14.13.jar",
           "AnalyzedBy": "jar"
@@ -5745,7 +5745,7 @@
           },
           "Version": "4.13.0",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "FilePath": "app/app.jar/BOOT-INF/lib/antlr4-runtime-4.13.0.jar",
           "AnalyzedBy": "jar"
@@ -5758,7 +5758,7 @@
           },
           "Version": "3.13.0",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "FilePath": "app/app.jar/BOOT-INF/lib/commons-lang3-3.13.0.jar",
           "AnalyzedBy": "jar"
@@ -5771,7 +5771,7 @@
           },
           "Version": "2.21.1",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "FilePath": "app/app.jar/BOOT-INF/lib/log4j-api-2.21.1.jar",
           "AnalyzedBy": "jar"
@@ -5784,7 +5784,7 @@
           },
           "Version": "2.21.1",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "FilePath": "app/app.jar/BOOT-INF/lib/log4j-to-slf4j-2.21.1.jar",
           "AnalyzedBy": "jar"
@@ -5797,7 +5797,7 @@
           },
           "Version": "10.1.20",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "FilePath": "app/app.jar/BOOT-INF/lib/tomcat-embed-core-10.1.20.jar",
           "AnalyzedBy": "jar"
@@ -5810,7 +5810,7 @@
           },
           "Version": "10.1.20",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "FilePath": "app/app.jar/BOOT-INF/lib/tomcat-embed-el-10.1.20.jar",
           "AnalyzedBy": "jar"
@@ -5823,7 +5823,7 @@
           },
           "Version": "10.1.20",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "FilePath": "app/app.jar/BOOT-INF/lib/tomcat-embed-websocket-10.1.20.jar",
           "AnalyzedBy": "jar"
@@ -5836,7 +5836,7 @@
           },
           "Version": "1.9.22",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "FilePath": "app/app.jar/BOOT-INF/lib/aspectjweaver-1.9.22.jar",
           "AnalyzedBy": "jar"
@@ -5849,7 +5849,7 @@
           },
           "Version": "3.31.0",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "FilePath": "app/app.jar/BOOT-INF/lib/checker-qual-3.31.0.jar",
           "AnalyzedBy": "jar"
@@ -5862,7 +5862,7 @@
           },
           "Version": "2.0.2",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "FilePath": "app/app.jar/BOOT-INF/lib/angus-activation-2.0.2.jar",
           "AnalyzedBy": "jar"
@@ -5875,7 +5875,7 @@
           },
           "Version": "4.0.5",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "FilePath": "app/app.jar/BOOT-INF/lib/jaxb-core-4.0.5.jar",
           "AnalyzedBy": "jar"
@@ -5888,7 +5888,7 @@
           },
           "Version": "4.0.5",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "FilePath": "app/app.jar/BOOT-INF/lib/jaxb-runtime-4.0.5.jar",
           "AnalyzedBy": "jar"
@@ -5901,7 +5901,7 @@
           },
           "Version": "4.0.5",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "FilePath": "app/app.jar/BOOT-INF/lib/txw2-4.0.5.jar",
           "AnalyzedBy": "jar"
@@ -5914,7 +5914,7 @@
           },
           "Version": "6.0.6.Final",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "FilePath": "app/app.jar/BOOT-INF/lib/hibernate-commons-annotations-6.0.6.Final.jar",
           "AnalyzedBy": "jar"
@@ -5927,7 +5927,7 @@
           },
           "Version": "6.4.4.Final",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "FilePath": "app/app.jar/BOOT-INF/lib/hibernate-core-6.4.4.Final.jar",
           "AnalyzedBy": "jar"
@@ -5940,7 +5940,7 @@
           },
           "Version": "3.5.3.Final",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "FilePath": "app/app.jar/BOOT-INF/lib/jboss-logging-3.5.3.Final.jar",
           "AnalyzedBy": "jar"
@@ -5953,7 +5953,7 @@
           },
           "Version": "42.6.2",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "FilePath": "app/app.jar/BOOT-INF/lib/postgresql-42.6.2.jar",
           "AnalyzedBy": "jar"
@@ -5966,7 +5966,7 @@
           },
           "Version": "2.0.13",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "FilePath": "app/app.jar/BOOT-INF/lib/jul-to-slf4j-2.0.13.jar",
           "AnalyzedBy": "jar"
@@ -5979,7 +5979,7 @@
           },
           "Version": "2.0.13",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "FilePath": "app/app.jar/BOOT-INF/lib/slf4j-api-2.0.13.jar",
           "AnalyzedBy": "jar"
@@ -5992,7 +5992,7 @@
           },
           "Version": "2.5.0",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "FilePath": "app/app.jar/BOOT-INF/lib/springdoc-openapi-starter-common-2.5.0.jar",
           "AnalyzedBy": "jar"
@@ -6005,7 +6005,7 @@
           },
           "Version": "2.5.0",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "FilePath": "app/app.jar/BOOT-INF/lib/springdoc-openapi-starter-webmvc-api-2.5.0.jar",
           "AnalyzedBy": "jar"
@@ -6018,7 +6018,7 @@
           },
           "Version": "2.5.0",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "FilePath": "app/app.jar/BOOT-INF/lib/springdoc-openapi-starter-webmvc-ui-2.5.0.jar",
           "AnalyzedBy": "jar"
@@ -6031,7 +6031,7 @@
           },
           "Version": "3.2.5",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "FilePath": "app/app.jar/BOOT-INF/lib/spring-boot-3.2.5.jar",
           "AnalyzedBy": "jar"
@@ -6044,7 +6044,7 @@
           },
           "Version": "3.2.5",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "FilePath": "app/app.jar/BOOT-INF/lib/spring-boot-autoconfigure-3.2.5.jar",
           "AnalyzedBy": "jar"
@@ -6057,7 +6057,7 @@
           },
           "Version": "3.2.5",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "FilePath": "app/app.jar/BOOT-INF/lib/spring-boot-jarmode-layertools-3.2.5.jar",
           "AnalyzedBy": "jar"
@@ -6070,7 +6070,7 @@
           },
           "Version": "3.2.5",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "FilePath": "app/app.jar/BOOT-INF/lib/spring-data-commons-3.2.5.jar",
           "AnalyzedBy": "jar"
@@ -6083,7 +6083,7 @@
           },
           "Version": "3.2.5",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "FilePath": "app/app.jar/BOOT-INF/lib/spring-data-jpa-3.2.5.jar",
           "AnalyzedBy": "jar"
@@ -6096,7 +6096,7 @@
           },
           "Version": "6.2.4",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "FilePath": "app/app.jar/BOOT-INF/lib/spring-security-config-6.2.4.jar",
           "AnalyzedBy": "jar"
@@ -6109,7 +6109,7 @@
           },
           "Version": "6.2.4",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "FilePath": "app/app.jar/BOOT-INF/lib/spring-security-core-6.2.4.jar",
           "AnalyzedBy": "jar"
@@ -6122,7 +6122,7 @@
           },
           "Version": "6.2.4",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "FilePath": "app/app.jar/BOOT-INF/lib/spring-security-crypto-6.2.4.jar",
           "AnalyzedBy": "jar"
@@ -6135,7 +6135,7 @@
           },
           "Version": "6.2.4",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "FilePath": "app/app.jar/BOOT-INF/lib/spring-security-oauth2-core-6.2.4.jar",
           "AnalyzedBy": "jar"
@@ -6148,7 +6148,7 @@
           },
           "Version": "6.2.4",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "FilePath": "app/app.jar/BOOT-INF/lib/spring-security-oauth2-jose-6.2.4.jar",
           "AnalyzedBy": "jar"
@@ -6161,7 +6161,7 @@
           },
           "Version": "6.2.4",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "FilePath": "app/app.jar/BOOT-INF/lib/spring-security-oauth2-resource-server-6.2.4.jar",
           "AnalyzedBy": "jar"
@@ -6174,7 +6174,7 @@
           },
           "Version": "6.2.4",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "FilePath": "app/app.jar/BOOT-INF/lib/spring-security-web-6.2.4.jar",
           "AnalyzedBy": "jar"
@@ -6187,7 +6187,7 @@
           },
           "Version": "6.1.6",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "FilePath": "app/app.jar/BOOT-INF/lib/spring-aop-6.1.6.jar",
           "AnalyzedBy": "jar"
@@ -6200,7 +6200,7 @@
           },
           "Version": "6.1.6",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "FilePath": "app/app.jar/BOOT-INF/lib/spring-aspects-6.1.6.jar",
           "AnalyzedBy": "jar"
@@ -6213,7 +6213,7 @@
           },
           "Version": "6.1.6",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "FilePath": "app/app.jar/BOOT-INF/lib/spring-beans-6.1.6.jar",
           "AnalyzedBy": "jar"
@@ -6226,7 +6226,7 @@
           },
           "Version": "6.1.6",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "FilePath": "app/app.jar/BOOT-INF/lib/spring-context-6.1.6.jar",
           "AnalyzedBy": "jar"
@@ -6239,7 +6239,7 @@
           },
           "Version": "6.1.6",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "FilePath": "app/app.jar/BOOT-INF/lib/spring-core-6.1.6.jar",
           "AnalyzedBy": "jar"
@@ -6252,7 +6252,7 @@
           },
           "Version": "6.1.6",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "FilePath": "app/app.jar/BOOT-INF/lib/spring-expression-6.1.6.jar",
           "AnalyzedBy": "jar"
@@ -6265,7 +6265,7 @@
           },
           "Version": "6.1.6",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "FilePath": "app/app.jar/BOOT-INF/lib/spring-jcl-6.1.6.jar",
           "AnalyzedBy": "jar"
@@ -6278,7 +6278,7 @@
           },
           "Version": "6.1.6",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "FilePath": "app/app.jar/BOOT-INF/lib/spring-jdbc-6.1.6.jar",
           "AnalyzedBy": "jar"
@@ -6291,7 +6291,7 @@
           },
           "Version": "6.1.6",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "FilePath": "app/app.jar/BOOT-INF/lib/spring-orm-6.1.6.jar",
           "AnalyzedBy": "jar"
@@ -6304,7 +6304,7 @@
           },
           "Version": "6.1.6",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "FilePath": "app/app.jar/BOOT-INF/lib/spring-tx-6.1.6.jar",
           "AnalyzedBy": "jar"
@@ -6317,7 +6317,7 @@
           },
           "Version": "6.1.6",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "FilePath": "app/app.jar/BOOT-INF/lib/spring-web-6.1.6.jar",
           "AnalyzedBy": "jar"
@@ -6330,7 +6330,7 @@
           },
           "Version": "6.1.6",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "FilePath": "app/app.jar/BOOT-INF/lib/spring-webmvc-6.1.6.jar",
           "AnalyzedBy": "jar"
@@ -6343,7 +6343,7 @@
           },
           "Version": "5.13.0",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "FilePath": "app/app.jar/BOOT-INF/lib/swagger-ui-5.13.0.jar",
           "AnalyzedBy": "jar"
@@ -6356,7 +6356,7 @@
           },
           "Version": "2.2",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "FilePath": "app/app.jar/BOOT-INF/lib/snakeyaml-2.2.jar",
           "AnalyzedBy": "jar"
@@ -6378,7 +6378,7 @@
           "FixedVersion": "1.5.13, 1.3.15",
           "Status": "fixed",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "SeveritySource": "ghsa",
           "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2024-12798",
@@ -6387,7 +6387,7 @@
             "Name": "GitHub Security Advisory Maven",
             "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Amaven"
           },
-          "Fingerprint": "sha256:980320c2bfdc38db0011a4824cba3f26d224fb53c385d21d2e9792be8a11598a",
+          "Fingerprint": "sha256:b25b52df5b9ab40d540d8b848a9bd67c6e682ec06d8fd065c821f72559e739ec",
           "Title": "logback-core: arbitrary code execution via JaninoEventEvaluator",
           "Description": "ACE vulnerability in JaninoEventEvaluator  by QOS.CH logback-core\n      upto including version 0.1 to 1.3.14 and 1.4.0 to 1.5.12 in Java applications allows\n      attacker to execute arbitrary code by compromising an existing\n      logback configuration file or by injecting an environment variable\n      before program execution.\n\n\n\n\n\nMalicious logback configuration files can allow the attacker to execute \narbitrary code using the JaninoEventEvaluator extension.\n\n\n\nA successful attack requires the user to have write access to a \nconfiguration file. Alternatively, the attacker could inject a malicious \nenvironment variable pointing to a malicious configuration file. In both \ncases, the attack requires existing privilege.",
           "Severity": "MEDIUM",
@@ -6435,7 +6435,7 @@
           "FixedVersion": "1.5.19, 1.3.16",
           "Status": "fixed",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "SeveritySource": "ghsa",
           "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2025-11226",
@@ -6444,7 +6444,7 @@
             "Name": "GitHub Security Advisory Maven",
             "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Amaven"
           },
-          "Fingerprint": "sha256:b34cbbd6694df4c59f280dc29bf6acbe22df7c37f7edd7f709ae2c03945feb23",
+          "Fingerprint": "sha256:fbe791228042a70c467bd47229b13a32cae55619d82a7a160dc30334e5a4b43f",
           "Title": "ch.qos.logback/logback-core: Conditional abitrary code execution in logback-core",
           "Description": "ACE vulnerability in conditional configuration file processing  by QOS.CH logback-core up to and including version 1.5.18 in Java applications, allows an attacker to execute arbitrary code by compromising an existing logback configuration file or by injecting an environment variable before program execution.\n\n\n\nA successful attack requires the presence of Janino library and Spring Framework to be present on the user's class path. In addition, the attacker must  have write access to a \nconfiguration file. Alternatively, the attacker could inject a malicious \nenvironment variable pointing to a malicious configuration file. In both \ncases, the attack requires existing privilege.",
           "Severity": "MEDIUM",
@@ -6494,7 +6494,7 @@
           "FixedVersion": "1.5.13, 1.3.15",
           "Status": "fixed",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "SeveritySource": "ghsa",
           "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2024-12801",
@@ -6503,7 +6503,7 @@
             "Name": "GitHub Security Advisory Maven",
             "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Amaven"
           },
-          "Fingerprint": "sha256:2b269d0da4ce40841dd59bdb9f49e9c7af4dfe94880febee91f7ee11f882a82d",
+          "Fingerprint": "sha256:97cf1e09ee3e625e4e097ae182f965339ded5156886f342f367a1ef9db291f7a",
           "Title": "logback-core: SaxEventRecorder vulnerable to Server-Side Request Forgery (SSRF) attacks",
           "Description": "Server-Side Request Forgery (SSRF) in SaxEventRecorder by QOS.CH logback version 0.1 to 1.3.14 and 1.4.0 to 1.5.12  on the Java platform, allows an attacker to \nforge requests by compromising logback configuration files in XML.\n\n\n\nThe attacks involves the modification of DOCTYPE declaration in  XML configuration files.",
           "Severity": "LOW",
@@ -6551,7 +6551,7 @@
           "FixedVersion": "1.5.25",
           "Status": "fixed",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "SeveritySource": "ghsa",
           "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-1225",
@@ -6560,7 +6560,7 @@
             "Name": "GitHub Security Advisory Maven",
             "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Amaven"
           },
-          "Fingerprint": "sha256:0076361ccd201226b61e6dac0065e86522690dcffc8fd6b0e32e0a62a805df29",
+          "Fingerprint": "sha256:b3daafadcf9d47e02c050f24405f1e27d21751107fea5bae0221cee3eb0fdbe0",
           "Title": "ch.qos.logback/logback-core: Malicious logback.xml configuration file allows instantiation of arbitrary classes",
           "Description": "ACE vulnerability in configuration file processing  by QOS.CH logback-core up to and including version 1.5.24 in Java applications, allows an attacker to instantiate classes already present on the class path by compromising an existing logback configuration file.\n\n\n\n\nThe instantiation of a potentially malicious Java class requires that said class is present on the user's class-path. In addition, the attacker must  have write access to a \nconfiguration file. However, after successful instantiation, the instance is very likely to be discarded with no further ado.",
           "Severity": "LOW",
@@ -6605,7 +6605,7 @@
           "FixedVersion": "2.21.1, 2.18.6",
           "Status": "fixed",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "SeveritySource": "ghsa",
           "PrimaryURL": "https://github.com/advisories/GHSA-72hv-8253-57qq",
@@ -6614,7 +6614,7 @@
             "Name": "GitHub Security Advisory Maven",
             "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Amaven"
           },
-          "Fingerprint": "sha256:5fb2b44b19f1f09dd558c5589141c34e55358b2f352c238255ede429a5803dcf",
+          "Fingerprint": "sha256:abaff30739d5046855aa6e3f5c45752ba25a56a17847095e1fd443fdab787699",
           "Title": "jackson-core: Number Length Constraint Bypass in Async Parser Leads to Potential DoS Condition",
           "Description": "### Summary\nThe non-blocking (async) JSON parser in `jackson-core` bypasses the `maxNumberLength` constraint (default: 1000 characters) defined in `StreamReadConstraints`. This allows an attacker to send JSON with arbitrarily long numbers through the async parser API, leading to excessive memory allocation and potential CPU exhaustion, resulting in a Denial of Service (DoS).\n\nThe standard synchronous parser correctly enforces this limit, but the async parser fails to do so, creating an inconsistent enforcement policy.\n\n### Details\nThe root cause is that the async parsing path in `NonBlockingUtf8JsonParserBase` (and related classes) does not call the methods responsible for number length validation.\n\n- The number parsing methods (e.g., `_finishNumberIntegralPart`) accumulate digits into the `TextBuffer` without any length checks.\n- After parsing, they call `_valueComplete()`, which finalizes the token but does **not** call `resetInt()` or `resetFloat()`.\n- The `resetInt()`/`resetFloat()` methods in `ParserBase` are where the `validateIntegerLength()` and `validateFPLength()` checks are performed.\n- Because this validation step is skipped, the `maxNumberLength` constraint is never enforced in the async code path.\n\n### PoC\nThe following JUnit 5 test demonstrates the vulnerability. It shows that the async parser accepts a 5,000-digit number, whereas the limit should be 1,000.\n\n```java\npackage tools.jackson.core.unittest.dos;\n\nimport java.nio.charset.StandardCharsets;\n\nimport org.junit.jupiter.api.Test;\n\nimport tools.jackson.core.*;\nimport tools.jackson.core.exc.StreamConstraintsException;\nimport tools.jackson.core.json.JsonFactory;\nimport tools.jackson.core.json.async.NonBlockingByteArrayJsonParser;\n\nimport static org.junit.jupiter.api.Assertions.*;\n\n/**\n * POC: Number Length Constraint Bypass in Non-Blocking (Async) JSON Parsers\n *\n * Authors: sprabhav7, rohan-repos\n * \n * maxNumberLength default = 1000 characters (digits).\n * A number with more than 1000 digits should be rejected by any parser.\n *\n * BUG: The async parser never calls resetInt()/resetFloat() which is where\n * validateIntegerLength()/validateFPLength() lives. Instead it calls\n * _valueComplete() which skips all number length validation.\n *\n * CWE-770: Allocation of Resources Without Limits or Throttling\n */\nclass AsyncParserNumberLengthBypassTest {\n\n    private static final int MAX_NUMBER_LENGTH = 1000;\n    private static final int TEST_NUMBER_LENGTH = 5000;\n\n    private final JsonFactory factory = new JsonFactory();\n\n    // CONTROL: Sync parser correctly rejects a number exceeding maxNumberLength\n    @Test\n    void syncParserRejectsLongNumber() throws Exception {\n        byte[] payload = buildPayloadWithLongInteger(TEST_NUMBER_LENGTH);\n\t\t\n\t\t// Output to console\n        System.out.println(\"[SYNC] Parsing \" + TEST_NUMBER_LENGTH + \"-digit number (limit: \" + MAX_NUMBER_LENGTH + \")\");\n        try {\n            try (JsonParser p = factory.createParser(ObjectReadContext.empty(), payload)) {\n                while (p.nextToken() != null) {\n                    if (p.currentToken() == JsonToken.VALUE_NUMBER_INT) {\n                        System.out.println(\"[SYNC] Accepted number with \" + p.getText().length() + \" digits — UNEXPECTED\");\n                    }\n                }\n            }\n            fail(\"Sync parser must reject a \" + TEST_NUMBER_LENGTH + \"-digit number\");\n        } catch (StreamConstraintsException e) {\n            System.out.println(\"[SYNC] Rejected with StreamConstraintsException: \" + e.getMessage());\n        }\n    }\n\n    // VULNERABILITY: Async parser accepts the SAME number that sync rejects\n    @Test\n    void asyncParserAcceptsLongNumber() throws Exception {\n        byte[] payload = buildPayloadWithLongInteger(TEST_NUMBER_LENGTH);\n\n        NonBlockingByteArrayJsonParser p =\n            (NonBlockingByteArrayJsonParser) factory.createNonBlockingByteArrayParser(ObjectReadContext.empty());\n        p.feedInput(payload, 0, payload.length);\n        p.endOfInput();\n\n        boolean foundNumber = false;\n        try {\n            while (p.nextToken() != null) {\n                if (p.currentToken() == JsonToken.VALUE_NUMBER_INT) {\n                    foundNumber = true;\n                    String numberText = p.getText();\n                    assertEquals(TEST_NUMBER_LENGTH, numberText.length(),\n                        \"Async parser silently accepted all \" + TEST_NUMBER_LENGTH + \" digits\");\n                }\n            }\n            // Output to console\n            System.out.println(\"[ASYNC INT] Accepted number with \" + TEST_NUMBER_LENGTH + \" digits — BUG CONFIRMED\");\n            assertTrue(foundNumber, \"Parser should have produced a VALUE_NUMBER_INT token\");\n        } catch (StreamConstraintsException e) {\n            fail(\"Bug is fixed — async parser now correctly rejects long numbers: \" + e.getMessage());\n        }\n        p.close();\n    }\n\n    private byte[] buildPayloadWithLongInteger(int numDigits) {\n        StringBuilder sb = new StringBuilder(numDigits + 10);\n        sb.append(\"{\\\"v\\\":\");\n        for (int i = 0; i \u003c numDigits; i++) {\n            sb.append((char) ('1' + (i % 9)));\n        }\n        sb.append('}');\n        return sb.toString().getBytes(StandardCharsets.UTF_8);\n    }\n}\n\n```\n\n\n### Impact\nA malicious actor can send a JSON document with an arbitrarily long number to an application using the async parser (e.g., in a Spring WebFlux or other reactive application). This can cause:\n1.  **Memory Exhaustion:** Unbounded allocation of memory in the `TextBuffer` to store the number's digits, leading to an `OutOfMemoryError`.\n2.  **CPU Exhaustion:** If the application subsequently calls `getBigIntegerValue()` or `getDecimalValue()`, the JVM can be tied up in O(n^2) `BigInteger` parsing operations, leading to a CPU-based DoS.\n\n### Suggested Remediation\n\nThe async parsing path should be updated to respect the `maxNumberLength` constraint. The simplest fix appears to ensure that `_valueComplete()` or a similar method in the async path calls the appropriate validation methods (`resetInt()` or `resetFloat()`) already present in `ParserBase`, mirroring the behavior of the synchronous parsers.\n\n**NOTE:** This research was performed in collaboration with [rohan-repos](https://github.com/rohan-repos)",
           "Severity": "MEDIUM",
@@ -6651,7 +6651,7 @@
           "FixedVersion": "9.37.2",
           "Status": "fixed",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "SeveritySource": "ghsa",
           "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2023-52428",
@@ -6660,7 +6660,7 @@
             "Name": "GitHub Security Advisory Maven",
             "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Amaven"
           },
-          "Fingerprint": "sha256:557dcc4d4d3f6b76540352a681e7cdeff5292be01d09b7c7bd24aefd64c2af2f",
+          "Fingerprint": "sha256:af8e3a88171074e243e0505ac08816f6f30dfe0435dbc9541d90ffcb0970fa01",
           "Title": "nimbus-jose-jwt: large JWE p2c header value causes Denial of Service",
           "Description": "In Connect2id Nimbus JOSE+JWT before 9.37.2, an attacker can cause a denial of service (resource consumption) via a large JWE p2c header value (aka iteration count) for the PasswordBasedDecrypter (PBKDF2) component.",
           "Severity": "HIGH",
@@ -6716,7 +6716,7 @@
           "FixedVersion": "10.0.2, 9.37.4",
           "Status": "fixed",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "SeveritySource": "ghsa",
           "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2025-53864",
@@ -6725,7 +6725,7 @@
             "Name": "GitHub Security Advisory Maven",
             "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Amaven"
           },
-          "Fingerprint": "sha256:b019e9a8af122440567f74fafb23d35d0e540757d37415c96433bb496e3879ea",
+          "Fingerprint": "sha256:d4473012bb470891a049f2270c9792fb6b9326587b2c2714a706d7a0be1f04b9",
           "Title": "com.nimbusds/nimbus-jose-jwt: Uncontrolled recursion in Connect2id Nimbus JOSE + JWT",
           "Description": "Connect2id Nimbus JOSE + JWT 10.0.x before 10.0.2 and 9.37.x before 9.37.4 allows a remote attacker to cause a denial of service via a deeply nested JSON object supplied in a JWT claim set, because of uncontrolled recursion. NOTE: this is independent of the Gson 2.11.0 issue because the Connect2id product could have checked the JSON object nesting depth, regardless of what limits (if any) were imposed by Gson.",
           "Severity": "MEDIUM",
@@ -6775,7 +6775,7 @@
           "FixedVersion": "3.18.0",
           "Status": "fixed",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "SeveritySource": "ghsa",
           "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2025-48924",
@@ -6784,7 +6784,7 @@
             "Name": "GitHub Security Advisory Maven",
             "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Amaven"
           },
-          "Fingerprint": "sha256:f30e1cbfa4d098f49c319f629644962aea7a1b223f71b99e47ce58b34e259450",
+          "Fingerprint": "sha256:693f6b0f17fb4f95518237771491e70122a107b9eee8a37cf532b2826743d3dc",
           "Title": "commons-lang/commons-lang: org.apache.commons/commons-lang3: Uncontrolled Recursion vulnerability in Apache Commons Lang",
           "Description": "Uncontrolled Recursion vulnerability in Apache Commons Lang.\n\nThis issue affects Apache Commons Lang: Starting with commons-lang:commons-lang 2.0 to 2.6, and, from org.apache.commons:commons-lang3 3.0 before 3.18.0.\n\nThe methods ClassUtils.getClass(...) can throw StackOverflowError on very long inputs. Because an Error is usually not handled by applications and libraries, a \nStackOverflowError could cause an application to stop.\n\nUsers are recommended to upgrade to version 3.18.0, which fixes the issue.",
           "Severity": "MEDIUM",
@@ -6841,7 +6841,7 @@
           "FixedVersion": "11.0.3, 10.1.35, 9.0.99",
           "Status": "fixed",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "SeveritySource": "ghsa",
           "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2025-24813",
@@ -6850,7 +6850,7 @@
             "Name": "GitHub Security Advisory Maven",
             "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Amaven"
           },
-          "Fingerprint": "sha256:4959c01714d37d8242e7d7d4500b56fc9ff81405830d9923d2576f5f527a879c",
+          "Fingerprint": "sha256:1204dd65a58b191c9b7b863d7fee345583d80d2ad5fec70ec72ed33d52056481",
           "Title": "tomcat: Potential RCE and/or information disclosure and/or information corruption with partial PUT",
           "Description": "Path Equivalence: 'file.Name' (Internal Dot) leading to Remote Code Execution and/or Information disclosure and/or malicious content added to uploaded files via write enabled Default Servlet in Apache Tomcat.\n\nThis issue affects Apache Tomcat: from 11.0.0-M1 through 11.0.2, from 10.1.0-M1 through 10.1.34, from 9.0.0.M1 through 9.0.98.\nThe following versions were EOL at the time the CVE was created but are \nknown to be affected: 8.5.0 though 8.5.100. Other, older, EOL versions \nmay also be affected.\n\n\nIf all of the following were true, a malicious user was able to view       security sensitive files and/or inject content into those files:\n- writes enabled for the default servlet (disabled by default)\n- support for partial PUT (enabled by default)\n- a target URL for security sensitive uploads that was a sub-directory of a target URL for public uploads\n- attacker knowledge of the names of security sensitive files being uploaded\n- the security sensitive files also being uploaded via partial PUT\n\nIf all of the following were true, a malicious user was able to       perform remote code execution:\n- writes enabled for the default servlet (disabled by default)\n- support for partial PUT (enabled by default)\n- application was using Tomcat's file based session persistence with the default storage location\n- application included a library that may be leveraged in a deserialization attack\n\nUsers are recommended to upgrade to version 11.0.3, 10.1.35 or 9.0.99, which fixes the issue.",
           "Severity": "CRITICAL",
@@ -6945,7 +6945,7 @@
           "FixedVersion": "9.0.116, 10.1.53, 11.0.20",
           "Status": "fixed",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "SeveritySource": "ghsa",
           "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-29145",
@@ -6954,7 +6954,7 @@
             "Name": "GitHub Security Advisory Maven",
             "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Amaven"
           },
-          "Fingerprint": "sha256:630dbb1a96a09e03b69fd44453ac2b96e14e5d65d648012fa206232222cccc1a",
+          "Fingerprint": "sha256:5753f1bbad848f7a06aa13f22923d688f2f918824630792fd1347f92092c8b55",
           "Title": "CLIENT_CERT authentication does not fail as expected for some scenario ...",
           "Description": "CLIENT_CERT authentication does not fail as expected for some scenarios when soft fail is disabled vulnerability in Apache Tomcat, Apache Tomcat Native.\n\nThis issue affects Apache Tomcat: from 11.0.0-M1 through 11.0.18, from 10.1.0-M7 through 10.1.52, from 9.0.83 through 9.0.115; Apache Tomcat Native: from 1.1.23 through 1.1.34, from 1.2.0 through 1.2.39, from 1.3.0 through 1.3.6, from 2.0.0 through 2.0.13.\n\nUsers are recommended to upgrade to version Tomcat Native 1.3.7 or 2.0.14 and Tomcat 11.0.20, 10.1.53 and 9.0.116, which fix the issue.",
           "Severity": "CRITICAL",
@@ -6994,7 +6994,7 @@
           "FixedVersion": "11.0.0-M21, 10.1.25, 9.0.90",
           "Status": "fixed",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "SeveritySource": "ghsa",
           "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2024-34750",
@@ -7003,7 +7003,7 @@
             "Name": "GitHub Security Advisory Maven",
             "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Amaven"
           },
-          "Fingerprint": "sha256:595f55df1dc31052a16d6be4e54bf1e67434f956d57dd9b04ebeca7795359b58",
+          "Fingerprint": "sha256:c72a549b5b36edc47001e0bea962584c3f32d2a50a1ea5acf25df23771f45890",
           "Title": "tomcat: Improper Handling of Exceptional Conditions",
           "Description": "Improper Handling of Exceptional Conditions, Uncontrolled Resource Consumption vulnerability in Apache Tomcat. When processing an HTTP/2 stream, Tomcat did not handle some cases of excessive HTTP headers correctly. This led to a miscounting of active HTTP/2 streams which in turn led to the use of an incorrect infinite timeout which allowed connections to remain open which should have been closed.\n\nThis issue affects Apache Tomcat: from 11.0.0-M1 through 11.0.0-M20, from 10.1.0-M1 through 10.1.24, from 9.0.0-M1 through 9.0.89.\n\nThe following versions were EOL at the time the CVE was created but are \nknown to be affected: 8.5.0 though 8.5.100. Other EOL versions may also be affected.\n\n\nUsers are recommended to upgrade to version 11.0.0-M21, 10.1.25 or 9.0.90, which fixes the issue.",
           "Severity": "HIGH",
@@ -7081,7 +7081,7 @@
           "FixedVersion": "11.0.2, 10.1.34, 9.0.98",
           "Status": "fixed",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "SeveritySource": "ghsa",
           "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2024-50379",
@@ -7090,7 +7090,7 @@
             "Name": "GitHub Security Advisory Maven",
             "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Amaven"
           },
-          "Fingerprint": "sha256:513b638472fc021167d838122b2c40a9ba1efbb8dc90430d3a1476be69737a62",
+          "Fingerprint": "sha256:767f598d3c4b0f2921fc1bd48a3e6a0570a1803dca481cd4573ae8a8541de3cd",
           "Title": "tomcat: RCE due to TOCTOU issue in JSP compilation",
           "Description": "Time-of-check Time-of-use (TOCTOU) Race Condition vulnerability during JSP compilation in Apache Tomcat permits an RCE on case insensitive file systems when the default servlet is enabled for write (non-default configuration).\n\nThis issue affects Apache Tomcat: from 11.0.0-M1 through 11.0.1, from 10.1.0-M1 through 10.1.33, from 9.0.0.M1 through 9.0.97.\n\nThe following versions were EOL at the time the CVE was created but are \nknown to be affected: 8.5.0 though 8.5.100. Other, older, EOL versions may also be affected.\n\nUsers are recommended to upgrade to version 11.0.2, 10.1.34 or 9.0.98, which fixes the issue.",
           "Severity": "HIGH",
@@ -7179,7 +7179,7 @@
           "FixedVersion": "11.0.2, 10.1.34, 9.0.98",
           "Status": "fixed",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "SeveritySource": "ghsa",
           "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2024-56337",
@@ -7188,7 +7188,7 @@
             "Name": "GitHub Security Advisory Maven",
             "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Amaven"
           },
-          "Fingerprint": "sha256:64b66fa866d46fc38ef25c7390287881620ebb0d894ec44271408ea4a6b933c5",
+          "Fingerprint": "sha256:57f6ec08d1acd035031c5474370ed64f3450e3c624aaefc33d52fad340cf568e",
           "Title": "tomcat: Incomplete fix for CVE-2024-50379 - RCE due to TOCTOU issue in JSP compilation",
           "Description": "Time-of-check Time-of-use (TOCTOU) Race Condition vulnerability in Apache Tomcat.\n\nThis issue affects Apache Tomcat: from 11.0.0-M1 through 11.0.1, from 10.1.0-M1 through 10.1.33, from 9.0.0.M1 through 9.0.97.\nThe following versions were EOL at the time the CVE was created but are \nknown to be affected: 8.5.0 though 8.5.100. Other, older, EOL versions \nmay also be affected.\n\n\nThe mitigation for CVE-2024-50379 was incomplete.\n\nUsers running Tomcat on a case insensitive file system with the default servlet write enabled (readonly initialisation \nparameter set to the non-default value of false) may need additional configuration to fully mitigate CVE-2024-50379 depending on which version of Java they are using with Tomcat:\n- running on Java 8 or Java 11: the system property sun.io.useCanonCaches must be explicitly set to false (it defaults to true)\n- running on Java 17: the system property sun.io.useCanonCaches, if set, must be set to false (it defaults to false)\n- running on Java 21 onwards: no further configuration is required (the system property and the problematic cache have been removed)\n\nTomcat 11.0.3, 10.1.35 and 9.0.99 onwards will include checks that sun.io.useCanonCaches is set appropriately before allowing the default servlet to be write enabled on a case insensitive file system. Tomcat will also set sun.io.useCanonCaches to false by default where it can.",
           "Severity": "HIGH",
@@ -7263,7 +7263,7 @@
           "FixedVersion": "11.0.8, 10.1.42, 9.0.106",
           "Status": "fixed",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "SeveritySource": "ghsa",
           "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2025-48988",
@@ -7272,7 +7272,7 @@
             "Name": "GitHub Security Advisory Maven",
             "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Amaven"
           },
-          "Fingerprint": "sha256:1c20e7e5f303c39512c760a56511294102550b7db8cf963b5f6343b05f95105e",
+          "Fingerprint": "sha256:743c8ded70a5cb41b8985f5ef623608e6ca49c4ca2123a945814bdf1e85bb564",
           "Title": "tomcat: Apache Tomcat DoS in multipart upload",
           "Description": "Allocation of Resources Without Limits or Throttling vulnerability in Apache Tomcat.\n\nThis issue affects Apache Tomcat: from 11.0.0-M1 through 11.0.7, from 10.1.0-M1 through 10.1.41, from 9.0.0.M1 through 9.0.105.\nThe following versions were EOL at the time the CVE was created but are \nknown to be affected: 8.5.0 though 8.5.100. Other, older, EOL versions \nmay also be affected.\n\n\nUsers are recommended to upgrade to version 11.0.8, 10.1.42 or 9.0.106, which fix the issue.",
           "Severity": "HIGH",
@@ -7366,7 +7366,7 @@
           "FixedVersion": "11.0.10, 10.1.44, 9.0.108",
           "Status": "fixed",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "SeveritySource": "ghsa",
           "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2025-48989",
@@ -7375,7 +7375,7 @@
             "Name": "GitHub Security Advisory Maven",
             "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Amaven"
           },
-          "Fingerprint": "sha256:9155a4c26675711b7c64ce19c1a7412b408485793ff8ca9c34ca7d4dea4b50e4",
+          "Fingerprint": "sha256:16c4fdd5fa23e97dec7faf2842bb06153a9272134cb90a08841ff7c70758129d",
           "Title": "tomcat: http/2 \"MadeYouReset\" DoS attack through HTTP/2 control frames",
           "Description": "Improper Resource Shutdown or Release vulnerability in Apache Tomcat made Tomcat vulnerable to the made you reset attack.\n\nThis issue affects Apache Tomcat: from 11.0.0-M1 through 11.0.9, from 10.1.0-M1 through 10.1.43 and from 9.0.0.M1 through 9.0.107. Older, EOL versions may also be affected.\n\nUsers are recommended to upgrade to one of versions 11.0.10, 10.1.44 or 9.0.108 which fix the issue.",
           "Severity": "HIGH",
@@ -7467,7 +7467,7 @@
           "FixedVersion": "11.0.9, 10.1.43, 9.0.107",
           "Status": "fixed",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "SeveritySource": "ghsa",
           "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2025-52520",
@@ -7476,7 +7476,7 @@
             "Name": "GitHub Security Advisory Maven",
             "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Amaven"
           },
-          "Fingerprint": "sha256:ec641053d2c39e3417af585d81fc5371fe9e5a110b1b4b2b3d5a637b21e43560",
+          "Fingerprint": "sha256:b12d927a4796b0786cd007fa18d16006606c68839fa5e963f4c1737636870803",
           "Title": "tomcat: Apache Tomcat denial of service",
           "Description": "For some unlikely configurations of multipart upload, an Integer Overflow vulnerability in Apache Tomcat could lead to a DoS via bypassing of size limits.\n\nThis issue affects Apache Tomcat: from 11.0.0-M1 through 11.0.8, from 10.1.0-M1 through 10.1.42, from 9.0.0.M1 through 9.0.106.\nThe following versions were EOL at the time the CVE was created but are \nknown to be affected: 8.5.0 through 8.5.100. Other, older, EOL versions \nmay also be affected.\n\n\nUsers are recommended to upgrade to version 11.0.9, 10.1.43 or 9.0.107, which fix the issue.",
           "Severity": "HIGH",
@@ -7565,7 +7565,7 @@
           "FixedVersion": "9.0.107, 10.1.43, 11.0.9",
           "Status": "fixed",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "SeveritySource": "ghsa",
           "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2025-53506",
@@ -7574,7 +7574,7 @@
             "Name": "GitHub Security Advisory Maven",
             "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Amaven"
           },
-          "Fingerprint": "sha256:8d7856de0fbae7ff6d8f6992ddf4d263ea3ed6958ac794aacd44e96d15535cc9",
+          "Fingerprint": "sha256:976d56bf7d9fbdb9a08d852dab4c47fa5051217ccdd1d50d0e8c57260bbd353e",
           "Title": "tomcat: Apache Tomcat denial of service",
           "Description": "Uncontrolled Resource Consumption vulnerability in Apache Tomcat if an HTTP/2 client did not acknowledge the initial settings frame that reduces the maximum permitted concurrent streams.\n\nThis issue affects Apache Tomcat: from 11.0.0-M1 through 11.0.8, from 10.1.0-M1 through 10.1.42, from 9.0.0.M1 through 9.0.106.\nThe following versions were EOL at the time the CVE was created but are \nknown to be affected: 8.5.0 through 8.5.100. Other EOL versions may also be affected.\n\n\nUsers are recommended to upgrade to version 11.0.9, 10.1.43 or 9.0.107, which fix the issue.",
           "Severity": "HIGH",
@@ -7663,7 +7663,7 @@
           "FixedVersion": "11.0.11, 10.1.45, 9.0.109",
           "Status": "fixed",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "SeveritySource": "ghsa",
           "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2025-55752",
@@ -7672,7 +7672,7 @@
             "Name": "GitHub Security Advisory Maven",
             "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Amaven"
           },
-          "Fingerprint": "sha256:c1e1d82a70c05c5288ddd4a27c0083e2b1cc1bd15a37d14714da68cfa9873747",
+          "Fingerprint": "sha256:7fedf1c4766135cc8799e472d5d2f6f85d826fb57e727dabd30aee0d578a7531",
           "Title": "tomcat: org.apache.tomcat/tomcat-catalina: Apache Tomcat: Directory traversal via rewrite with possible RCE",
           "Description": "Relative Path Traversal vulnerability in Apache Tomcat.\n\nThe fix for bug 60013 introduced a regression where the       rewritten URL was normalized before it was decoded. This introduced the       possibility that, for rewrite rules that rewrite query parameters to the       URL, an attacker could manipulate the request URI to bypass security       constraints including the protection for /WEB-INF/ and /META-INF/. If PUT requests were also enabled then malicious files could be uploaded leading to remote code execution. PUT requests are normally limited to trusted users and it is considered unlikely that PUT requests would be enabled in conjunction with a rewrite that manipulated the URI.\n\n\n\nThis issue affects Apache Tomcat: from 11.0.0-M1 through 11.0.10, from 10.1.0-M1 through 10.1.44, from 9.0.0.M11 through 9.0.108.\n\nThe following versions were EOL at the time the CVE was created but are \nknown to be affected: 8.5.6 though 8.5.100. Other, older, EOL versions may also be affected.\nUsers are recommended to upgrade to version 11.0.11 or later, 10.1.45 or later or 9.0.109 or later, which fix the issue.",
           "Severity": "HIGH",
@@ -7749,7 +7749,7 @@
           "FixedVersion": "11.0.18, 10.1.52, 9.0.115",
           "Status": "fixed",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "SeveritySource": "ghsa",
           "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-24734",
@@ -7758,7 +7758,7 @@
             "Name": "GitHub Security Advisory Maven",
             "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Amaven"
           },
-          "Fingerprint": "sha256:6f41bf824da77afebb260ed201496a9bfebc6124ae34b9e4819edaedaffbc040",
+          "Fingerprint": "sha256:e3f4c0dac430e210d327336fe57d4897cc8df1d46e4d5353680c2c3c4181c0d7",
           "Title": "tomcat: Apache Tomcat: Certificate revocation bypass due to improper OCSP response validation",
           "Description": "Improper Input Validation vulnerability in Apache Tomcat Native, Apache Tomcat.\n\nWhen using an OCSP responder, Tomcat Native (and Tomcat's FFM port of the Tomcat Native code) did not complete verification or freshness checks on the OCSP response which could allow certificate revocation to be bypassed.\n\nThis issue affects Apache Tomcat Native:  from 1.3.0 through 1.3.4, from 2.0.0 through 2.0.11; Apache Tomcat: from 11.0.0-M1 through 11.0.17, from 10.1.0-M7 through 10.1.51, from 9.0.83 through 9.0.114.\n\n\nThe following versions were EOL at the time the CVE was created but are \nknown to be affected: from 1.1.23 through 1.1.34, from 1.2.0 through 1.2.39. Older EOL versions are not affected.\n\nApache Tomcat Native users are recommended to upgrade to versions 1.3.5 or later or 2.0.12 or later, which fix the issue.\n\nApache Tomcat users are recommended to upgrade to versions 11.0.18 or later, 10.1.52 or later or 9.0.115 or later which fix the issue.",
           "Severity": "HIGH",
@@ -7816,7 +7816,7 @@
           "FixedVersion": "9.0.116, 10.1.52, 11.0.20",
           "Status": "fixed",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "SeveritySource": "ghsa",
           "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-24880",
@@ -7825,7 +7825,7 @@
             "Name": "GitHub Security Advisory Maven",
             "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Amaven"
           },
-          "Fingerprint": "sha256:1cbc2f98de3364d2af86ae49edd957a97ef6fdf6c99ada5526a38dcae2a8acaf",
+          "Fingerprint": "sha256:be1f7d0cac25bf1113cc6d998155ee7e3f938a5b04e4e3ac0bc02a5122773ccb",
           "Title": "Inconsistent Interpretation of HTTP Requests ('HTTP Request/Response S ...",
           "Description": "Inconsistent Interpretation of HTTP Requests ('HTTP Request/Response Smuggling') vulnerability in Apache Tomcat via invalid chunk extension.\n\nThis issue affects Apache Tomcat: from 11.0.0-M1 through 11.0.18, from 10.1.0-M1 through 10.1.52, from 9.0.0.M1 through 9.0.115, from 8.5.0 through 8.5.100, from 7.0.0 through 7.0.109.\nOther, unsupported versions may also be affected.\n\nUsers are recommended to upgrade to version 11.0.20, 10.1.52 or 9.0.116, which fix the issue.",
           "Severity": "HIGH",
@@ -7865,7 +7865,7 @@
           "FixedVersion": "9.0.116, 10.1.54, 11.0.21",
           "Status": "fixed",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "SeveritySource": "ghsa",
           "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-34483",
@@ -7874,7 +7874,7 @@
             "Name": "GitHub Security Advisory Maven",
             "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Amaven"
           },
-          "Fingerprint": "sha256:62f80403041f2d0b4fd4a3b956cfef50afd869c5c582b0b047dd6ca3ea2e4b93",
+          "Fingerprint": "sha256:3a0dd071455c41b46f1d3b5e2441a59304f928608805507ba0bb1934636d86cc",
           "Title": "Improper Encoding or Escaping of Output vulnerability in the JsonAcces ...",
           "Description": "Improper Encoding or Escaping of Output vulnerability in the JsonAccessLogValve component of Apache Tomcat.\n\nThis issue affects Apache Tomcat: from 11.0.0-M1 through 11.0.20, from 10.1.0-M1 through 10.1.53, from 9.0.40 through 9.0.116.\n\nUsers are recommended to upgrade to version 11.0.21, 10.1.54 or 9.0.117 , which fix the issue.",
           "Severity": "HIGH",
@@ -7914,7 +7914,7 @@
           "FixedVersion": "9.0.117, 10.1.54, 11.0.21",
           "Status": "fixed",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "SeveritySource": "ghsa",
           "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-34487",
@@ -7923,7 +7923,7 @@
             "Name": "GitHub Security Advisory Maven",
             "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Amaven"
           },
-          "Fingerprint": "sha256:a8dba679b9e6ecae3c4114c420d966b811e93778a2876e7bba80acbb601526f7",
+          "Fingerprint": "sha256:b02b9cb826ee9056d77dc27b0803686e962bb3bb7f179defaad2ea57550ca073",
           "Title": "Insertion of Sensitive Information into Log File vulnerability in the  ...",
           "Description": "Insertion of Sensitive Information into Log File vulnerability in the cloud membership for clustering component of Apache Tomcat exposed the Kubernetes bearer token.\n\nThis issue affects Apache Tomcat: from 11.0.0-M1 through 11.0.20, from 10.1.0-M1 through 10.1.53, from 9.0.13 through 9.0.116.\n\nUsers are recommended to upgrade to version 11.0.21, 10.1.54 or 9.0.117, which fix the issue.",
           "Severity": "HIGH",
@@ -7963,7 +7963,7 @@
           "FixedVersion": "9.0.104, 10.1.40, 11.0.6",
           "Status": "fixed",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "SeveritySource": "ghsa",
           "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2025-31650",
@@ -7972,7 +7972,7 @@
             "Name": "GitHub Security Advisory Maven",
             "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Amaven"
           },
-          "Fingerprint": "sha256:0285daf5f5b0009d3a0857e4518dc6bcd94c63a1dbab2aaaccf80ed1efb1a6dd",
+          "Fingerprint": "sha256:d10e636ebffbfd885d64157ce4ce0a82b81c4e314b67022e1a98681381d1e779",
           "Title": "tomcat: Apache Tomcat: DoS via malformed HTTP/2 PRIORITY_UPDATE frame",
           "Description": "Improper Input Validation vulnerability in Apache Tomcat. Incorrect error handling for some invalid HTTP priority headers resulted in incomplete clean-up of the failed request which created a memory leak. A large number of such requests could trigger an OutOfMemoryException resulting in a denial of service.\n\nThis issue affects Apache Tomcat: from 9.0.76 through 9.0.102, from 10.1.10 through 10.1.39, from 11.0.0-M2 through 11.0.5.\nThe following versions were EOL at the time the CVE was created but are \nknown to be affected: 8.5.90 though 8.5.100.\n\n\nUsers are recommended to upgrade to version 9.0.104, 10.1.40 or 11.0.6 which fix the issue.",
           "Severity": "MEDIUM",
@@ -8060,7 +8060,7 @@
           "FixedVersion": "11.0.8, 10.1.42, 9.0.106",
           "Status": "fixed",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "SeveritySource": "ghsa",
           "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2025-49124",
@@ -8069,7 +8069,7 @@
             "Name": "GitHub Security Advisory Maven",
             "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Amaven"
           },
-          "Fingerprint": "sha256:a392cdbef48251d528dd94777d6842637259b33da38884699c244a9dabb1de61",
+          "Fingerprint": "sha256:be1aedf8e806e0e9e8dfe70577b0885cc9c6cfbed0f5646623c68ef937325ce7",
           "Title": "Apache Tomcat installer for Windows has an untrusted search path vulnerability",
           "Description": "Untrusted Search Path vulnerability in Apache Tomcat installer for Windows. During installation, the Tomcat installer for Windows used icacls.exe without specifying a full path.\n\nThis issue affects Apache Tomcat: from 11.0.0-M1 through 11.0.7, from 10.1.0 through 10.1.41, from 9.0.23 through 9.0.105.\nThe following versions were EOL at the time the CVE was created but are \nknown to be affected: 8.5.0 through 8.5.100 and 7.0.95 through 7.0.109. Other EOL versions may also be affected.\n\n\nUsers are recommended to upgrade to version 11.0.8, 10.1.42 or 9.0.106, which fix the issue.",
           "Severity": "MEDIUM",
@@ -8121,7 +8121,7 @@
           "FixedVersion": "11.0.8, 10.1.42, 9.0.106",
           "Status": "fixed",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "SeveritySource": "ghsa",
           "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2025-49125",
@@ -8130,7 +8130,7 @@
             "Name": "GitHub Security Advisory Maven",
             "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Amaven"
           },
-          "Fingerprint": "sha256:9cf41e88909de521391158d2c2d45701bb398ce289932c1631728f2eff833bd6",
+          "Fingerprint": "sha256:ea0b2b5772d7eeb8ed7a58a8dc1c17591dab969ffaf2771f5d79bcce4c714f77",
           "Title": "tomcat: Apache Tomcat: Security constraint bypass for pre/post-resources",
           "Description": "Authentication Bypass Using an Alternate Path or Channel vulnerability in Apache Tomcat.  When using PreResources or PostResources mounted other than at the root of the web application, it was possible to access those resources via an unexpected path. That path was likely not to be protected by the same security constraints as the expected path, allowing those security constraints to be bypassed.\n\nThis issue affects Apache Tomcat: from 11.0.0-M1 through 11.0.7, from 10.1.0-M1 through 10.1.41, from 9.0.0.M1 through 9.0.105.\nThe following versions were EOL at the time the CVE was created but are \nknown to be affected: 8.5.0 through 8.5.100. Other, older, EOL versions \nmay also be affected.\n\n\nUsers are recommended to upgrade to version 11.0.8, 10.1.42 or 9.0.106, which fix the issue.",
           "Severity": "MEDIUM",
@@ -8222,7 +8222,7 @@
           "FixedVersion": "11.0.15, 10.1.50, 9.0.113",
           "Status": "fixed",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "SeveritySource": "ghsa",
           "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2025-66614",
@@ -8231,7 +8231,7 @@
             "Name": "GitHub Security Advisory Maven",
             "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Amaven"
           },
-          "Fingerprint": "sha256:6f3d3bce9edb1d7e284b61c1f40b25437288c5cd7200794662f315f37a754c40",
+          "Fingerprint": "sha256:766d83c28fe42868f0d263dd10a6bac20ab5cc51c62513ccf690cb52e86064c1",
           "Title": "tomcat: Client certificate verification bypass due to virtual host mapping",
           "Description": "Improper Input Validation vulnerability.\n\nThis issue affects Apache Tomcat: from 11.0.0-M1 through 11.0.14, from 10.1.0-M1 through 10.1.49, from 9.0.0-M1 through 9.0.112.\n\nThe following versions were EOL at the time the CVE was created but are \nknown to be affected: 8.5.0 through 8.5.100. Older EOL versions are not affected.\nTomcat did not validate that the host name provided via the SNI \nextension was the same as the host name provided in the HTTP host header \nfield. If Tomcat was configured with more than one virtual host and the \nTLS configuration for one of those hosts did not require client \ncertificate authentication but another one did, it was possible for a \nclient to bypass the client certificate authentication by sending \ndifferent host names in the SNI extension and the HTTP host header field.\n\n\n\nThe vulnerability only applies if client certificate authentication is \nonly enforced at the Connector. It does not apply if client certificate \nauthentication is enforced at the web application.\n\n\nUsers are recommended to upgrade to version 11.0.15 or later, 10.1.50 or later or 9.0.113 or later, which fix the issue.",
           "Severity": "MEDIUM",
@@ -8300,7 +8300,7 @@
           "FixedVersion": "9.0.116, 10.1.53, 11.0.20",
           "Status": "fixed",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "SeveritySource": "ghsa",
           "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-25854",
@@ -8309,7 +8309,7 @@
             "Name": "GitHub Security Advisory Maven",
             "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Amaven"
           },
-          "Fingerprint": "sha256:bc9690b1db454a860b01bc83cac5760b011f709eb9146105063de722e6801fb6",
+          "Fingerprint": "sha256:d6cfd2658a81dfc614e11f70963677a78418a28aad019b1c9f7e501f39fc7f69",
           "Title": "Occasional URL redirection to untrusted Site ('Open Redirect') vulnera ...",
           "Description": "Occasional URL redirection to untrusted Site ('Open Redirect') vulnerability in Apache Tomcat via the LoadBalancerDrainingValve.\n\nThis issue affects Apache Tomcat: from 11.0.0-M1 through 11.0.18, from 10.1.0-M1 through 10.1.52, from 9.0.0.M23 through 9.0.115, from 8.5.30 through 8.5.100.\nOther, unsupported versions may also be affected\n\nUsers are recommended to upgrade to version 11.0.20, 10.1.53 or 9.0.116, which fix the issue.",
           "Severity": "MEDIUM",
@@ -8351,7 +8351,7 @@
           "FixedVersion": "9.0.104, 10.1.40, 11.0.6",
           "Status": "fixed",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "SeveritySource": "ghsa",
           "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2025-31651",
@@ -8360,7 +8360,7 @@
             "Name": "GitHub Security Advisory Maven",
             "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Amaven"
           },
-          "Fingerprint": "sha256:b8d64de8fa03044fa7da9fa185c53c919a88e188634090c779b3337876f4a3df",
+          "Fingerprint": "sha256:8887b21081403921da570dba174c8cf695e68caae0d4d640c3c8fc27286f6aa7",
           "Title": "tomcat: Apache Tomcat: Bypass of rules in Rewrite Valve",
           "Description": "Improper Neutralization of Escape, Meta, or Control Sequences vulnerability in Apache Tomcat. For a subset of unlikely rewrite rule configurations, it was possible \nfor a specially crafted request to bypass some rewrite rules. If those \nrewrite rules effectively enforced security constraints, those \nconstraints could be bypassed.\n\nThis issue affects Apache Tomcat: from 11.0.0-M1 through 11.0.5, from 10.1.0-M1 through 10.1.39, from 9.0.0.M1 through 9.0.102.\nThe following versions were EOL at the time the CVE was created but are \nknown to be affected: 8.5.0 though 8.5.100. Other, older, EOL versions \nmay also be affected.\n\n\nUsers are recommended to upgrade to version [FIXED_VERSION], which fixes the issue.",
           "Severity": "LOW",
@@ -8443,7 +8443,7 @@
           "FixedVersion": "9.0.105, 10.1.41, 11.0.7",
           "Status": "fixed",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "SeveritySource": "ghsa",
           "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2025-46701",
@@ -8452,7 +8452,7 @@
             "Name": "GitHub Security Advisory Maven",
             "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Amaven"
           },
-          "Fingerprint": "sha256:2f4250d96741c3b3f532222d5c92a6d1614633acbbb0c1b8fa0c83f01a6a461d",
+          "Fingerprint": "sha256:a76bc2f6aaf3e66636cc5e27d07c8b3f5ae98942a57cb646d225d583f12d01ce",
           "Title": "tomcat: Apache Tomcat: Security constraint bypass for CGI scripts",
           "Description": "Improper Handling of Case Sensitivity vulnerability in Apache Tomcat's GCI servlet allows security constraint bypass of security constraints that apply to the pathInfo component of a URI mapped to the CGI servlet.\n\nThis issue affects Apache Tomcat: from 11.0.0-M1 through 11.0.6, from 10.1.0-M1 through 10.1.40, from 9.0.0.M1 through 9.0.104.\nThe following versions were EOL at the time the CVE was created but are \nknown to be affected: 8.5.0 though 8.5.100. Other, older, EOL versions \nmay also be affected.\n\n\nUsers are recommended to upgrade to version 11.0.7, 10.1.41 or 9.0.105, which fixes the issue.",
           "Severity": "LOW",
@@ -8524,7 +8524,7 @@
           "FixedVersion": "11.0.11, 10.1.45, 9.0.109",
           "Status": "fixed",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "SeveritySource": "ghsa",
           "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2025-55754",
@@ -8533,7 +8533,7 @@
             "Name": "GitHub Security Advisory Maven",
             "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Amaven"
           },
-          "Fingerprint": "sha256:d5b8965afe0dbce71fc7e5e80de0292e01f142acd59263a702646eeb0ed23e10",
+          "Fingerprint": "sha256:bd2c0d8222509700b042ebb28f31bdb04de88ee93ad63003f1b6d5be2011c670",
           "Title": "org.apache.tomcat/tomcat-juli: tomcat: Apache Tomcat: console manipulation",
           "Description": "Improper Neutralization of Escape, Meta, or Control Sequences vulnerability in Apache Tomcat.\n\nTomcat did not escape ANSI escape sequences in log messages. If Tomcat was running in a console on a Windows operating system, and the console supported ANSI escape sequences, it was possible for an attacker to use a specially crafted URL to inject ANSI escape sequences to manipulate the console and the clipboard and attempt to trick an administrator into running an attacker controlled command. While no attack vector was found, it may have been possible to mount this attack on other operating systems.\n\n\n\nThis issue affects Apache Tomcat: from 11.0.0-M1 through 11.0.10, from 10.1.0-M1 through 10.1.44, from 9.0.40 through 9.0.108.\n\nThe following versions were EOL at the time the CVE was created but are \nknown to be affected: 8.5.60 though 8.5.100. Other, older, EOL versions may also be affected.\nUsers are recommended to upgrade to version 11.0.11 or later, 10.1.45 or later or 9.0.109 or later, which fix the issue.",
           "Severity": "LOW",
@@ -8593,7 +8593,7 @@
           "FixedVersion": "11.0.12, 10.1.47, 9.0.110",
           "Status": "fixed",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "SeveritySource": "ghsa",
           "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2025-61795",
@@ -8602,7 +8602,7 @@
             "Name": "GitHub Security Advisory Maven",
             "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Amaven"
           },
-          "Fingerprint": "sha256:9093c13d796820160893d46a069a5a9a9cde2ebd935e09c5cc1767e6f63c6eb1",
+          "Fingerprint": "sha256:7802aa8a1a775d1ffcba8913fd4811f713b8b8a83a380b8c9a17a26f917c1d9b",
           "Title": "tomcat: org.apache.tomcat/tomcat-catalina: Apache Tomcat: Denial of service",
           "Description": "Improper Resource Shutdown or Release vulnerability in Apache Tomcat.\n\nIf an error occurred (including exceeding limits) during the processing of a multipart upload, temporary copies of the uploaded parts written to disc were not cleaned up immediately but left for the garbage collection process to delete. Depending on JVM settings, application memory usage and application load, it was possible that space for the temporary copies of uploaded parts would be filled faster than GC cleared it, leading to a DoS.\n\n\n\nThis issue affects Apache Tomcat: from 11.0.0-M1 through 11.0.11, from 10.1.0-M1 through 10.1.46, from 9.0.0.M1 through 9.0.109.\n\nThe following versions were EOL at the time the CVE was created but are \nknown to be affected: 8.5.0 though 8.5.100. Other, older, EOL versions may also be affected.\nUsers are recommended to upgrade to version 11.0.12 or later, 10.1.47 or later or 9.0.110 or later which fixes the issue.",
           "Severity": "LOW",
@@ -8678,7 +8678,7 @@
           "FixedVersion": "11.0.15, 10.1.50, 9.0.113",
           "Status": "fixed",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "SeveritySource": "ghsa",
           "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-24733",
@@ -8687,7 +8687,7 @@
             "Name": "GitHub Security Advisory Maven",
             "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Amaven"
           },
-          "Fingerprint": "sha256:e1ca19eff3f6029dc15e496c7871bb31b5b4bd7c269892c22c32016e4ee4ca32",
+          "Fingerprint": "sha256:c7868468faf3b4ec8ddf7afbc33a76db396a395fee64b69aad3a8d7a7c028d2c",
           "Title": "tomcat: security constraint bypass with HTTP/0.9",
           "Description": "Improper Input Validation vulnerability in Apache Tomcat.\n\n\nTomcat did not limit HTTP/0.9 requests to the GET method. If a security \nconstraint was configured to allow HEAD requests to a URI but deny GET \nrequests, the user could bypass that constraint on GET requests by \nsending a (specification invalid) HEAD request using HTTP/0.9.\n\n\nThis issue affects Apache Tomcat: from 11.0.0-M1 through 11.0.14, from 10.1.0-M1 through 10.1.49, from 9.0.0.M1 through 9.0.112.\n\n\nOlder, EOL versions are also affected.\n\nUsers are recommended to upgrade to version 11.0.15 or later, 10.1.50 or later or 9.0.113 or later, which fixes the issue.",
           "Severity": "LOW",
@@ -8750,7 +8750,7 @@
           "FixedVersion": "3.3.11, 3.4.5",
           "Status": "fixed",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "SeveritySource": "ghsa",
           "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2025-22235",
@@ -8759,7 +8759,7 @@
             "Name": "GitHub Security Advisory Maven",
             "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Amaven"
           },
-          "Fingerprint": "sha256:f61d3091fb36c15db514db766e59f29f0312cbc1a197cc486e0bf16057405ac5",
+          "Fingerprint": "sha256:cc2f5dec1350e385ca5f18d35193088e84f37b04074c4e6b90e5fda6470d5d2a",
           "Title": "org.springframework.boot/spring-boot: Spring Boot EndpointRequest.to() creates wrong matcher if actuator endpoint is not exposed",
           "Description": "EndpointRequest.to() creates a matcher for null/** if the actuator endpoint, for which the EndpointRequest has been created, is disabled or not exposed.\n\nYour application may be affected by this if all the following conditions are met:\n\n  *  You use Spring Security\n  *  EndpointRequest.to() has been used in a Spring Security chain configuration\n  *  The endpoint which EndpointRequest references is disabled or not exposed via web\n  *  Your application handles requests to /null and this path needs protection\n\n\nYou are not affected if any of the following is true:\n\n  *  You don't use Spring Security\n  *  You don't use EndpointRequest.to()\n  *  The endpoint which EndpointRequest.to() refers to is enabled and is exposed\n  *  Your application does not handle requests to /null or this path does not need protection",
           "Severity": "HIGH",
@@ -8808,7 +8808,7 @@
           "FixedVersion": "5.7.14, 5.8.16, 6.0.14, 6.1.12, 6.2.8, 6.3.5",
           "Status": "fixed",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "SeveritySource": "ghsa",
           "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2024-38827",
@@ -8817,7 +8817,7 @@
             "Name": "GitHub Security Advisory Maven",
             "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Amaven"
           },
-          "Fingerprint": "sha256:9f7d43b01e65921b7a0379f1c33b04142b920a80313633cb2fcc9fa9d038b87e",
+          "Fingerprint": "sha256:e4895a2b77bfcd4377b9127639ec9e36464383310ee24d16527256ce25bc58fc",
           "Title": "spring-security: authorization bypass for case sensitive comparisons",
           "Description": "The usage of String.toLowerCase() and String.toUpperCase() has some Locale dependent exceptions that could potentially result in authorization rules not working properly.",
           "Severity": "MEDIUM",
@@ -8870,7 +8870,7 @@
           "FixedVersion": "6.3.8, 6.4.4, 6.2.10, 6.1.14, 6.0.16, 5.8.18, 5.7.16",
           "Status": "fixed",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "SeveritySource": "ghsa",
           "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2025-22228",
@@ -8879,7 +8879,7 @@
             "Name": "GitHub Security Advisory Maven",
             "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Amaven"
           },
-          "Fingerprint": "sha256:ae3a07bcda55b1912b07bf9c0c571352814128520695f33ee5f0ff1baefec8cd",
+          "Fingerprint": "sha256:7ec7c7d2624cd95b38914ed27382094110bb8f380b631a49542723367f01b91b",
           "Title": "spring-security-core: Spring Security BCryptPasswordEncoder does not enforce maximum password length",
           "Description": "BCryptPasswordEncoder.matches(CharSequence,String) will incorrectly return true for passwords larger than 72 characters as long as the first 72 characters are the same.",
           "Severity": "HIGH",
@@ -8928,7 +8928,7 @@
           "FixedVersion": "5.7.13, 5.8.15, 6.2.7, 6.0.13, 6.1.11, 6.3.4",
           "Status": "fixed",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "SeveritySource": "ghsa",
           "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2024-38821",
@@ -8937,7 +8937,7 @@
             "Name": "GitHub Security Advisory Maven",
             "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Amaven"
           },
-          "Fingerprint": "sha256:82cf853996c9235ca2482ddf39821927e1798768306b9778b497372066830bce",
+          "Fingerprint": "sha256:29e123ac25921cf4187cdb852b710c6af33fb73251b31736d6f75ff92b5d0301",
           "Title": "Spring-WebFlux: Authorization Bypass of Static Resources in WebFlux Applications",
           "Description": "Spring WebFlux applications that have Spring Security authorization rules on static resources can be bypassed under certain circumstances.\n\nFor this to impact an application, all of the following must be true:\n\n  *  It must be a WebFlux application\n  *  It must be using Spring's static resources support\n  *  It must have a non-permitAll authorization rule applied to the static resources support",
           "Severity": "CRITICAL",
@@ -8989,7 +8989,7 @@
           "FixedVersion": "6.5.9, 7.0.4",
           "Status": "fixed",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "SeveritySource": "ghsa",
           "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-22732",
@@ -8998,7 +8998,7 @@
             "Name": "GitHub Security Advisory Maven",
             "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Amaven"
           },
-          "Fingerprint": "sha256:426e0013a0c840042eccdc3a946fe82ac3664c71be006228cf93157c74cef77a",
+          "Fingerprint": "sha256:fda5589680110b9f0d9871f89511ed9f30f04f4d9d79d741dc29f83b96b8590a",
           "Title": "Spring Security: Spring Security: Security policy bypass and information disclosure due to unwritten HTTP headers",
           "Description": "When applications specify HTTP response headers for servlet applications using Spring Security, there is the possibility that the HTTP Headers will not be written. \nThis issue affects Spring Security Servlet applications using lazy (default) writing of HTTP Headers:\n\n: from 5.7.0 through 5.7.21, from 5.8.0 through 5.8.23, from 6.3.0 through 6.3.14, from 6.4.0 through 6.4.14, from 6.5.0 through 6.5.8, from 7.0.0 through 7.0.3.",
           "Severity": "CRITICAL",
@@ -9044,7 +9044,7 @@
           "FixedVersion": "6.1.14",
           "Status": "fixed",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "SeveritySource": "ghsa",
           "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2024-38820",
@@ -9053,7 +9053,7 @@
             "Name": "GitHub Security Advisory Maven",
             "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Amaven"
           },
-          "Fingerprint": "sha256:e2fb03e2c4b9e4a8cb36690a698685769f0d8a79e66913daeeb254c762c3ceef",
+          "Fingerprint": "sha256:3a775a1edca8c84add40543bd1f37dd0e3fc67fd5102bb59703cfde840203e14",
           "Title": "The fix for CVE-2022-22968 made disallowedFieldspatterns in DataBinder ...",
           "Description": "The fix for CVE-2022-22968 made disallowedFields patterns in DataBinder case insensitive. However, String.toLowerCase() has some Locale dependent exceptions that could potentially result in fields not protected as expected.",
           "Severity": "MEDIUM",
@@ -9101,7 +9101,7 @@
           "FixedVersion": "6.2.7, 6.1.20",
           "Status": "fixed",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "SeveritySource": "ghsa",
           "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2025-22233",
@@ -9110,7 +9110,7 @@
             "Name": "GitHub Security Advisory Maven",
             "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Amaven"
           },
-          "Fingerprint": "sha256:b7141aba2c3d851ace1519a1cb78fa3e9e326f513af7f743e198fc373121a772",
+          "Fingerprint": "sha256:3b70d7a45976b7b42794bab728b459230df6db488d3007c444595cf7491c7339",
           "Title": "CVE-2024-38820 ensured Locale-independent, lowercase conversion for bo ...",
           "Description": "CVE-2024-38820 ensured Locale-independent, lowercase conversion for both the configured disallowedFields patterns and for request parameter names. However, there are still cases where it is possible to bypass the disallowedFields checks.\n\nAffected Spring Products and Versions\n\nSpring Framework:\n  *  6.2.0 - 6.2.6\n\n  *  6.1.0 - 6.1.19\n\n  *  6.0.0 - 6.0.27\n\n  *  5.3.0 - 5.3.42\n  *  Older, unsupported versions are also affected\n\n\n\nMitigation\n\nUsers of affected versions should upgrade to the corresponding fixed version.\n\nAffected version(s)Fix Version Availability 6.2.x\n 6.2.7\nOSS6.1.x\n 6.1.20\nOSS6.0.x\n 6.0.28\n Commercial https://enterprise.spring.io/ 5.3.x\n 5.3.43\n Commercial https://enterprise.spring.io/ \nNo further mitigation steps are necessary.\n\n\nGenerally, we recommend using a dedicated model object with properties only for data binding, or using constructor binding since constructor arguments explicitly declare what to bind together with turning off setter binding through the declarativeBinding flag. See the Model Design section in the reference documentation.\n\nFor setting binding, prefer the use of allowedFields (an explicit list) over disallowedFields.\n\nCredit\n\nThis issue was responsibly reported by the TERASOLUNA Framework Development Team from NTT DATA Group Corporation.",
           "Severity": "LOW",
@@ -9153,7 +9153,7 @@
           "FixedVersion": "6.2.11",
           "Status": "fixed",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "SeveritySource": "ghsa",
           "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2025-41249",
@@ -9162,7 +9162,7 @@
             "Name": "GitHub Security Advisory Maven",
             "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Amaven"
           },
-          "Fingerprint": "sha256:f703ab0ea11fe101727e4b7fce35adbfae84b6a58b43dcf26238d2dcd2b21ee2",
+          "Fingerprint": "sha256:b87873a2dcd27fcfde1371e0ed43be31b25cc0a986f017d24fd88e4c640c74e3",
           "Title": "org.springframework/spring-core: Spring Framework Annotation Detection Vulnerability",
           "Description": "The Spring Framework annotation detection mechanism may not correctly resolve annotations on methods within type hierarchies with a parameterized super type with unbounded generics. This can be an issue if such annotations are used for authorization decisions.\n\nYour application may be affected by this if you are using Spring Security's @EnableMethodSecurity feature.\n\nYou are not affected by this if you are not using @EnableMethodSecurity or if you do not use security annotations on methods in generic superclasses or generic interfaces.\n\nThis CVE is published in conjunction with  CVE-2025-41248 https://spring.io/security/cve-2025-41248 .",
           "Severity": "HIGH",
@@ -9211,7 +9211,7 @@
           "FixedVersion": "5.3.38, 6.0.23, 6.1.12",
           "Status": "fixed",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "SeveritySource": "ghsa",
           "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2024-38809",
@@ -9220,7 +9220,7 @@
             "Name": "GitHub Security Advisory Maven",
             "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Amaven"
           },
-          "Fingerprint": "sha256:a8f67c6c5d2cda33f17aea52209f93168b2b79f72b4f537a91a816cc5423276f",
+          "Fingerprint": "sha256:0a4d974b36490ed276d08200cd736d30575f68cd813cc4f0eb466e328daada3e",
           "Title": "org.springframework:spring-web: Spring Framework DoS via conditional HTTP request",
           "Description": "Applications that parse ETags from \"If-Match\" or \"If-None-Match\" request headers are vulnerable to DoS attack.\n\nUsers of affected versions should upgrade to the corresponding fixed version.\n\nUsers of older, unsupported versions could enforce a size limit on \"If-Match\" and \"If-None-Match\" headers, e.g. through a Filter.",
           "Severity": "MEDIUM",
@@ -9272,7 +9272,7 @@
           "FixedVersion": "6.1.14",
           "Status": "fixed",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "SeveritySource": "ghsa",
           "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2024-38820",
@@ -9281,7 +9281,7 @@
             "Name": "GitHub Security Advisory Maven",
             "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Amaven"
           },
-          "Fingerprint": "sha256:e2fb03e2c4b9e4a8cb36690a698685769f0d8a79e66913daeeb254c762c3ceef",
+          "Fingerprint": "sha256:3a775a1edca8c84add40543bd1f37dd0e3fc67fd5102bb59703cfde840203e14",
           "Title": "The fix for CVE-2022-22968 made disallowedFieldspatterns in DataBinder ...",
           "Description": "The fix for CVE-2022-22968 made disallowedFields patterns in DataBinder case insensitive. However, String.toLowerCase() has some Locale dependent exceptions that could potentially result in fields not protected as expected.",
           "Severity": "MEDIUM",
@@ -9329,7 +9329,7 @@
           "FixedVersion": "6.2.8, 6.1.21",
           "Status": "fixed",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "SeveritySource": "ghsa",
           "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2025-41234",
@@ -9338,7 +9338,7 @@
             "Name": "GitHub Security Advisory Maven",
             "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Amaven"
           },
-          "Fingerprint": "sha256:0a02645e797233bfd801612c90486128ce9dd4602516a3b50813ca593380edf1",
+          "Fingerprint": "sha256:6bfc7d014a47be23b96ffb1644475fa2799f761f82b2becec8acf24f945383ca",
           "Title": "springframework: Reflected download attack in Spring Framework with non-ASCII headers",
           "Description": "Description\n\nIn Spring Framework, versions 6.0.x as of 6.0.5, versions 6.1.x and 6.2.x, an application is vulnerable to a reflected file download (RFD) attack when it sets a “Content-Disposition” header with a non-ASCII charset, where the filename attribute is derived from user-supplied input.\n\nSpecifically, an application is vulnerable when all the following are true:\n\n  *  The header is prepared with org.springframework.http.ContentDisposition.\n  *  The filename is set via ContentDisposition.Builder#filename(String, Charset).\n  *  The value for the filename is derived from user-supplied input.\n  *  The application does not sanitize the user-supplied input.\n  *  The downloaded content of the response is injected with malicious commands by the attacker (see RFD paper reference for details).\n\n\nAn application is not vulnerable if any of the following is true:\n\n  *  The application does not set a “Content-Disposition” response header.\n  *  The header is not prepared with org.springframework.http.ContentDisposition.\n  *  The filename is set via one of:  *  ContentDisposition.Builder#filename(String), or\n  *  ContentDisposition.Builder#filename(String, ASCII)\n\n\n\n  *  The filename is not derived from user-supplied input.\n  *  The filename is derived from user-supplied input but sanitized by the application.\n  *  The attacker cannot inject malicious content in the downloaded content of the response.\n\n\nAffected Spring Products and VersionsSpring Framework:\n\n  *  6.2.0 - 6.2.7\n  *  6.1.0 - 6.1.20\n  *  6.0.5 - 6.0.28\n  *  Older, unsupported versions are not affected\n\n\nMitigationUsers of affected versions should upgrade to the corresponding fixed version.\n\nAffected version(s)Fix versionAvailability6.2.x6.2.8OSS6.1.x6.1.21OSS6.0.x6.0.29 Commercial https://enterprise.spring.io/ No further mitigation steps are necessary.\n\n\nCWE-113 in `Content-Disposition` handling in VMware Spring Framework versions 6.0.5 to 6.2.7 allows remote attackers to launch Reflected File Download (RFD) attacks via unsanitized user input in `ContentDisposition.Builder#filename(String, Charset)` with non-ASCII charsets.",
           "Severity": "MEDIUM",
@@ -9388,7 +9388,7 @@
           "FixedVersion": "6.1.13",
           "Status": "fixed",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "SeveritySource": "ghsa",
           "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2024-38816",
@@ -9397,7 +9397,7 @@
             "Name": "GitHub Security Advisory Maven",
             "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Amaven"
           },
-          "Fingerprint": "sha256:54b9458316b46e22c18614d44ac76fe167b88fafa249afa7e0f0e94dc0b00efd",
+          "Fingerprint": "sha256:4492a662886a494200c9388825ef5eb6f9c4a5922391d8caa969cf66502affe3",
           "Title": "spring-webmvc: Path Traversal Vulnerability in Spring Applications Using RouterFunctions and FileSystemResource",
           "Description": "Applications serving static resources through the functional web frameworks WebMvc.fn or WebFlux.fn are vulnerable to path traversal attacks. An attacker can craft malicious HTTP requests and obtain any file on the file system that is also accessible to the process in which the Spring application is running.\n\nSpecifically, an application is vulnerable when both of the following are true:\n\n  *  the web application uses RouterFunctions to serve static resources\n  *  resource handling is explicitly configured with a FileSystemResource location\n\n\nHowever, malicious requests are blocked and rejected when any of the following is true:\n\n  *  the  Spring Security HTTP Firewall https://docs.spring.io/spring-security/reference/servlet/exploits/firewall.html  is in use\n  *  the application runs on Tomcat or Jetty",
           "Severity": "HIGH",
@@ -9446,7 +9446,7 @@
           "FixedVersion": "6.1.14",
           "Status": "fixed",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "SeveritySource": "ghsa",
           "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2024-38819",
@@ -9455,7 +9455,7 @@
             "Name": "GitHub Security Advisory Maven",
             "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Amaven"
           },
-          "Fingerprint": "sha256:883b2807fb7f88a3f9ea7037f357129734dc26d8670bd81b5d87ec759f63a123",
+          "Fingerprint": "sha256:280769d1c8c40afcd01e282b1302e9de5e6837f7ff50df610c3f1dcf23e5ae60",
           "Title": "org.springframework:spring-webmvc: Path traversal vulnerability in functional web frameworks",
           "Description": "Applications serving static resources through the functional web frameworks WebMvc.fn or WebFlux.fn are vulnerable to path traversal attacks. An attacker can craft malicious HTTP requests and obtain any file on the file system that is also accessible to the process in which the Spring application is running.",
           "Severity": "HIGH",
@@ -9506,7 +9506,7 @@
           "FixedVersion": "6.2.10",
           "Status": "fixed",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "SeveritySource": "ghsa",
           "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2025-41242",
@@ -9515,7 +9515,7 @@
             "Name": "GitHub Security Advisory Maven",
             "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Amaven"
           },
-          "Fingerprint": "sha256:e2a0a60111c7d7a2e5dacf5f599b84eee7c3dd4c50bc091234978bd2cf04b6ed",
+          "Fingerprint": "sha256:cfcba1f1ec2f974b2d8df04a45ea74abb3f5b7ad79550e1cfb11f779ed91286d",
           "Title": "org.springframework/spring-webmvc: Spring Framework MVC path traversal vulnerability",
           "Description": "Spring Framework MVC applications can be vulnerable to a “Path Traversal Vulnerability” when deployed on a non-compliant Servlet container.\n\nAn application can be vulnerable when all the following are true:\n\n  *  the application is deployed as a WAR or with an embedded Servlet container\n  *  the Servlet container  does not reject suspicious sequences https://jakarta.ee/specifications/servlet/6.1/jakarta-servlet-spec-6.1.html#uri-path-canonicalization \n  *  the application  serves static resources https://docs.spring.io/spring-framework/reference/web/webmvc/mvc-config/static-resources.html#page-title  with Spring resource handling\n\n\nWe have verified that applications deployed on Apache Tomcat or Eclipse Jetty are not vulnerable, as long as default security features are not disabled in the configuration. Because we cannot check exploits against all Servlet containers and configuration variants, we strongly recommend upgrading your application.",
           "Severity": "MEDIUM",
@@ -9563,7 +9563,7 @@
           "FixedVersion": "7.0.6, 6.2.17",
           "Status": "fixed",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "SeveritySource": "ghsa",
           "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-22737",
@@ -9572,7 +9572,7 @@
             "Name": "GitHub Security Advisory Maven",
             "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Amaven"
           },
-          "Fingerprint": "sha256:94adb3f02010d1e89d2c868dfdd6b246c803507cbdd47d8d2108364c990602e6",
+          "Fingerprint": "sha256:f17abb8287b57898ab868c020082fa6c0826ff66366f5d4492ed9227dddc46b4",
           "Title": "Spring Framework: Spring Framework: Information disclosure via Java scripting engine enabled template views",
           "Description": "Use of Java scripting engine enabled (e.g. JRuby, Jython) template views in Spring MVC and Spring WebFlux applications can result in disclosure of content from files outside the configured locations for script template views. This issue affects Spring Framework: from 7.0.0 through 7.0.5, from 6.2.0 through 6.2.16, from 6.1.0 through 6.1.25, from 5.3.0 through 5.3.46.",
           "Severity": "MEDIUM",
@@ -9618,7 +9618,7 @@
           "FixedVersion": "7.0.6, 6.2.17",
           "Status": "fixed",
           "Layer": {
-            "DiffID": "sha256:a4608654c931ca4bdda57c5d4cbc8c99aed194efea320aea59052a98c82ef0da"
+            "DiffID": "sha256:4e34bf2ebe9d9223b3ef3d896ee4fa19f8707403676492af7ef86aa9ef5fc5d4"
           },
           "SeveritySource": "ghsa",
           "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-22735",
@@ -9627,7 +9627,7 @@
             "Name": "GitHub Security Advisory Maven",
             "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Amaven"
           },
-          "Fingerprint": "sha256:d0ddaf5bc2616148e53720ad30bdeb09505691674ebdeb1c2750709ca9fd889d",
+          "Fingerprint": "sha256:f3adeb21a01bad0d6bfdb94e5e08ca6d4bef379c4b0710ed7032cf1a4a07589e",
           "Title": "org.springframework/spring-webmvc: org.springframework/spring-webflux: Spring MVC and WebFlux: Stream corruption vulnerability when using Server-Sent Events",
           "Description": "Spring MVC and WebFlux applications are vulnerable to stream corruption when using Server-Sent Events (SSE). This issue affects Spring Foundation: from 7.0.0 through 7.0.5, from 6.2.0 through 6.2.16, from 6.1.0 through 6.1.25, from 5.3.0 through 5.3.46.",
           "Severity": "LOW",
