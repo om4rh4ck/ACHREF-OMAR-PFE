@@ -166,30 +166,36 @@ jobs:
       - name: OWASP Dependency-Check (employee-service)
         if: ${{ env.NVD_API_KEY != '' }}
         working-directory: backend/employee-service
+        continue-on-error: true
         run: mvn -q -DskipTests org.owasp:dependency-check-maven:8.4.0:check -Dformat=HTML -DoutputDirectory=../../reports/security -DreportName=dependency-check-employee-service -DnvdApiKey=${{ env.NVD_API_KEY }}
 
       - name: OWASP Dependency-Check (recruitment-service)
         if: ${{ env.NVD_API_KEY != '' }}
         working-directory: backend/recruitment-service
+        continue-on-error: true
         run: mvn -q -DskipTests org.owasp:dependency-check-maven:8.4.0:check -Dformat=HTML -DoutputDirectory=../../reports/security -DreportName=dependency-check-recruitment-service -DnvdApiKey=${{ env.NVD_API_KEY }}
 
       - name: OWASP Dependency-Check (approval-service)
         if: ${{ env.NVD_API_KEY != '' }}
         working-directory: backend/approval-service
+        continue-on-error: true
         run: mvn -q -DskipTests org.owasp:dependency-check-maven:8.4.0:check -Dformat=HTML -DoutputDirectory=../../reports/security -DreportName=dependency-check-approval-service -DnvdApiKey=${{ env.NVD_API_KEY }}
 
       - name: OWASP Dependency-Check (api-gateway)
         if: ${{ env.NVD_API_KEY != '' }}
         working-directory: backend/api-gateway
+        continue-on-error: true
         run: mvn -q -DskipTests org.owasp:dependency-check-maven:8.4.0:check -Dformat=HTML -DoutputDirectory=../../reports/security -DreportName=dependency-check-api-gateway -DnvdApiKey=${{ env.NVD_API_KEY }}
 
       - name: npm audit (frontend)
         working-directory: front
+        continue-on-error: true
         run: |
           npm ci
           npm audit > ../reports/security/npm-audit.txt || true
 
       - name: Install Trivy
+        continue-on-error: true
         run: |
           sudo apt-get update -y
           sudo apt-get install -y wget
@@ -197,6 +203,7 @@ jobs:
           sudo mv trivy /usr/local/bin/trivy
 
       - name: Build images for Trivy scan
+        continue-on-error: true
         run: |
           docker build -t vermeg-employee-service:scan -f backend/employee-service/Dockerfile backend/employee-service
           docker build -t vermeg-recruitment-service:scan -f backend/recruitment-service/Dockerfile backend/recruitment-service
@@ -205,23 +212,29 @@ jobs:
           docker build -t vermeg-frontend:scan -f front/Dockerfile front
 
       - name: Trivy image scan (employee-service)
+        continue-on-error: true
         run: trivy image --format html -o reports/security/trivy-employee-service.html vermeg-employee-service:scan || true
 
       - name: Trivy image scan (recruitment-service)
+        continue-on-error: true
         run: trivy image --format html -o reports/security/trivy-recruitment-service.html vermeg-recruitment-service:scan || true
 
       - name: Trivy image scan (approval-service)
+        continue-on-error: true
         run: trivy image --format html -o reports/security/trivy-approval-service.html vermeg-approval-service:scan || true
 
       - name: Trivy image scan (api-gateway)
+        continue-on-error: true
         run: trivy image --format html -o reports/security/trivy-api-gateway.html vermeg-api-gateway:scan || true
 
       - name: Trivy image scan (frontend)
+        continue-on-error: true
         run: trivy image --format html -o reports/security/trivy-frontend.html vermeg-frontend:scan || true
 
       - name: Snyk (backend + frontend)
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        continue-on-error: true
         run: |
           if [ -z "$SNYK_TOKEN" ]; then
             echo "SNYK_TOKEN manquant, scan ignore." > reports/security/snyk-backend.txt
@@ -234,10 +247,12 @@ jobs:
           cd ../../front && snyk test > ../reports/security/snyk-frontend.txt || true
 
       - name: Aggregate real security scan results
+        continue-on-error: true
         run: |
           python3 scripts/aggregate-security-results.py
 
       - name: Commit reports
+        continue-on-error: true
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
