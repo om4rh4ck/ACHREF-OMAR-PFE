@@ -6,6 +6,42 @@ on:
   pull_request:
 
 jobs:
+  secrets-detection:
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name != 'push' || !contains(github.event.head_commit.message, '[skip ci]') }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: GitLeaks secret scan
+        uses: gitleaks/gitleaks-action@v2
+        id: gitleaks
+        with:
+          source: .
+          verbose: true
+          fail: false
+          exit-code: 0
+        continue-on-error: true
+
+      - name: Generate GitLeaks report
+        if: always()
+        run: |
+          mkdir -p reports/security
+          cat > reports/security/gitleaks-report.txt <<EOF
+          GitLeaks Secret Scan Report
+          ============================
+          Status: Completed $([ "${{ steps.gitleaks.outcome }}" = "success" ] && echo "✓" || echo "✗")
+          Timestamp: $(date)
+          
+          For detailed GitLeaks results, check GitHub's Security tab.
+          To prevent secrets in future commits:
+          1. Use GitHub Secrets for sensitive data
+          2. Use .gitignore for local config files
+          3. Use pre-commit hooks with gitleaks locally
+          EOF
+
   backend-build:
     runs-on: ubuntu-latest
     if: ${{ github.event_name != 'push' || !contains(github.event.head_commit.message, '[skip ci]') }}
@@ -196,6 +232,10 @@ jobs:
           snyk auth "$SNYK_TOKEN"
           cd backend/employee-service && snyk test > ../../reports/security/snyk-backend.txt || true
           cd ../../front && snyk test > ../reports/security/snyk-frontend.txt || true
+
+      - name: Aggregate real security scan results
+        run: |
+          python3 scripts/aggregate-security-results.py
 
       - name: Commit reports
         run: |

@@ -171,6 +171,30 @@ h1 {
   font-weight: 600;
 }
 
+.chip.critical {
+  background: rgba(255, 59, 87, 0.2);
+  border-color: rgba(255, 59, 87, 0.6);
+  color: #ff8fa3;
+}
+
+.chip.high {
+  background: rgba(255, 152, 0, 0.2);
+  border-color: rgba(255, 152, 0, 0.6);
+  color: #ffb74d;
+}
+
+.chip.medium {
+  background: rgba(255, 193, 7, 0.2);
+  border-color: rgba(255, 193, 7, 0.6);
+  color: #ffd54f;
+}
+
+.chip.low {
+  background: rgba(76, 175, 80, 0.2);
+  border-color: rgba(76, 175, 80, 0.6);
+  color: #81c784;
+}
+
 .grid {
   margin-top: 20px;
   display: grid;
