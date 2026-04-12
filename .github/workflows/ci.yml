@@ -277,3 +277,118 @@ jobs:
           git diff --staged --quiet && echo "No report changes" && exit 0
           git commit -m "chore: update security reports [skip ci]"
           git push
+
+  docker-push:
+    runs-on: ubuntu-latest
+    needs: [backend-build, frontend-build, security-reports]
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' && !contains(github.event.head_commit.message, '[skip ci]') }}
+    env:
+      REGISTRY: docker.io
+      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ env.DOCKERHUB_USERNAME }}
+          password: ${{ env.DOCKERHUB_TOKEN }}
+
+      - name: Extract metadata
+        id: meta
+        run: |
+          echo "COMMIT_SHORT=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+          echo "BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> $GITHUB_OUTPUT
+
+      - name: Build and push Employee Service
+        uses: docker/build-push-action@v5
+        with:
+          context: ./backend/employee-service
+          file: ./backend/employee-service/Dockerfile
+          push: true
+          tags: |
+            ${{ env.DOCKERHUB_USERNAME }}/vermeg-employee-service:latest
+            ${{ env.DOCKERHUB_USERNAME }}/vermeg-employee-service:${{ steps.meta.outputs.COMMIT_SHORT }}
+          labels: |
+            org.opencontainers.image.created=${{ steps.meta.outputs.BUILD_DATE }}
+            org.opencontainers.image.revision=${{ github.sha }}
+
+      - name: Build and push Recruitment Service
+        uses: docker/build-push-action@v5
+        with:
+          context: ./backend/recruitment-service
+          file: ./backend/recruitment-service/Dockerfile
+          push: true
+          tags: |
+            ${{ env.DOCKERHUB_USERNAME }}/vermeg-recruitment-service:latest
+            ${{ env.DOCKERHUB_USERNAME }}/vermeg-recruitment-service:${{ steps.meta.outputs.COMMIT_SHORT }}
+          labels: |
+            org.opencontainers.image.created=${{ steps.meta.outputs.BUILD_DATE }}
+            org.opencontainers.image.revision=${{ github.sha }}
+
+      - name: Build and push Approval Service
+        uses: docker/build-push-action@v5
+        with:
+          context: ./backend/approval-service
+          file: ./backend/approval-service/Dockerfile
+          push: true
+          tags: |
+            ${{ env.DOCKERHUB_USERNAME }}/vermeg-approval-service:latest
+            ${{ env.DOCKERHUB_USERNAME }}/vermeg-approval-service:${{ steps.meta.outputs.COMMIT_SHORT }}
+          labels: |
+            org.opencontainers.image.created=${{ steps.meta.outputs.BUILD_DATE }}
+            org.opencontainers.image.revision=${{ github.sha }}
+
+      - name: Build and push API Gateway
+        uses: docker/build-push-action@v5
+        with:
+          context: ./backend/api-gateway
+          file: ./backend/api-gateway/Dockerfile
+          push: true
+          tags: |
+            ${{ env.DOCKERHUB_USERNAME }}/vermeg-api-gateway:latest
+            ${{ env.DOCKERHUB_USERNAME }}/vermeg-api-gateway:${{ steps.meta.outputs.COMMIT_SHORT }}
+          labels: |
+            org.opencontainers.image.created=${{ steps.meta.outputs.BUILD_DATE }}
+            org.opencontainers.image.revision=${{ github.sha }}
+
+      - name: Build and push Frontend
+        uses: docker/build-push-action@v5
+        with:
+          context: ./front
+          file: ./front/Dockerfile
+          push: true
+          tags: |
+            ${{ env.DOCKERHUB_USERNAME }}/vermeg-frontend:latest
+            ${{ env.DOCKERHUB_USERNAME }}/vermeg-frontend:${{ steps.meta.outputs.COMMIT_SHORT }}
+          labels: |
+            org.opencontainers.image.created=${{ steps.meta.outputs.BUILD_DATE }}
+            org.opencontainers.image.revision=${{ github.sha }}
+
+  deploy-ssh:
+    runs-on: ubuntu-latest
+    needs: [docker-push]
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' && !contains(github.event.head_commit.message, '[skip ci]') }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: SSH Deploy via private key
+        uses: appleboy/ssh-action@master
+        continue-on-error: true
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            cd ${{ secrets.DEPLOY_PATH }}
+            git pull origin master
+            docker compose -f backend/docker-compose.yml pull
+            docker compose -f backend/docker-compose.yml up -d
+            echo "✅ Deployment completed at $(date)"
