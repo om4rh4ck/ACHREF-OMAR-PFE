@@ -91,9 +91,9 @@ Exemple:
 
 ## 11. Security Dashboard Professional
 
-### 📊 Nouveau Dashboard Professionnel
+### 📊 Dashboard Professionnel avec Interface Sidebar
 
-Le dashboard a été complètement modernisé avec une interface de niveau entreprise:
+Le dashboard a été complètement redessiné avec une interface moderne de niveau entreprise:
 
 ```bash
 # Depuis la racine du projet:
@@ -101,21 +101,35 @@ cd reports/security
 npx http-server -p 8099 -c-1
 ```
 
-Puis acceder a: **http://localhost:8099/professional-dashboard.html**
+Puis acceder a: **http://localhost:8099/dashboard.html**
 
-### 📄 Nouveautés - Rapports Professionnels
+### 🎨 Fonctionnalités du Dashboard
+
+✅ **Interface Moderne**
+- Sidebar de navigation avec 6 sections
+- Dark theme professionnel
+- Cartes de statistiques en temps réel
+- Responsive design (desktop, tablet, mobile)
+
+✅ **Sections de Scan**
+- **Overview**: Vue d'ensemble consolidée
+- **OWASP**: Résultats dependency-check (Java)
+- **Trivy**: Résultats image scans (Docker)
+- **Snyk**: Analyse continue SCA/SAST
+- **npm audit**: Dépendances frontend
+- **GitLeaks**: Détection des secrets
 
 ✅ **Rapports PDF Executifs**
-- Formatage professionnel avec sections structurées
-- Résumés exécutifs avec métriques clés
-- Recommandations spécifiques par service
-- Téléchargeable pour présentation aux stakeholders
+- Génération automatique à chaque push
+- Résumés exécutifs avec métriques
+- Recommandations par service
+- Téléchargeable pour stakeholders
 
 ✅ **Insights Auto-Générés**
-- Analyse automatique des résultats de scan
-- Recommandations en français professionnel
+- Analyse automatique des résultats
+- Recommandations French professionnelles
 - Classement par priorité (CRITICAL → LOW)
-- Actions spécifiques pour chaque vulnérabilité
+- Actions spécifiques et mesurables
 
 ✅ **Historique & Archive**
 - Snapshots journaliers des métriques
