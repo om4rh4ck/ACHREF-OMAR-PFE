@@ -1,0 +1,289 @@
+
+        <!DOCTYPE html>
+        <html lang="fr">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Security Insights Report</title>
+            <style>
+                body {
+                    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                    margin: 0;
+                    padding: 20px;
+                    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                    min-height: 100vh;
+                }
+                
+                .container {
+                    max-width: 1200px;
+                    margin: 0 auto;
+                    background: white;
+                    border-radius: 12px;
+                    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+                    overflow: hidden;
+                }
+                
+                .header {
+                    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                    color: white;
+                    padding: 30px;
+                    text-align: center;
+                }
+                
+                .header h1 {
+                    margin: 0;
+                    font-size: 2.5em;
+                }
+                
+                .header p {
+                    margin: 10px 0 0 0;
+                    opacity: 0.9;
+                }
+                
+                .content {
+                    padding: 30px;
+                }
+                
+                .insight-card {
+                    margin-bottom: 20px;
+                    border-left: 5px solid #667eea;
+                    padding: 20px;
+                    background: #f9f9f9;
+                    border-radius: 6px;
+                }
+                
+                .insight-card.critical {
+                    border-left-color: #e74c3c;
+                    background: #fdeaea;
+                }
+                
+                .insight-card.high {
+                    border-left-color: #e67e22;
+                    background: #fdf3e9;
+                }
+                
+                .insight-card.medium {
+                    border-left-color: #f39c12;
+                    background: #fef9e9;
+                }
+                
+                .insight-card.low {
+                    border-left-color: #f1c40f;
+                    background: #fffde9;
+                }
+                
+                .insight-card.clean {
+                    border-left-color: #27ae60;
+                    background: #eafce9;
+                }
+                
+                .insight-header {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    margin-bottom: 10px;
+                }
+                
+                .severity {
+                    display: inline-block;
+                    padding: 5px 12px;
+                    border-radius: 20px;
+                    font-size: 0.85em;
+                    font-weight: bold;
+                    color: white;
+                }
+                
+                .severity.critical {
+                    background: #e74c3c;
+                }
+                
+                .severity.high {
+                    background: #e67e22;
+                }
+                
+                .severity.medium {
+                    background: #f39c12;
+                }
+                
+                .severity.low {
+                    background: #f1c40f;
+                    color: #333;
+                }
+                
+                .severity.clean {
+                    background: #27ae60;
+                }
+                
+                .service-badge {
+                    display: inline-block;
+                    background: #ecf0f1;
+                    padding: 4px 10px;
+                    border-radius: 4px;
+                    font-size: 0.9em;
+                    margin: 5px 5px 5px 0;
+                    color: #2c3e50;
+                }
+                
+                .issue {
+                    margin: 10px 0;
+                    font-weight: 500;
+                    color: #2c3e50;
+                }
+                
+                .recommendation {
+                    background: white;
+                    padding: 15px;
+                    border-radius: 4px;
+                    margin: 10px 0;
+                    border-left: 3px solid #3498db;
+                    line-height: 1.6;
+                    color: #34495e;
+                }
+                
+                .stats {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                    gap: 15px;
+                    margin-bottom: 30px;
+                }
+                
+                .stat-box {
+                    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                    color: white;
+                    padding: 20px;
+                    border-radius: 8px;
+                    text-align: center;
+                }
+                
+                .stat-box h3 {
+                    margin: 0;
+                    font-size: 2em;
+                }
+                
+                .stat-box p {
+                    margin: 5px 0 0 0;
+                    opacity: 0.9;
+                }
+                
+                .footer {
+                    background: #ecf0f1;
+                    padding: 20px;
+                    text-align: center;
+                    color: #7f8c8d;
+                    font-size: 0.9em;
+                    border-top: 1px solid #bdc3c7;
+                }
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <div class="header">
+                    <h1>🔐 Security Insights Report</h1>
+                    <p>VERMEG SIRH Platform - 2026-04-12 14:46:17</p>
+                </div>
+                
+                <div class="content">
+                    <div class="stats">
+                        <div class="stat-box">
+                            <h3>5</h3>
+                            <p>🔴 Critical Issues</p>
+                        </div>
+                        <div class="stat-box">
+                            <h3>0</h3>
+                            <p>🟠 High Priority</p>
+                        </div>
+                        <div class="stat-box">
+                            <h3>0</h3>
+                            <p>🟡 Medium Priority</p>
+                        </div>
+                        <div class="stat-box">
+                            <h3>0</h3>
+                            <p>✅ Clean</p>
+                        </div>
+                    </div>
+        
+            <div class="insight-card critical">
+                <div class="insight-header">
+                    <div>
+                        <h3>Trivy Container Image</h3>
+                        <div class="service-badge">employee-service</div>
+                    </div>
+                    <span class="severity critical">CRITICAL</span>
+                </div>
+                <div class="issue">📌 Image contient 4 vulnérabilités critiques détectées</div>
+                <div class="recommendation">
+                    <strong>💡 Action Recommandée:</strong><br/>
+                    🔴 URGENT: Reconstruire l'image Docker du employee-service avec des versions de base à jour (ex: FROM openjdk:21-slim au lieu de versions plus anciennes). Appliquer les correctifs de sécurité. Ne pas utiliser en production tant que ces vulnérabilités ne sont pas corrigées.
+                </div>
+            </div>
+            
+            <div class="insight-card critical">
+                <div class="insight-header">
+                    <div>
+                        <h3>Trivy Container Image</h3>
+                        <div class="service-badge">recruitment-service</div>
+                    </div>
+                    <span class="severity critical">CRITICAL</span>
+                </div>
+                <div class="issue">📌 Image contient 4 vulnérabilités critiques détectées</div>
+                <div class="recommendation">
+                    <strong>💡 Action Recommandée:</strong><br/>
+                    🔴 URGENT: Reconstruire l'image Docker du recruitment-service avec des versions de base à jour (ex: FROM openjdk:21-slim au lieu de versions plus anciennes). Appliquer les correctifs de sécurité. Ne pas utiliser en production tant que ces vulnérabilités ne sont pas corrigées.
+                </div>
+            </div>
+            
+            <div class="insight-card critical">
+                <div class="insight-header">
+                    <div>
+                        <h3>Trivy Container Image</h3>
+                        <div class="service-badge">approval-service</div>
+                    </div>
+                    <span class="severity critical">CRITICAL</span>
+                </div>
+                <div class="issue">📌 Image contient 4 vulnérabilités critiques détectées</div>
+                <div class="recommendation">
+                    <strong>💡 Action Recommandée:</strong><br/>
+                    🔴 URGENT: Reconstruire l'image Docker du approval-service avec des versions de base à jour (ex: FROM openjdk:21-slim au lieu de versions plus anciennes). Appliquer les correctifs de sécurité. Ne pas utiliser en production tant que ces vulnérabilités ne sont pas corrigées.
+                </div>
+            </div>
+            
+            <div class="insight-card critical">
+                <div class="insight-header">
+                    <div>
+                        <h3>Trivy Container Image</h3>
+                        <div class="service-badge">api-gateway</div>
+                    </div>
+                    <span class="severity critical">CRITICAL</span>
+                </div>
+                <div class="issue">📌 Image contient 2 vulnérabilités critiques détectées</div>
+                <div class="recommendation">
+                    <strong>💡 Action Recommandée:</strong><br/>
+                    🔴 URGENT: Reconstruire l'image Docker du api-gateway avec des versions de base à jour (ex: FROM openjdk:21-slim au lieu de versions plus anciennes). Appliquer les correctifs de sécurité. Ne pas utiliser en production tant que ces vulnérabilités ne sont pas corrigées.
+                </div>
+            </div>
+            
+            <div class="insight-card critical">
+                <div class="insight-header">
+                    <div>
+                        <h3>Trivy Container Image</h3>
+                        <div class="service-badge">frontend</div>
+                    </div>
+                    <span class="severity critical">CRITICAL</span>
+                </div>
+                <div class="issue">📌 Image contient 3 vulnérabilités critiques détectées</div>
+                <div class="recommendation">
+                    <strong>💡 Action Recommandée:</strong><br/>
+                    🔴 URGENT: Reconstruire l'image Docker du frontend avec des versions de base à jour (ex: FROM openjdk:21-slim au lieu de versions plus anciennes). Appliquer les correctifs de sécurité. Ne pas utiliser en production tant que ces vulnérabilités ne sont pas corrigées.
+                </div>
+            </div>
+            
+                </div>
+                
+                <div class="footer">
+                    <p><strong>VERMEG Security Team</strong> | Rapport généré automatiquement via CI/CD</p>
+                    <p>Pour questions ou escalade: security@vermeg.com</p>
+                </div>
+            </div>
+        </body>
+        </html>
+        

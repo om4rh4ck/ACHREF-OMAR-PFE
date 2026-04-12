@@ -1,228 +1,80 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Security Report History</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 20px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-        }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .header {
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            margin-bottom: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        }
-
-        .header h1 {
-            margin: 0;
-            color: #2c3e50;
-        }
-
-        .header p {
-            margin: 10px 0 0 0;
-            color: #7f8c8d;
-        }
-
-        .report-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 15px;
-            margin-bottom: 30px;
-        }
-
-        .report-card {
-            background: white;
-            border-radius: 8px;
-            padding: 15px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .report-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        }
-
-        .date {
-            font-weight: bold;
-            color: #3498db;
-            margin-bottom: 10px;
-            font-size: 1.1em;
-        }
-
-        .report-stat {
-            display: flex;
-            justify-content: space-between;
-            padding: 4px 0;
-            border-bottom: 1px solid #ecf0f1;
-            font-size: 0.9em;
-        }
-
-        .report-stat:last-child {
-            border-bottom: none;
-        }
-
-        .stat-value {
-            font-weight: bold;
-        }
-
-        .critical { color: #c0392b; }
-        .high { color: #e67e22; }
-        .medium { color: #f39c12; }
-        .low { color: #27ae60; }
-
-        .actions {
-            margin-top: 10px;
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            flex: 1;
-            min-width: 100px;
-            padding: 6px 10px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 0.85em;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 4px;
-            transition: all 0.2s;
-        }
-
-        .btn-pdf {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-
-        .btn-pdf:hover {
-            transform: scale(1.05);
-            box-shadow: 0 3px 10px rgba(102, 126, 234, 0.4);
-        }
-
-        .btn-insights {
-            background: #ecf0f1;
-            color: #2c3e50;
-        }
-
-        .btn-insights:hover {
-            background: #bdc3c7;
-        }
-
-        .footer {
-            text-align: center;
-            color: white;
-            margin-top: 30px;
-        }
-
-        @media (max-width: 768px) {
-            .report-grid {
-                grid-template-columns: 1fr;
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Security Report History</title>
+        <style>
+            body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 20px; background: #f5f5f5; }
+            h1 { color: #2c3e50; }
+            .report-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; }
+            .report-card { 
+                background: white; 
+                border-radius: 8px; 
+                padding: 15px; 
+                box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+                transition: transform 0.2s;
             }
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="header">
-            <h1>📊 Security Report History</h1>
-            <p>Browse historical security reports and trends</p>
-        </div>
-
+            .report-card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+            .date { font-weight: bold; color: #3498db; }
+            .critical { color: #c0392b; }
+            .high { color: #e67e22; }
+            .medium { color: #f39c12; }
+            .low { color: #27ae60; }
+            a { color: #3498db; text-decoration: none; }
+            a:hover { text-decoration: underline; }
+        </style>
+    </head>
+    <body>
+        <h1>📊 Security Report History</h1>
         <div class="report-grid">
+    
+            <div class="report-card">
+                <div class="date">📅 2026-04-12</div>
+                <p>
+                    <span class="critical">🔴 Critical: 17</span><br/>
+                    <span class="high">🟠 High: 123</span><br/>
+                    <span class="medium">🟡 Medium: 168</span><br/>
+                    <span class="low">🟢 Low: 527</span>
+                </p>
+                <a href="pdf/VERMEG-Security-Report-2026-04-12.pdf" target="_blank">📄 Download PDF</a>
+            </div>
+            
             <div class="report-card">
                 <div class="date">📅 2024-01-15</div>
-                <div class="report-stat">
-                    <span>Critical</span>
-                    <span class="stat-value critical">2</span>
-                </div>
-                <div class="report-stat">
-                    <span>High</span>
-                    <span class="stat-value high">5</span>
-                </div>
-                <div class="report-stat">
-                    <span>Medium</span>
-                    <span class="stat-value medium">12</span>
-                </div>
-                <div class="report-stat">
-                    <span>Low</span>
-                    <span class="stat-value low">8</span>
-                </div>
-                <div class="actions">
-                    <a href="pdf/VERMEG-Security-Report-2024-01-15.pdf" class="btn btn-pdf" target="_blank">📄 PDF</a>
-                    <a href="insights/insights-2024-01-15.html" class="btn btn-insights" target="_blank">💡 Insights</a>
-                </div>
+                <p>
+                    <span class="critical">🔴 Critical: 2</span><br/>
+                    <span class="high">🟠 High: 5</span><br/>
+                    <span class="medium">🟡 Medium: 12</span><br/>
+                    <span class="low">🟢 Low: 8</span>
+                </p>
+                <a href="pdf/VERMEG-Security-Report-2024-01-15.pdf" target="_blank">📄 Download PDF</a>
             </div>
-
+            
             <div class="report-card">
                 <div class="date">📅 2024-01-14</div>
-                <div class="report-stat">
-                    <span>Critical</span>
-                    <span class="stat-value critical">3</span>
-                </div>
-                <div class="report-stat">
-                    <span>High</span>
-                    <span class="stat-value high">7</span>
-                </div>
-                <div class="report-stat">
-                    <span>Medium</span>
-                    <span class="stat-value medium">15</span>
-                </div>
-                <div class="report-stat">
-                    <span>Low</span>
-                    <span class="stat-value low">10</span>
-                </div>
-                <div class="actions">
-                    <a href="pdf/VERMEG-Security-Report-2024-01-14.pdf" class="btn btn-pdf" target="_blank">📄 PDF</a>
-                    <a href="insights/insights-2024-01-14.html" class="btn btn-insights" target="_blank">💡 Insights</a>
-                </div>
+                <p>
+                    <span class="critical">🔴 Critical: 3</span><br/>
+                    <span class="high">🟠 High: 7</span><br/>
+                    <span class="medium">🟡 Medium: 15</span><br/>
+                    <span class="low">🟢 Low: 10</span>
+                </p>
+                <a href="pdf/VERMEG-Security-Report-2024-01-14.pdf" target="_blank">📄 Download PDF</a>
             </div>
-
+            
             <div class="report-card">
                 <div class="date">📅 2024-01-13</div>
-                <div class="report-stat">
-                    <span>Critical</span>
-                    <span class="stat-value critical">1</span>
-                </div>
-                <div class="report-stat">
-                    <span>High</span>
-                    <span class="stat-value high">4</span>
-                </div>
-                <div class="report-stat">
-                    <span>Medium</span>
-                    <span class="stat-value medium">10</span>
-                </div>
-                <div class="report-stat">
-                    <span>Low</span>
-                    <span class="stat-value low">6</span>
-                </div>
-                <div class="actions">
-                    <a href="pdf/VERMEG-Security-Report-2024-01-13.pdf" class="btn btn-pdf" target="_blank">📄 PDF</a>
-                    <a href="insights/insights-2024-01-13.html" class="btn btn-insights" target="_blank">💡 Insights</a>
-                </div>
+                <p>
+                    <span class="critical">🔴 Critical: 1</span><br/>
+                    <span class="high">🟠 High: 4</span><br/>
+                    <span class="medium">🟡 Medium: 10</span><br/>
+                    <span class="low">🟢 Low: 6</span>
+                </p>
+                <a href="pdf/VERMEG-Security-Report-2024-01-13.pdf" target="_blank">📄 Download PDF</a>
             </div>
+            
         </div>
-
-        <div class="footer">
-            <p>🔒 VERMEG Security Dashboard | Last updated: 2024-01-15</p>
-        </div>
-    </div>
-</body>
-</html>
+    </body>
+    </html>
+    

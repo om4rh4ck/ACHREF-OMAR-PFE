@@ -1,8 +1,8 @@
 {
-  "timestamp": "2024-01-15T10:30:45",
-  "critical": 2,
-  "high": 5,
-  "medium": 12,
-  "low": 8,
-  "total": 27
+  "timestamp": "2026-04-12T14:46:18.012781",
+  "critical": 17,
+  "high": 118,
+  "medium": 168,
+  "low": 477,
+  "total": 780
 }
