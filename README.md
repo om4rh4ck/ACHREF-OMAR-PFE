@@ -89,9 +89,11 @@ Exemple:
 - `backend/keycloak`: realm import
 - `backend/db/seed.sql`: donnees de demonstration
 
-## 11. Security Dashboard
+## 11. Security Dashboard Professional
 
-### Lancer le dashboard localement
+### 📊 Nouveau Dashboard Professionnel
+
+Le dashboard a été complètement modernisé avec une interface de niveau entreprise:
 
 ```bash
 # Depuis la racine du projet:
@@ -99,25 +101,78 @@ cd reports/security
 npx http-server -p 8099 -c-1
 ```
 
-Puis acceder a: **http://localhost:8099** ou **http://127.0.0.1:8099**
+Puis acceder a: **http://localhost:8099/professional-dashboard.html**
 
-### Dashboard Features
+### 📄 Nouveautés - Rapports Professionnels
 
-- 🛡️ Vue d'ensemble des vulnerabilites
-- 🔎 OWASP Dependency-Check (Java + npm)
-- 🐳 Trivy Image Scan (Docker images)
-- 🧪 Snyk Continuous Analysis
-- 📦 npm audit (Frontend)
-- 🔐 GitLeaks Secret Detection
+✅ **Rapports PDF Executifs**
+- Formatage professionnel avec sections structurées
+- Résumés exécutifs avec métriques clés
+- Recommandations spécifiques par service
+- Téléchargeable pour présentation aux stakeholders
 
-Tous les rapports sont generes automatiquement par le CI/CD a chaque push.
+✅ **Insights Auto-Générés**
+- Analyse automatique des résultats de scan
+- Recommandations en français professionnel
+- Classement par priorité (CRITICAL → LOW)
+- Actions spécifiques pour chaque vulnérabilité
 
-### Configuration
+✅ **Historique & Archive**
+- Snapshots journaliers des métriques
+- Historique 30 jours
+- Analyse de tendances
+- Accès rapide aux rapports antérieurs
 
-Pour activer les vrais scans OWASP:
-1. Genere une clé NVD API sur https://nvd.nist.gov
-2. Add dans GitHub Settings → Secrets → `NVD_API_KEY`
-3. Push un commit pour declencher les scans
+✅ **Dashboard Moderne**
+- 4 onglets: Vue d'ensemble, Historique, Services, Insights
+- Visualisation temps réel des vulnérabilités
+- Statistiques par service
+- Interface responsive (mobile-friendly)
+
+### 📁 Structure des Rapports
+
+```
+reports/security/
+├── professional-dashboard.html    # Dashboard principal moderne
+├── pdf/                          # Rapports PDF professionnels
+│   └── VERMEG-Security-Report-2024-01-15.pdf
+├── insights/                     # Recommandations détaillées
+│   └── insights-2024-01-15.html
+├── archive/                      # Historique journalier
+├── dependency-check-*.html       # OWASP (Java)
+├── trivy-*.html                  # Trivy (Docker)
+└── latest-metrics.json          # Métriques actuelles
+```
+
+### 🎯 Fonctionnalités du Dashboard
+
+| Onglet | Contenu |
+|--------|---------|
+| **📊 Overview** | Statistiques en temps réel, breakdown par composant |
+| **📋 History** | Rapports précédents, PDF téléchargeable, insights linkés |
+| **🔧 Services** | Santé de chaque microservice, OWASP/Trivy status |
+| **💡 Insights** | Recommandations auto-générées, actions prioritaires |
+
+### 🔄 Génération Automatique
+
+À chaque push sur `master`, le pipeline CI/CD:
+1. Exécute tous les scans (OWASP, Trivy, npm audit, GitLeaks)
+2. Génère les rapports PDF
+3. Produit les insights avec recommandations
+4. Crée des snapshots d'archive
+5. Met à jour le dashboard automatiquement
+
+### 📖 Documentation Complète
+
+Pour voir tous les détails, configurations et bonnes pratiques:
+
+👉 Consulter: **[SECURITY_DASHBOARD.md](SECURITY_DASHBOARD.md)**
+
+Contient:
+- Guide d'utilisation complet
+- Format des rapports en détail
+- Intégration CI/CD
+- Personnalisation et support
 
 ## 12. CI/CD & Security
 
