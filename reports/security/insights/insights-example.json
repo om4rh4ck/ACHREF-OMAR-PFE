@@ -1,0 +1,42 @@
+[
+  {
+    "service": "api-gateway",
+    "type": "OWASP Dependency",
+    "severity": "CLEAN",
+    "issue": "L'image Container n'a pas de vulnérabilités détectées",
+    "recommendation": "✅ L'image Docker du api-gateway est sécurisée. Maintenir les mises à jour automatiques de l'image de base.",
+    "priority": 5
+  },
+  {
+    "service": "employee-service",
+    "type": "OWASP Dependency",
+    "severity": "CRITICAL",
+    "issue": "Found 2 critical dependency vulnerabilities in Spring Boot libraries",
+    "recommendation": "Immédiatement mettre à jour les dépendances critiques du employee-service. Ces vulnérabilités peuvent permettre une exécution de code distant (RCE). Effectuer les mises à jour avant le déploiement en production.",
+    "priority": 1
+  },
+  {
+    "service": "recruitment-service",
+    "type": "Trivy Container Image",
+    "severity": "HIGH",
+    "issue": "Image contient 5 vulnérabilités à haut risque détectées",
+    "recommendation": "Mettre à jour l'image de base du recruitment-service et reconstruire le conteneur. Examiner le Dockerfile pour les dépendances optionnelles qui pourraient être supprimées. Tester l'image reconstruite avant le déploiement.",
+    "priority": 2
+  },
+  {
+    "service": "approval-service",
+    "type": "Trivy Container Image",
+    "severity": "MEDIUM/LOW",
+    "issue": "Image contient 3 problèmes medium et 2 problèmes low",
+    "recommendation": "Planifier une mise à jour de l'image de base du approval-service dans le prochain cycle de compilation. Les problèmes medium peuvent être adressés dans 30 jours.",
+    "priority": 4
+  },
+  {
+    "service": "frontend",
+    "type": "npm Audit",
+    "severity": "MEDIUM",
+    "issue": "Application Angular a 3 dépendances à risque moyen",
+    "recommendation": "Exécuter 'npm audit fix' pour mettre à jour automatiquement les dépendances. Tester l'application après la mise à jour. Si 'npm audit fix' est insuffisant, mettre à jour manuellement les packages problématiques.",
+    "priority": 3
+  }
+]
