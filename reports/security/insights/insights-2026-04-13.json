@@ -1,0 +1,42 @@
+[
+  {
+    "service": "employee-service",
+    "type": "Trivy Container Image",
+    "severity": "CRITICAL",
+    "issue": "Image contient 4 vulnérabilités critiques détectées",
+    "recommendation": "🔴 URGENT: Reconstruire l'image Docker du employee-service avec des versions de base à jour (ex: FROM openjdk:21-slim au lieu de versions plus anciennes). Appliquer les correctifs de sécurité. Ne pas utiliser en production tant que ces vulnérabilités ne sont pas corrigées.",
+    "priority": 1
+  },
+  {
+    "service": "recruitment-service",
+    "type": "Trivy Container Image",
+    "severity": "CRITICAL",
+    "issue": "Image contient 4 vulnérabilités critiques détectées",
+    "recommendation": "🔴 URGENT: Reconstruire l'image Docker du recruitment-service avec des versions de base à jour (ex: FROM openjdk:21-slim au lieu de versions plus anciennes). Appliquer les correctifs de sécurité. Ne pas utiliser en production tant que ces vulnérabilités ne sont pas corrigées.",
+    "priority": 1
+  },
+  {
+    "service": "approval-service",
+    "type": "Trivy Container Image",
+    "severity": "CRITICAL",
+    "issue": "Image contient 4 vulnérabilités critiques détectées",
+    "recommendation": "🔴 URGENT: Reconstruire l'image Docker du approval-service avec des versions de base à jour (ex: FROM openjdk:21-slim au lieu de versions plus anciennes). Appliquer les correctifs de sécurité. Ne pas utiliser en production tant que ces vulnérabilités ne sont pas corrigées.",
+    "priority": 1
+  },
+  {
+    "service": "api-gateway",
+    "type": "Trivy Container Image",
+    "severity": "CRITICAL",
+    "issue": "Image contient 2 vulnérabilités critiques détectées",
+    "recommendation": "🔴 URGENT: Reconstruire l'image Docker du api-gateway avec des versions de base à jour (ex: FROM openjdk:21-slim au lieu de versions plus anciennes). Appliquer les correctifs de sécurité. Ne pas utiliser en production tant que ces vulnérabilités ne sont pas corrigées.",
+    "priority": 1
+  },
+  {
+    "service": "frontend",
+    "type": "Trivy Container Image",
+    "severity": "CRITICAL",
+    "issue": "Image contient 3 vulnérabilités critiques détectées",
+    "recommendation": "🔴 URGENT: Reconstruire l'image Docker du frontend avec des versions de base à jour (ex: FROM openjdk:21-slim au lieu de versions plus anciennes). Appliquer les correctifs de sécurité. Ne pas utiliser en production tant que ces vulnérabilités ne sont pas corrigées.",
+    "priority": 1
+  }
+]
