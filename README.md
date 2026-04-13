@@ -147,7 +147,7 @@ Puis acceder a: **http://localhost:8099/dashboard.html**
 
 ```
 reports/security/
-├── professional-dashboard.html    # Dashboard principal moderne
+├── dashboard.html                 # Professional security dashboard
 ├── pdf/                          # Rapports PDF professionnels
 │   └── VERMEG-Security-Report-2024-01-15.pdf
 ├── insights/                     # Recommandations détaillées

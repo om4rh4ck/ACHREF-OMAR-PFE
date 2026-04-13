@@ -36,7 +36,7 @@ Each scan generates detailed recommendations:
 
 ```
 reports/security/
-├── professional-dashboard.html    # Main dashboard (modern UI)
+├── dashboard.html                   # Professional security dashboard
 ├── latest-metrics.json           # Current vulnerability counts
 ├── history.html                  # Report history index
 ├── archive/                      # Daily metric snapshots
@@ -263,7 +263,7 @@ Daily snapshots for trend analysis:
 open reports/security/pdf/VERMEG-Security-Report-$(date +%Y-%m-%d).pdf
 
 # Share dashboard link
-# http://production-server:8099/professional-dashboard.html
+# http://production-server:8099/dashboard.html
 ```
 
 ---
@@ -272,7 +272,7 @@ open reports/security/pdf/VERMEG-Security-Report-$(date +%Y-%m-%d).pdf
 
 ### Modify Report Styling
 
-Edit `professional-dashboard.html` styles section (lines 10-200)
+Edit `dashboard.html` styles section (lines 10-200)
 
 ### Customize PDF Layout
 

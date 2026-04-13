@@ -53,7 +53,7 @@
 
 ```
 reports/security/
-├── professional-dashboard.html          # Dashboard principal (NOUVEAU)
+├── dashboard.html                       # Professional dashboard (UNIQUE)
 ├── latest-metrics.json                  # Métriques actuelles
 ├── history.html                         # Index de l'historique
 ├── pdf/                                 # Rapports PDF générés

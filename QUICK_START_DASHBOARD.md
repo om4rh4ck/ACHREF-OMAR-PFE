@@ -10,8 +10,8 @@ Trois nouveaux systèmes ont été relivrés:
 
 ### URL
 ```
-http://localhost:8099/professional-dashboard.html  
-http://server:8099/professional-dashboard.html (production)
+http://localhost:8099/dashboard.html  
+http://server:8099/dashboard.html (production)
 ```
 
 ### Fonctionnalités
@@ -251,7 +251,7 @@ npx -y http-server -p 8099 -c-1
 ### Accéder aux différents rapports
 ```bash
 # Dashboard principal
-http://localhost:8099/professional-dashboard.html
+http://localhost:8099/dashboard.html
 
 # Historique 30 jours
 http://localhost:8099/history.html
