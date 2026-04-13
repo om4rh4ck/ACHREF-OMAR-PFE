@@ -1,0 +1,49 @@
+# Security and SAST Requirements
+# Install with: pip install -r requirements-security.txt
+
+# Vault Integration
+hvac==1.2.1
+
+# Secret Management
+python-dotenv==1.0.0
+cryptography==41.0.7
+PyNaCl==1.5.0
+
+# HTTP Requests
+requests==2.31.0
+urllib3==2.1.0
+
+# JSON/YAML Processing
+PyYAML==6.0.1
+python-json-logger==2.0.7
+
+# Database Support
+psycopg2-binary==2.9.9
+mysql-connector-python==8.2.0
+
+# Security Scanning
+bandit==1.7.5
+semgrep==1.45.0
+
+# PDF Report Generation (from previous implementation)
+reportlab==4.0.7
+Pillow==10.1.0
+
+# Code Analysis
+radon==6.1.0
+pylint==3.0.3
+flake8==6.1.0
+black==23.12.1
+
+# Testing & Coverage
+pytest==7.4.3
+pytest-cov==4.1.0
+coverage==7.3.2
+
+# Utilities
+colorama==0.4.6
+tabulate==0.9.0
+click==8.1.7
+
+# Logging
+python-json-logger==2.0.7

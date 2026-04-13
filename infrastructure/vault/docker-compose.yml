@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  vault:
+    image: vault:latest
+    container_name: vault
+    ports:
+      - "8200:8200"
+    environment:
+      VAULT_ADDR: http://0.0.0.0:8200
+      VAULT_CONFIG_DIR: /vault/config
+      VAULT_API_ADDR: http://127.0.0.1:8200
+    volumes:
+      - ./vault-config.hcl:/vault/config/config.hcl
+      - vault-data:/vault/file
+      - ./scripts:/vault/scripts
+    command: vault server -config=/vault/config/config.hcl
+    cap_add:
+      - IPC_LOCK
+    networks:
+      - vermeg
+
+  vault-ui:
+    image: vault:latest
+    container_name: vault-ui
+    ports:
+      - "8201:8200"
+    environment:
+      VAULT_ADDR: http://vault:8200
+    depends_on:
+      - vault
+    networks:
+      - vermeg
+    command: |
+      sh -c "sleep 5 && echo '=== Vault UI available at http://localhost:8200 ==='
+             echo '=== Initialize Vault with: vault operator init ==='
+             echo '=== Then unseal with: vault operator unseal ==='
+             tail -f /dev/null"
+
+volumes:
+  vault-data:
+    driver: local
+
+networks:
+  vermeg:
+    external: true
+    # Or create if needed:
+    # driver: bridge

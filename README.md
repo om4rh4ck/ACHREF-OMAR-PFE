@@ -188,14 +188,99 @@ Contient:
 - Intégration CI/CD
 - Personnalisation et support
 
-## 12. CI/CD & Security
+## 12. SAST & Gestion des Secrets
+
+### 🔐 Security Testing (Static Application Security Testing)
+
+Analyse statique complète du code source avec multiples outils:
+
+**Outils intégrés:**
+- **SonarQube**: Code quality & security hotspots
+- **Bandit**: Python security analysis
+- **Semgrep**: Semantic code analysis (OWASP Top 10)
+- **ESLint**: JavaScript/TypeScript security
+- **SpotBugs**: Java static analysis
+
+**Execution manuelle:**
+```bash
+# Tous les SAST
+python3 scripts/sast-orchestrator.py all
+
+# Outil spécifique
+python3 scripts/sast-orchestrator.py sonar
+python3 scripts/sast-orchestrator.py bandit
+python3 scripts/sast-orchestrator.py semgrep
+python3 scripts/sast-orchestrator.py eslint
+```
+
+**Rapports générés:**
+- `reports/security/sast-report-*.html` (rapport consolidé)
+- `reports/security/sast-report-*.json` (données brutes)
+- Détails par outil dans `reports/security/`
+
+### 🔑 HashiCorp Vault - Gestion Centralisée des Secrets
+
+Stockage sécurisé et rotation automatique des credentials:
+
+**Setup (5 minutes):**
+```bash
+# 1. Démarrer Vault
+cd infrastructure/vault
+docker-compose up -d
+
+# 2. Initialiser
+bash vault-init.sh
+
+# 3. Configurer GitHub Secrets (voir QUICK_START_SAST_SECRETS.md)
+```
+
+**Secrets gérés:**
+- 🔐 Credentials base de données (PostgreSQL)
+- 🔐 API tokens (Snyk, SonarQube, NVD)
+- 🔐 OAuth tokens (GitHub, DockerHub)
+- 🔐 SSH keys (déploiement)
+
+**Rotation automatique:**
+```bash
+# Check credentials expirant dans 30 jours
+python3 scripts/vault-secrets-manager.py check-expiry
+
+# Rotation complète (tous les 90 jours)
+python3 scripts/vault-secrets-manager.py rotate-all
+
+# Sync vers GitHub Secrets
+python3 scripts/vault-secrets-manager.py sync-github
+```
+
+**Architecture:**
+```
+┌─────────────────────┐
+│  HashiCorp Vault    │
+│  (Secrets Storage)  │
+└─────────┬───────────┘
+          │
+      ┌───┴─────────────┬─────────────┐
+      ▼                 ▼             ▼
+  CI/CD Pipeline    Applications   Monitoring
+```
+
+**Documentation complète:**
+👉 [SAST-AND-SECRETS-GUIDE.md](docs/SAST-AND-SECRETS-GUIDE.md)
+👉 [QUICK_START_SAST_SECRETS.md](QUICK_START_SAST_SECRETS.md)
+👉 [CI_CD_ENHANCEMENT.md](docs/CI_CD_ENHANCEMENT.md)
+
+## 13. CI/CD & Security
 
 - **Workflow**: `.github/workflows/ci.yml`
-- **Auto-scans**: OWASP, Trivy, npm audit, Snyk, GitLeaks
-- **Rapports**: generes dans `reports/security/`
-- **Dashboard**: agrege tous les resultats en temps reel
+- **SAST Scans**: SonarQube, Bandit, Semgrep, SpotBugs, ESLint
+- **Dependency Checks**: OWASP, Trivy, npm audit, Snyk
+- **Secret Detection**: GitLeaks
+- **Secret Management**: HashiCorp Vault + GitHub Secrets
+- **Automated Rotation**: Credentials rotated based on policy
+- **Rapports**: Générés dans `reports/security/`
+- **Dashboard**: Agrège tous les résultats en temps réel
 
-Voir `SECURITY_DEVSECOPS.md` pour plus de details.
+Voir `SAST-AND-SECRETS-GUIDE.md` pour plus de détails.
 
 ```powershell
 git add .
@@ -204,10 +289,76 @@ git push
 
  
 
-## 12. Depannage rapide
-- Backend indisponible:
-  `docker compose -f backend/docker-compose.yml up -d`
-- Donnees vides:
-  executer `backend/seed.ps1`
-- WSL sans Docker Desktop:
-  utiliser l’IP WSL au lieu de `localhost`
+## 14. Depannage rapide
+
+**Backend indisponible:**
+```bash
+docker compose -f backend/docker-compose.yml up -d
+```
+
+**Donnees vides:**
+```powershell
+powershell -ExecutionPolicy Bypass -File backend/seed.ps1
+```
+
+**WSL sans Docker Desktop:**
+Utiliser l'IP WSL au lieu de `localhost`:
+```bash
+hostname -I
+```
+
+**Vault ne démarre pas:**
+```bash
+cd infrastructure/vault
+docker-compose down -v
+docker-compose up -d
+sleep 10
+bash vault-init.sh
+```
+
+**SAST tools manquants:**
+```bash
+pip install -r requirements-security.txt
+```
+
+---
+
+## 📚 Documentation Complète
+
+| Document | Contenu |
+|----------|---------|
+| [SAST-AND-SECRETS-GUIDE.md](docs/SAST-AND-SECRETS-GUIDE.md) | Guide complet SAST & Vault |
+| [QUICK_START_SAST_SECRETS.md](QUICK_START_SAST_SECRETS.md) | Setup rapide (5 min) |
+| [SECURITY_DASHBOARD.md](SECURITY_DASHBOARD.md) | Dashboard sécurité professionnel |
+| [CI_CD_ENHANCEMENT.md](docs/CI_CD_ENHANCEMENT.md) | Intégration CI/CD avancée |
+| [API_MAP.md](backend/API_MAP.md) | Mapping des endpoints API |
+
+---
+
+## ✅ Checklist Déploiement
+
+- [ ] Backend Docker running (`docker compose up -d`)
+- [ ] Database seeded (`backend/seed.ps1`)
+- [ ] Frontend accessible (`http://localhost:5173`)
+- [ ] Keycloak running (`http://localhost:8080`)
+- [ ] Vault initialized (`infrastructure/vault/vault-init.sh`)
+- [ ] SAST configured (`scripts/sast-orchestrator.py all`)
+- [ ] GitHub Secrets configured (VAULT_ADDR, VAULT_TOKEN, etc)
+- [ ] Test credentials rotation (`vault-secrets-manager.py check-expiry`)
+
+---
+
+## 📞 Support
+
+Pour des questions ou problèmes:
+
+1. Consulter la documentation appropriée (liens ci-dessus)
+2. Vérifier les logs: `docker logs <container-name>`
+3. Vérifier l'état des services: `http://localhost:8081/actuator/health`
+4. Créer une issue GitHub avec logs et contexte
+
+---
+
+**Version:** 2.0.0 (with SAST & Vault)  
+**Last Updated:** January 2024
+**Stack Quality:** ⭐⭐⭐⭐⭐ Enterprise-Grade
