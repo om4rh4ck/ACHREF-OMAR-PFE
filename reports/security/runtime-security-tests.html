@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Runtime Security Tests - VERMEG SIRH Security</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        .header h1 {
+            color: #0f172a;
+            margin-bottom: 10px;
+            font-size: 2em;
+        }
+        
+        .header p {
+            color: #666;
+            font-size: 1em;
+        }
+        
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .tab-btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            background: #f0f0f0;
+            color: #333;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .tab-btn.active {
+            background: #06b6d4;
+            color: white;
+        }
+        
+        .tab-btn:hover {
+            background: #e0e0e0;
+        }
+        
+        .tab-btn.active:hover {
+            background: #0891b2;
+        }
+        
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .test-section {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .test-section h2 {
+            color: #0f172a;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #06b6d4;
+            padding-bottom: 10px;
+            font-size: 1.6em;
+        }
+        
+        .test-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .test-card {
+            background: linear-gradient(135deg, #f9fafb 0%, #e5e7eb 100%);
+            padding: 20px;
+            border-radius: 6px;
+            border-left: 4px solid #06b6d4;
+        }
+        
+        .test-card h3 {
+            color: #0f172a;
+            margin-bottom: 10px;
+        }
+        
+        .test-card .status {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        
+        .status-pass {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        
+        .status-fail {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+        
+        .status-warning {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        
+        .status-info {
+            background: #dbeafe;
+            color: #0c2d6b;
+        }
+        
+        .issue {
+            background: #fff5f5;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 4px;
+            border-left: 4px solid;
+        }
+        
+        .issue.critical { border-left-color: #dc2626; background: #fef2f2; }
+        .issue.high { border-left-color: #f97316; background: #fffbeb; }
+        .issue.medium { border-left-color: #eab308; background: #fefce8; }
+        .issue.low { border-left-color: #10b981; background: #f0fdf4; }
+        
+        .issue-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        
+        .issue-title {
+            font-weight: bold;
+            color: #0f172a;
+        }
+        
+        .issue-severity {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 3px;
+            font-size: 0.8em;
+            font-weight: bold;
+            color: white;
+        }
+        
+        .severity-critical { background: #dc2626; }
+        .severity-high { background: #f97316; }
+        .severity-medium { background: #eab308; color: #000; }
+        .severity-low { background: #10b981; }
+        
+        .issue-description {
+            color: #4b5563;
+            margin: 8px 0;
+        }
+        
+        .remediation {
+            background: #f0fdf4;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 3px;
+            border-left: 3px solid #10b981;
+            color: #166534;
+        }
+        
+        .score-circle {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            font-size: 2em;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+        
+        .score-high {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        
+        .score-medium {
+            background: #fefce8;
+            color: #92400e;
+        }
+        
+        .score-low {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+        
+        .stats-line {
+            display: flex;
+            justify-content: space-around;
+            padding: 15px 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-label {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 5px;
+        }
+        
+        .stat-value {
+            font-size: 1.8em;
+            font-weight: bold;
+        }
+        
+        .stat-critical { color: #dc2626; }
+        .stat-high { color: #f97316; }
+        .stat-medium { color: #eab308; }
+        .stat-low { color: #10b981; }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #999;
+            font-size: 0.9em;
+        }
+        
+        .no-issues {
+            background: #f0fdf4;
+            padding: 20px;
+            border-radius: 4px;
+            text-align: center;
+            color: #166534;
+            border-left: 4px solid #10b981;
+        }
+        
+        .timestamp {
+            color: #999;
+            font-size: 0.95em;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔒 Runtime Security Tests Dashboard</h1>
+            <p><strong>VERMEG SIRH Security Suite</strong> - SSL/TLS, Security Headers, and DAST</p>
+            <p class="timestamp">Last scan: <span id="last-scan">Not yet run</span></p>
+        </div>
+        
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="overview">📊 Overview</button>
+            <button class="tab-btn" data-tab="ssl-tls">🔐 SSL/TLS</button>
+            <button class="tab-btn" data-tab="headers">📋 Headers</button>
+            <button class="tab-btn" data-tab="dast">⚠️ DAST</button>
+        </div>
+        
+        <!-- Overview Tab -->
+        <div id="overview" class="tab-content active">
+            <div class="test-section">
+                <h2>Security Testing Overview</h2>
+                
+                <div class="test-grid">
+                    <div class="test-card">
+                        <h3>🔐 SSL/TLS Configuration</h3>
+                        <p>Validates certificate validity, TLS versions, and cipher strength</p>
+                        <div class="status status-info">Run Test</div>
+                    </div>
+                    
+                    <div class="test-card">
+                        <h3>📋 Security Headers</h3>
+                        <p>Checks for presence and correctness of HTTP security headers</p>
+                        <div class="status status-info">Run Test</div>
+                    </div>
+                    
+                    <div class="test-card">
+                        <h3>⚠️ DAST Scanning</h3>
+                        <p>Dynamic application security testing for common vulnerabilities</p>
+                        <div class="status status-info">Run Test</div>
+                    </div>
+                </div>
+                
+                <div style="background: #f9fafb; padding: 20px; border-radius: 6px; margin-top: 20px;">
+                    <h3>🚀 Quick Start</h3>
+                    <p style="margin: 10px 0;">Run all security tests from the command line:</p>
+                    <pre style="background: #1f2937; color: #00ff00; padding: 15px; border-radius: 4px; overflow-x: auto;">
+python3 scripts/runtime-security-tester.py https://your-domain.com
+                    </pre>
+                </div>
+            </div>
+        </div>
+        
+        <!-- SSL/TLS Tab -->
+        <div id="ssl-tls" class="tab-content">
+            <div class="test-section">
+                <h2>🔐 SSL/TLS Configuration</h2>
+                
+                <div style="margin-bottom: 20px;">
+                    <h3>Certificate Check</h3>
+                    <div id="cert-status">
+                        <p style="color: #666;">No test results yet. Run: <code>python3 scripts/runtime-security-tester.py &lt;url&gt;</code></p>
+                    </div>
+                </div>
+                
+                <div style="margin-bottom: 20px;">
+                    <h3>TLS Versions</h3>
+                    <div id="tls-versions">
+                        <p style="color: #666;">Testing TLS 1.0, 1.1, 1.2, 1.3 compatibility</p>
+                    </div>
+                </div>
+                
+                <div style="margin-bottom: 20px;">
+                    <h3>Cipher Suites</h3>
+                    <div id="ciphers">
+                        <p style="color: #666;">Checking for weak cipher algorithms</p>
+                    </div>
+                </div>
+                
+                <div style="background: #f9fafb; padding: 15px; border-radius: 4px;">
+                    <h4>✅ What We Test</h4>
+                    <ul style="margin-left: 20px; line-height: 1.8;">
+                        <li>Certificate expiration and validity</li>
+                        <li>Certificate chain verification</li>
+                        <li>Supported TLS versions (1.2+, disable old versions)</li>
+                        <li>Cipher suite strength</li>
+                        <li>Subject Alternative Names (SAN)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Headers Tab -->
+        <div id="headers" class="tab-content">
+            <div class="test-section">
+                <h2>📋 HTTP Security Headers</h2>
+                
+                <div id="headers-score" style="text-align: center; margin: 20px 0;">
+                    <p style="color: #666;">No test results yet</p>
+                </div>
+                
+                <div id="headers-results" style="margin: 20px 0;">
+                    <!-- Results will be populated here -->
+                </div>
+                
+                <div style="background: #f9fafb; padding: 15px; border-radius: 4px;">
+                    <h4>🎯 Critical Headers Validated</h4>
+                    <ul style="margin-left: 20px; line-height: 1.8;">
+                        <li><strong>Strict-Transport-Security:</strong> Enforces HTTPS</li>
+                        <li><strong>X-Content-Type-Options:</strong> Prevents MIME sniffing</li>
+                        <li><strong>X-Frame-Options:</strong> Prevents clickjacking</li>
+                        <li><strong>Content-Security-Policy:</strong> XSS and injection protection</li>
+                        <li><strong>Referrer-Policy:</strong> Controls referrer information</li>
+                        <li><strong>X-XSS-Protection:</strong> XSS protection (legacy)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- DAST Tab -->
+        <div id="dast" class="tab-content">
+            <div class="test-section">
+                <h2>⚠️ Dynamic Application Security Testing (DAST)</h2>
+                
+                <div id="dast-stats" class="stats-line">
+                    <div class="stat-item">
+                        <div class="stat-label">Total Issues</div>
+                        <div class="stat-value" id="dast-total">-</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">Critical</div>
+                        <div class="stat-value stat-critical" id="dast-critical">-</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">High</div>
+                        <div class="stat-value stat-high" id="dast-high">-</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">Medium</div>
+                        <div class="stat-value stat-medium" id="dast-medium">-</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">Low</div>
+                        <div class="stat-value stat-low" id="dast-low">-</div>
+                    </div>
+                </div>
+                
+                <div id="dast-results" style="margin: 20px 0;">
+                    <!-- Results will be populated here -->
+                </div>
+                
+                <div style="background: #f9fafb; padding: 15px; border-radius: 4px; margin-top: 20px;">
+                    <h4>🔍 Vulnerabilities Tested</h4>
+                    <ul style="margin-left: 20px; line-height: 1.8;">
+                        <li><strong>SQL Injection:</strong> Database query attacks</li>
+                        <li><strong>Cross-Site Scripting (XSS):</strong> Script injection attacks</li>
+                        <li><strong>Security Misconfiguration:</strong> Exposed endpoints</li>
+                        <li><strong>Insecure HTTP Methods:</strong> PUT, DELETE, TRACE</li>
+                        <li><strong>Sensitive Data Exposure:</strong> Credentials in response</li>
+                        <li><strong>Security Headers:</strong> Missing protection headers</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>🔒 VERMEG SIRH Security Suite - Runtime Security Testing Dashboard</p>
+        <p>For detailed results, run: <code>python3 scripts/runtime-security-tester.py &lt;url&gt;</code></p>
+        <p>View reports in: <code>reports/security/runtime-security-report-*.html</code></p>
+    </footer>
+    
+    <script>
+        // Tab switching
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                
+                btn.classList.add('active');
+                document.getElementById(btn.dataset.tab).classList.add('active');
+            });
+        });
+        
+        // Load test results if available
+        function loadResults() {
+            const lastScan = new Date().toLocaleString();
+            document.getElementById('last-scan').textContent = lastScan;
+            
+            // In production, this would fetch actual test results from JSON files
+            // For now, show placeholder
+        }
+        
+        loadResults();
+    </script>
+</body>
+</html>
