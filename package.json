@@ -1,0 +1,32 @@
+{
+  "name": "vermeg-security-dashboard",
+  "version": "1.0.0",
+  "description": "Comprehensive Security Testing Platform with OWASP, Trivy, Snyk, SAST, SSL, Headers, DAST",
+  "main": "security-dashboard-server.js",
+  "scripts": {
+    "start": "node security-dashboard-server.js",
+    "dev": "nodemon security-dashboard-server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "security",
+    "testing",
+    "dashboard",
+    "owasp",
+    "trivy",
+    "snyk",
+    "sast",
+    "ssl",
+    "dast"
+  ],
+  "author": "VERMEG SIRH",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "pdfkit": "^0.13.0",
+    "cors": "^2.8.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}

@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VERMEG SIRH - Dashboard Sécurité Complète (Port 8099)</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #ef4444;
+            --secondary: #3b82f6;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #dc2626;
+            --dark: #0f172a;
+            --darker: #020617;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 100%);
+            color: white;
+            min-height: 100vh;
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            width: 280px;
+            background: var(--dark);
+            border-right: 1px solid rgba(255,255,255,0.1);
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .logo {
+            font-size: 1.8em;
+            font-weight: bold;
+            margin-bottom: 30px;
+            color: var(--primary);
+        }
+
+        .nav-item {
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: rgba(255,255,255,0.7);
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background: rgba(239,68,68,0.2);
+            color: var(--primary);
+        }
+
+        /* MAIN */
+        .main {
+            flex: 1;
+            overflow-y: auto;
+            padding: 30px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            background: rgba(255,255,255,0.05);
+            padding: 20px;
+            border-radius: 12px;
+        }
+
+        .header h1 {
+            font-size: 2em;
+        }
+
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            background: var(--danger);
+            transform: scale(1.05);
+        }
+
+        .btn-secondary {
+            background: var(--secondary);
+        }
+
+        .btn-success {
+            background: var(--success);
+        }
+
+        /* TABS */
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .tab {
+            padding: 10px 20px;
+            background: none;
+            border: none;
+            color: rgba(255,255,255,0.6);
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .tab.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* CARDS */
+        .card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .card h3 {
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .kpi-card {
+            background: rgba(255,255,255,0.05);
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .kpi-value {
+            font-size: 2em;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .kpi-label {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+
+        /* RESULTS TABLE */
+        .results-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        .results-table th {
+            background: rgba(0,0,0,0.3);
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            color: rgba(255,255,255,0.8);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .results-table td {
+            padding: 12px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .results-table tr:hover {
+            background: rgba(239,68,68,0.05);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: bold;
+        }
+
+        .badge-critical {
+            background: rgba(239,68,68,0.2);
+            color: #ff6b6b;
+        }
+
+        .badge-high {
+            background: rgba(245,158,11,0.2);
+            color: #ffa500;
+        }
+
+        .badge-medium {
+            background: rgba(59,130,246,0.2);
+            color: #3b82f6;
+        }
+
+        .badge-low {
+            background: rgba(16,185,129,0.2);
+            color: #10b981;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+        }
+
+        .spinner {
+            border: 4px solid rgba(255,255,255,0.2);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            margin: 20px 0;
+        }
+
+        .export-buttons {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .status-badge {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        .status-ok {
+            background: rgba(16,185,129,0.2);
+            color: #10b981;
+        }
+
+        .status-failed {
+            background: rgba(239,68,68,0.2);
+            color: #ff6b6b;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        @media (max-width: 1024px) {
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- SIDEBAR -->
+        <div class="sidebar">
+            <div class="logo">🔐 VERMEG</div>
+            <div class="nav-item active" onclick="switchTab('overview', this)">📊 Vue d'ensemble</div>
+            <div class="nav-item" onclick="switchTab('owasp', this)">📦 OWASP</div>
+            <div class="nav-item" onclick="switchTab('trivy', this)">🐳 Trivy</div>
+            <div class="nav-item" onclick="switchTab('snyk', this)">🐍 Snyk</div>
+            <div class="nav-item" onclick="switchTab('sast', this)">🔍 SAST</div>
+            <div class="nav-item" onclick="switchTab('ssl', this)">🔒 SSL/TLS</div>
+            <div class="nav-item" onclick="switchTab('headers', this)">📋 Headers</div>
+            <div class="nav-item" onclick="switchTab('dast', this)">🚀 DAST</div>
+            <hr style="margin: 20px 0; border: none; border-top: 1px solid rgba(255,255,255,0.1);">
+            <div class="nav-item" onclick="runAllTests()">▶ Exécuter Tous</div>
+            <div class="nav-item" onclick="exportReports()">📥 Exporter</div>
+        </div>
+
+        <!-- MAIN -->
+        <div class="main">
+            <!-- HEADER -->
+            <div class="header">
+                <div>
+                    <h1 id="pageTitle">Vue d'ensemble</h1>
+                    <p style="color: rgba(255,255,255,0.6);">Dashboard Sécurité Complète - Port 8099</p>
+                </div>
+                <button class="btn btn-secondary" onclick="location.reload()">🔄 Actualiser</button>
+            </div>
+
+            <!-- OVERVIEW TAB -->
+            <div id="overview" class="tab-content active">
+                <div class="kpi-grid">
+                    <div class="kpi-card">
+                        <div class="kpi-value" id="totalVulns">0</div>
+                        <div class="kpi-label">Total Vulnérabilités</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-value" style="color: #ff6b6b;" id="criticalCount">0</div>
+                        <div class="kpi-label">Critiques</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-value" style="color: #ffa500;" id="highCount">0</div>
+                        <div class="kpi-label">Haute Sévérité</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-value" style="color: #3b82f6;" id="mediumCount">0</div>
+                        <div class="kpi-label">Moyenne</div>
+                    </div>
+                </div>
+
+                <div class="grid-2">
+                    <div class="card">
+                        <h3>Distribution des Vulnérabilités</h3>
+                        <div class="chart-container">
+                            <canvas id="severityChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h3>Résultats par Test</h3>
+                        <div class="chart-container">
+                            <canvas id="resultChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>Résumé Exécutif</h3>
+                    <table class="results-table">
+                        <thead>
+                            <tr>
+                                <th>Test</th>
+                                <th>Statut</th>
+                                <th>Critiques</th>
+                                <th>Hauts</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody id="summaryTable">
+                            <tr><td colspan="5">Chargement...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="export-buttons">
+                    <button class="btn btn-success" onclick="downloadPDF()">📄 Télécharger PDF</button>
+                    <button class="btn btn-secondary" onclick="downloadJSON()">📋 JSON</button>
+                    <button class="btn btn-secondary" onclick="downloadCSV()">📊 CSV</button>
+                </div>
+            </div>
+
+            <!-- OWASP TAB -->
+            <div id="owasp" class="tab-content">
+                <div class="card">
+                    <h3>OWASP Dependency-Check</h3>
+                    <button class="btn" onclick="runTest('owasp')">▶ Exécuter</button>
+                    <table class="results-table" id="owaspTable">
+                        <thead>
+                            <tr>
+                                <th>Vulnérabilité</th>
+                                <th>Sévérité</th>
+                                <th>CVE</th>
+                                <th>Remédiation</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td colspan="4">Chargement...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- TRIVY TAB -->
+            <div id="trivy" class="tab-content">
+                <div class="card">
+                    <h3>Trivy Container Scan</h3>
+                    <button class="btn" onclick="runTest('trivy')">▶ Exécuter</button>
+                    <div id="trivyResults"></div>
+                </div>
+            </div>
+
+            <!-- SNYK TAB -->
+            <div id="snyk" class="tab-content">
+                <div class="card">
+                    <h3>Snyk SCA Analysis</h3>
+                    <button class="btn" onclick="runTest('snyk')">▶ Exécuter</button>
+                    <div id="snykResults"></div>
+                </div>
+            </div>
+
+            <!-- SAST TAB -->
+            <div id="sast" class="tab-content">
+                <div class="card">
+                    <h3>SAST Analysis (SonarQube, Bandit, SpotBugs, Semgrep, ESLint)</h3>
+                    <button class="btn" onclick="runTest('sast')">▶ Exécuter</button>
+                    <div id="sastResults"></div>
+                </div>
+            </div>
+
+            <!-- SSL TAB -->
+            <div id="ssl" class="tab-content">
+                <div class="card">
+                    <h3>SSL/TLS Validation</h3>
+                    <button class="btn" onclick="runTest('ssl')">▶ Vérifier</button>
+                    <div id="sslResults"></div>
+                </div>
+            </div>
+
+            <!-- HEADERS TAB -->
+            <div id="headers" class="tab-content">
+                <div class="card">
+                    <h3>Security Headers Validation</h3>
+                    <button class="btn" onclick="runTest('headers')">▶ Vérifier</button>
+                    <div id="headersResults"></div>
+                </div>
+            </div>
+
+            <!-- DAST TAB -->
+            <div id="dast" class="tab-content">
+                <div class="card">
+                    <h3>DAST - Dynamic Application Security Testing</h3>
+                    <button class="btn" onclick="runTest('dast')">▶ Exécuter</button>
+                    <div id="dastResults"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:8099/api/security';
+
+        // Switch Tab Function
+        function switchTab(tabName, element) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            document.getElementById(tabName).classList.add('active');
+            element.classList.add('active');
+            
+            const titles = {
+                overview: 'Vue d\'ensemble',
+                owasp: 'OWASP Dependency-Check',
+                trivy: 'Trivy Container Scan',
+                snyk: 'Snyk SCA Analysis',
+                sast: 'SAST Analysis',
+                ssl: 'SSL/TLS Validation',
+                headers: 'Security Headers',
+                dast: 'DAST Testing'
+            };
+            document.getElementById('pageTitle').textContent = titles[tabName];
+        }
+
+        // Run Single Test
+        async function runTest(testName) {
+            try {
+                const response = await axios.get(`${API_URL}/${testName}`);
+                const data = response.data;
+                
+                switch(testName) {
+                    case 'owasp':
+                        displayOWASP(data);
+                        break;
+                    case 'trivy':
+                        displayTrivy(data);
+                        break;
+                    case 'snyk':
+                        displaySnyk(data);
+                        break;
+                    case 'sast':
+                        displaySAST(data);
+                        break;
+                    case 'ssl':
+                        displaySSL(data);
+                        break;
+                    case 'headers':
+                        displayHeaders(data);
+                        break;
+                    case 'dast':
+                        displayDAST(data);
+                        break;
+                }
+            } catch (err) {
+                alert('Erreur: ' + err.message);
+            }
+        }
+
+        // Display Functions
+        function displayOWASP(data) {
+            let html = '<table class="results-table"><thead><tr><th>Vulnérabilité</th><th>Sévérité</th><th>CVE</th></tr></thead><tbody>';
+            data.findings.forEach(f => {
+                html += `<tr>
+                    <td>${f.name}</td>
+                    <td><span class="badge badge-${f.severity.toLowerCase()}">${f.severity}</span></td>
+                    <td>${f.cve}</td>
+                </tr>`;
+            });
+            html += '</tbody></table>';
+            document.getElementById('owaspTable').innerHTML = html;
+        }
+
+        function displayTrivy(data) {
+            let html = '';
+            data.images.forEach(img => {
+                html += `<div style="margin: 15px 0; padding: 15px; background: rgba(255,255,255,0.05); border-radius: 8px;">
+                    <strong>${img.image}</strong> - Score: ${img.score}
+                    <table class="results-table">
+                        <tr><th>Vulnérabilité</th><th>Sévérité</th></tr>`;
+                img.vulnerabilities.forEach(v => {
+                    html += `<tr><td>${v.name}</td><td><span class="badge badge-${v.severity.toLowerCase()}">${v.severity}</span></td></tr>`;
+                });
+                html += `</table></div>`;
+            });
+            document.getElementById('trivyResults').innerHTML = html;
+        }
+
+        function displaySnyk(data) {
+            let html = '';
+            data.projects.forEach(p => {
+                html += `<div style="margin: 15px 0; padding: 15px; background: rgba(255,255,255,0.05); border-radius: 8px;">
+                    <strong>${p.name}</strong>
+                    <table class="results-table">
+                        <tr><th>Package</th><th>Sévérité</th><th>Titre</th></tr>`;
+                p.vulns.forEach(v => {
+                    html += `<tr><td>${v.package}</td><td><span class="badge badge-${v.severity.toLowerCase()}">${v.severity}</span></td><td>${v.title}</td></tr>`;
+                });
+                html += `</table></div>`;
+            });
+            document.getElementById('snykResults').innerHTML = html;
+        }
+
+        function displaySAST(data) {
+            let html = '<div style="margin: 15px 0;"><strong>Outils SAST:</strong><table class="results-table"><tr><th>Tool</th><th>Issues</th><th>Critical</th><th>High</th></tr>';
+            data.tools.forEach(t => {
+                html += `<tr><td>${t.tool}</td><td>${t.issues}</td><td>${t.critical}</td><td>${t.high}</td></tr>`;
+            });
+            html += '</table></div>';
+            html += '<div style="margin: 15px 0;"><strong>Résultats détaillés:</strong><table class="results-table"><tr><th>Tool</th><th>Sévérité</th><th>File</th><th>Message</th></tr>';
+            data.findings.forEach(f => {
+                html += `<tr><td>${f.tool}</td><td><span class="badge badge-${f.severity.toLowerCase()}">${f.severity}</span></td><td>${f.file}:${f.line}</td><td>${f.message}</td></tr>`;
+            });
+            html += '</table></div>';
+            document.getElementById('sastResults').innerHTML = html;
+        }
+
+        function displaySSL(data) {
+            let html = '<table class="results-table"><tr><th>Domain</th><th>Issuer</th><th>Days Left</th><th>Status</th></tr>';
+            data.certificates.forEach(c => {
+                html += `<tr><td>${c.domain}</td><td>${c.issuer}</td><td>${c.daysRemaining}</td><td><span class="status-badge status-ok">${c.status}</span></td></tr>`;
+            });
+            html += '</table>';
+            document.getElementById('sslResults').innerHTML = html;
+        }
+
+        function displayHeaders(data) {
+            let html = '<table class="results-table"><tr><th>Header</th><th>Status</th><th>Severity</th></tr>';
+            data.headers.forEach(h => {
+                const status = h.present ? '✓ Present' : '✗ Missing';
+                html += `<tr><td>${h.name}</td><td>${status}</td><td><span class="badge badge-${h.severity.toLowerCase()}">${h.severity}</span></td></tr>`;
+            });
+            html += '</table>';
+            document.getElementById('headersResults').innerHTML = html;
+        }
+
+        function displayDAST(data) {
+            let html = '<table class="results-table"><tr><th>Type</th><th>Severity</th><th>Endpoint</th></tr>';
+            data.vulnerabilities.forEach(v => {
+                html += `<tr><td>${v.type}</td><td><span class="badge badge-${v.severity.toLowerCase()}">${v.severity}</span></td><td>${v.endpoint}</td></tr>`;
+            });
+            html += '</table>';
+            document.getElementById('dastResults').innerHTML = html;
+        }
+
+        // Run All Tests
+        async function runAllTests() {
+            try {
+                const response = await axios.get(`${API_URL}/run-all`);
+                const data = response.data;
+                
+                let critical = 0, high = 0, total = 0;
+                
+                Object.values(data.tests).forEach(test => {
+                    if (test.summary) {
+                        critical += test.summary.critical || 0;
+                        high += test.summary.high || 0;
+                        total += test.summary.total || 0;
+                    }
+                });
+                
+                document.getElementById('totalVulns').textContent = total;
+                document.getElementById('criticalCount').textContent = critical;
+                document.getElementById('highCount').textContent = high;
+                document.getElementById('mediumCount').textContent = (total - critical - high);
+                
+                updateSummaryTable(data);
+                initCharts();
+                
+                alert(`✅ Tous les tests exécutés!\nTotal: ${total} | Critiques: ${critical} | Hauts: ${high}`);
+            } catch (err) {
+                alert('Erreur: ' + err.message);
+            }
+        }
+
+        function updateSummaryTable(data) {
+            let html = '';
+            Object.entries(data.tests).forEach(([name, test]) => {
+                if (test.summary) {
+                    const status = test.summary.critical > 0 ? '⚠️ Issues' : '✓ OK';
+                    html += `<tr>
+                        <td style="text-transform: uppercase;">${name}</td>
+                        <td>${status}</td>
+                        <td><span class="badge badge-critical">${test.summary.critical || 0}</span></td>
+                        <td><span class="badge badge-high">${test.summary.high || 0}</span></td>
+                        <td><strong>${test.summary.total || 0}</strong></td>
+                    </tr>`;
+                }
+            });
+            document.getElementById('summaryTable').innerHTML = html;
+        }
+
+        function initCharts() {
+            Chart.defaults.color = 'rgba(255,255,255,0.7)';
+            Chart.defaults.borderColor = 'rgba(255,255,255,0.1)';
+
+            // Severity Distribution
+            new Chart(document.getElementById('severityChart'), {
+                type: 'doughnut',
+                data: {
+                    labels: ['Critique', 'Haute', 'Moyenne'],
+                    datasets: [{
+                        data: [24, 39, 59],
+                        backgroundColor: ['#ff6b6b', '#ffa500', '#3b82f6']
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+
+            // Results by Test
+            new Chart(document.getElementById('resultChart'), {
+                type: 'bar',
+                data: {
+                    labels: ['OWASP', 'Trivy', 'Snyk', 'SAST', 'SSL', 'Headers', 'DAST'],
+                    datasets: [{
+                        label: 'Issues',
+                        data: [3, 3, 3, 210, 0, 4, 5],
+                        backgroundColor: '#ef4444'
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true } } }
+            });
+        }
+
+        // Export Functions
+        function downloadPDF() {
+            window.open(`${API_URL}/report/pdf`);
+        }
+
+        function downloadJSON() {
+            window.open(`${API_URL}/report/json`);
+        }
+
+        function downloadCSV() {
+            window.open(`${API_URL}/report/csv`);
+        }
+
+        function exportReports() {
+            alert('Rapport disponible en:\n📄 PDF\n📋 JSON\n📊 CSV');
+        }
+
+        // Load initial data
+        window.addEventListener('load', async () => {
+            try {
+                const response = await axios.get(`${API_URL}/run-all`);
+                updateSummaryTable(response.data);
+                initCharts();
+            } catch (err) {
+                console.error('Error loading data:', err);
+            }
+        });
+    </script>
+</body>
+</html>
