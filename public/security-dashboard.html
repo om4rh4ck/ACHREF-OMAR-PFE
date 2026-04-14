@@ -309,16 +309,25 @@
         <!-- SIDEBAR -->
         <div class="sidebar">
             <div class="logo">🔐 VERMEG</div>
-            <div class="nav-item active" onclick="switchTab('overview', this)">📊 Vue d'ensemble</div>
+            
+            <div style="color: rgba(255,255,255,0.5); font-size: 0.85em; margin-top: 20px; margin-bottom: 10px; text-transform: uppercase; font-weight: bold;">📊 DASHBOARD</div>
+            <div class="nav-item active" onclick="switchTab('overview', this)">Vue d'ensemble</div>
+            
+            <div style="color: rgba(255,255,255,0.5); font-size: 0.85em; margin-top: 20px; margin-bottom: 10px; text-transform: uppercase; font-weight: bold;">🔍 ANALYSE SÉCURITÉ</div>
             <div class="nav-item" onclick="switchTab('owasp', this)">📦 OWASP</div>
-            <div class="nav-item" onclick="switchTab('trivy', this)">🐳 Trivy</div>
-            <div class="nav-item" onclick="switchTab('snyk', this)">🐍 Snyk</div>
+            <div class="nav-item" onclick="switchTab('trivy', this)">🐳 Trivy Containers</div>
+            <div class="nav-item" onclick="switchTab('snyk', this)">🐍 Snyk SCA</div>
             <div class="nav-item" onclick="switchTab('sast', this)">🔍 SAST</div>
             <div class="nav-item" onclick="switchTab('ssl', this)">🔒 SSL/TLS</div>
             <div class="nav-item" onclick="switchTab('headers', this)">📋 Headers</div>
             <div class="nav-item" onclick="switchTab('dast', this)">🚀 DAST</div>
+            
             <hr style="margin: 20px 0; border: none; border-top: 1px solid rgba(255,255,255,0.1);">
-            <div class="nav-item" onclick="runAllTests()">▶ Exécuter Tous</div>
+            <div style="color: rgba(255,255,255,0.5); font-size: 0.85em; margin-bottom: 10px; text-transform: uppercase; font-weight: bold;">📁 ARCHIVE</div>
+            <div class="nav-item" onclick="switchTab('archive', this)">📅 Historique</div>
+            
+            <hr style="margin: 20px 0; border: none; border-top: 1px solid rgba(255,255,255,0.1);">
+            <div class="nav-item" onclick="runAllTests()" style="background: rgba(239,68,68,0.1); border-left: 3px solid var(--primary);">▶ Exécuter Tous</div>
             <div class="nav-item" onclick="exportReports()">📥 Exporter</div>
         </div>
 
@@ -468,6 +477,17 @@
                     <div id="dastResults"></div>
                 </div>
             </div>
+
+            <!-- ARCHIVE TAB -->
+            <div id="archive" class="tab-content">
+                <div class="card">
+                    <h3>📁 Archive - Historique des Rapports</h3>
+                    <button class="btn btn-secondary" onclick="loadHistory()">🔄 Charger l'historique</button>
+                    <div id="archiveList" style="margin-top: 20px;">
+                        <p style="text-align: center; color: rgba(255,255,255,0.5);">Cliquez sur "Charger" pour voir l'historique...</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -530,12 +550,15 @@
 
         // Display Functions
         function displayOWASP(data) {
-            let html = '<table class="results-table"><thead><tr><th>Vulnérabilité</th><th>Sévérité</th><th>CVE</th></tr></thead><tbody>';
+            let html = '<table class="results-table"><thead><tr><th>Paquet</th><th>Sévérité</th><th>CVE</th><th>Type</th><th>Impact</th><th>Remédiation</th></tr></thead><tbody>';
             data.findings.forEach(f => {
                 html += `<tr>
-                    <td>${f.name}</td>
+                    <td><strong>${f.package || 'N/A'}</strong></td>
                     <td><span class="badge badge-${f.severity.toLowerCase()}">${f.severity}</span></td>
-                    <td>${f.cve}</td>
+                    <td><code>${f.cve}</code></td>
+                    <td>${f.type || 'N/A'}</td>
+                    <td style="font-size: 0.9em; color: #ffa500;">${f.impact || 'N/A'}</td>
+                    <td style="font-size: 0.85em;">${f.remediation}</td>
                 </tr>`;
             });
             html += '</tbody></table>';
@@ -545,14 +568,27 @@
         function displayTrivy(data) {
             let html = '';
             data.images.forEach(img => {
-                html += `<div style="margin: 15px 0; padding: 15px; background: rgba(255,255,255,0.05); border-radius: 8px;">
-                    <strong>${img.image}</strong> - Score: ${img.score}
+                html += `<div style="margin: 15px 0; padding: 15px; background: rgba(255,255,255,0.05); border-radius: 8px; border-left: 4px solid var(--primary);">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                        <strong style="font-size: 1.1em;">${img.image}</strong>
+                        <span style="color: #ffa500;">Score: ${img.score}</span>
+                    </div>
+                    <div style="font-size: 0.85em; color: rgba(255,255,255,0.6); margin-bottom: 10px;">Base Image: ${img.baseImage}</div>
+                    ${img.vulnerabilities.length === 0 ? '<p style="color: #10b981;">✓ Aucune vulnérabilité détectée</p>' : `
                     <table class="results-table">
-                        <tr><th>Vulnérabilité</th><th>Sévérité</th></tr>`;
+                        <tr><th>CVE</th><th>Nom</th><th>Sévérité</th><th>Description</th><th>Fix</th><th>Exploitable</th></tr>`;
                 img.vulnerabilities.forEach(v => {
-                    html += `<tr><td>${v.name}</td><td><span class="badge badge-${v.severity.toLowerCase()}">${v.severity}</span></td></tr>`;
+                    html += `<tr>
+                        <td><code>${v.id}</code></td>
+                        <td>${v.name}</td>
+                        <td><span class="badge badge-${v.severity.toLowerCase()}">${v.severity}</span></td>
+                        <td style="font-size: 0.85em;">${v.description}</td>
+                        <td style="font-size: 0.85em; color: #10b981;">→ ${v.fixed}</td>
+                        <td>${v.exploitable ? '<span style="color: #ff6b6b;">⚠️ OUI</span>' : '<span style="color: #10b981;">Non</span>'}</td>
+                    </tr>`;
                 });
-                html += `</table></div>`;
+                html += `</table>`}
+                </div>`;
             });
             document.getElementById('trivyResults').innerHTML = html;
         }
@@ -560,12 +596,22 @@
         function displaySnyk(data) {
             let html = '';
             data.projects.forEach(p => {
-                html += `<div style="margin: 15px 0; padding: 15px; background: rgba(255,255,255,0.05); border-radius: 8px;">
-                    <strong>${p.name}</strong>
+                html += `<div style="margin: 15px 0; padding: 15px; background: rgba(255,255,255,0.05); border-radius: 8px; border-left: 4px solid var(--secondary);">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                        <strong style="font-size: 1.1em;">${p.name}</strong>
+                        <span style="color: rgba(255,255,255,0.6);">🏷️ ${p.language}</span>
+                    </div>
                     <table class="results-table">
-                        <tr><th>Package</th><th>Sévérité</th><th>Titre</th></tr>`;
+                        <tr><th>Paquet</th><th>Version</th><th>Sévérité</th><th>Titre</th><th>CVSS</th><th>Fix</th></tr>`;
                 p.vulns.forEach(v => {
-                    html += `<tr><td>${v.package}</td><td><span class="badge badge-${v.severity.toLowerCase()}">${v.severity}</span></td><td>${v.title}</td></tr>`;
+                    html += `<tr>
+                        <td><strong>${v.package}</strong></td>
+                        <td><span style="background: rgba(255,255,255,0.1); padding: 3px 8px; border-radius: 3px;">${v.version}</span></td>
+                        <td><span class="badge badge-${v.severity.toLowerCase()}">${v.severity}</span></td>
+                        <td>${v.title}<br><span style="font-size: 0.85em; color: rgba(255,255,255,0.6);">${v.description}</span></td>
+                        <td><span style="color: #ffa500; font-weight: bold;">${v.cvss}</span></td>
+                        <td style="font-size: 0.85em; color: #10b981;">${v.fixVersion}</td>
+                    </tr>`;
                 });
                 html += `</table></div>`;
             });
@@ -573,44 +619,87 @@
         }
 
         function displaySAST(data) {
-            let html = '<div style="margin: 15px 0;"><strong>Outils SAST:</strong><table class="results-table"><tr><th>Tool</th><th>Issues</th><th>Critical</th><th>High</th></tr>';
+            let html = '<div style="margin: 15px 0;"><strong>📊 Résumé par Outil:</strong><table class="results-table"><tr><th>Outil</th><th>Total</th><th>🔴 Crit</th><th>🟠 Haut</th><th>🔵 Moy</th><th>Score</th></tr>';
             data.tools.forEach(t => {
-                html += `<tr><td>${t.tool}</td><td>${t.issues}</td><td>${t.critical}</td><td>${t.high}</td></tr>`;
+                html += `<tr>
+                    <td><strong>${t.tool}</strong></td>
+                    <td>${t.issues}</td>
+                    <td><span style="color: #ff6b6b; font-weight: bold;">${t.critical}</span></td>
+                    <td><span style="color: #ffa500; font-weight: bold;">${t.high}</span></td>
+                    <td><span style="color: #3b82f6; font-weight: bold;">${t.medium}</span></td>
+                    <td><span style="background: rgba(255,255,255,0.1); padding: 3px 8px; border-radius: 3px;">${t.score}/10</span></td>
+                </tr>`;
             });
             html += '</table></div>';
-            html += '<div style="margin: 15px 0;"><strong>Résultats détaillés:</strong><table class="results-table"><tr><th>Tool</th><th>Sévérité</th><th>File</th><th>Message</th></tr>';
+            html += '<div style="margin: 20px 0; padding: 15px; background: rgba(255,255,255,0.05); border-radius: 8px;"><strong>🔍 Défauts Détectés:</strong><table class="results-table"><tr><th>Outil</th><th>Fichier</th><th>Sévérité</th><th>Faille</th><th>Ligne</th></tr>';
             data.findings.forEach(f => {
-                html += `<tr><td>${f.tool}</td><td><span class="badge badge-${f.severity.toLowerCase()}">${f.severity}</span></td><td>${f.file}:${f.line}</td><td>${f.message}</td></tr>`;
+                html += `<tr>
+                    <td><strong>${f.tool}</strong></td>
+                    <td><code style="font-size: 0.85em;">${f.file}</code></td>
+                    <td><span class="badge badge-${f.severity.toLowerCase()}">${f.severity}</span></td>
+                    <td style="font-size: 0.85em;">${f.message}</td>
+                    <td style="color: #ffa500;">:${f.line}</td>
+                </tr>`;
             });
             html += '</table></div>';
             document.getElementById('sastResults').innerHTML = html;
         }
 
         function displaySSL(data) {
-            let html = '<table class="results-table"><tr><th>Domain</th><th>Issuer</th><th>Days Left</th><th>Status</th></tr>';
+            let html = '<div style="margin: 15px 0;"><strong>🔒 Certificats et Configuration TLS:</strong><table class="results-table"><tr><th>Domain</th><th>Issuer</th><th>Valide Jusqu\'au</th><th>J. Restants</th><th>Versions TLS</th><th>HSTS</th><th>Clé</th><th>Status</th></tr>';
             data.certificates.forEach(c => {
-                html += `<tr><td>${c.domain}</td><td>${c.issuer}</td><td>${c.daysRemaining}</td><td><span class="status-badge status-ok">${c.status}</span></td></tr>`;
+                html += `<tr>
+                    <td><strong>${c.domain}</strong></td>
+                    <td>${c.issuer}</td>
+                    <td>${c.validTo}</td>
+                    <td><span style="color: ${c.daysRemaining < 30 ? '#ff6b6b' : '#10b981'}; font-weight: bold;">${c.daysRemaining} j</span></td>
+                    <td>${c.tlsVersions.join(', ')}</td>
+                    <td>${c.hstsEnabled ? '✓' : '✗'}</td>
+                    <td>${c.keySize} bits</td>
+                    <td><span class="status-badge status-ok">${c.status}</span></td>
+                </tr>`;
             });
-            html += '</table>';
+            html += '</table></div>';
+            html += `<div style="margin: 15px 0; padding: 10px; background: rgba(16,185,129,0.1); border-radius: 6px;"><strong>Score Global:</strong> <span style="color: #10b981; font-weight: bold; font-size: 1.2em;">${data.summary.score}</span></div>`;
             document.getElementById('sslResults').innerHTML = html;
         }
 
         function displayHeaders(data) {
-            let html = '<table class="results-table"><tr><th>Header</th><th>Status</th><th>Severity</th></tr>';
+            let html = '<div style="margin: 15px 0;"><strong>🛡️ Headers de Sécurité:</strong><table class="results-table"><tr><th>Header</th><th>Statut</th><th>Sévérité</th><th>Description</th></tr>';
+            const headerDescriptions = {
+                'HSTS': 'Force HTTPS only',
+                'CSP': 'Content Security Policy',
+                'X-Frame-Options': 'Clickjacking protection',
+                'X-Content-Type-Options': 'MIME type protection',
+                'X-XSS-Protection': 'XSS filter',
+                'Referrer-Policy': 'Referrer control',
+                'Permissions-Policy': 'Feature permissions'
+            };
             data.headers.forEach(h => {
-                const status = h.present ? '✓ Present' : '✗ Missing';
-                html += `<tr><td>${h.name}</td><td>${status}</td><td><span class="badge badge-${h.severity.toLowerCase()}">${h.severity}</span></td></tr>`;
+                const status = h.present ? '✓ Présent' : '✗ Manquant';
+                const statusColor = h.present ? '#10b981' : '#ff6b6b';
+                html += `<tr>
+                    <td><strong>${h.name}</strong></td>
+                    <td style="color: ${statusColor}; font-weight: bold;">${status}</td>
+                    <td><span class="badge badge-${h.severity.toLowerCase()}">${h.severity}</span></td>
+                    <td style="font-size: 0.85em;">${headerDescriptions[h.name] || 'Security header'}</td>
+                </tr>`;
             });
-            html += '</table>';
+            html += '</table></div>';
             document.getElementById('headersResults').innerHTML = html;
         }
 
         function displayDAST(data) {
-            let html = '<table class="results-table"><tr><th>Type</th><th>Severity</th><th>Endpoint</th></tr>';
+            let html = '<div style="margin: 15px 0;"><strong>⚠️ Vulnérabilités Détectées:</strong><table class="results-table"><tr><th>Type</th><th>Sévérité</th><th>Endpoint Affecté</th><th>Remédiation</th></tr>';
             data.vulnerabilities.forEach(v => {
-                html += `<tr><td>${v.type}</td><td><span class="badge badge-${v.severity.toLowerCase()}">${v.severity}</span></td><td>${v.endpoint}</td></tr>`;
+                html += `<tr>
+                    <td><strong>${v.type}</strong></td>
+                    <td><span class="badge badge-${v.severity.toLowerCase()}">${v.severity}</span></td>
+                    <td><code style="font-size: 0.85em; background: rgba(0,0,0,0.3); padding: 3px 6px; border-radius: 3px;">${v.endpoint}</code></td>
+                    <td style="font-size: 0.85em;">${v.remediation}</td>
+                </tr>`;
             });
-            html += '</table>';
+            html += '</table></div>';
             document.getElementById('dastResults').innerHTML = html;
         }
 
@@ -708,6 +797,62 @@
 
         function exportReports() {
             alert('Rapport disponible en:\n📄 PDF\n📋 JSON\n📊 CSV');
+        }
+
+        // Load History
+        async function loadHistory() {
+            try {
+                const response = await axios.get(`${API_URL}/history`);
+                const history = response.data.history;
+                let html = '';
+                
+                if (Object.keys(history).length === 0) {
+                    html = '<p style="color: rgba(255,255,255,0.5);">Aucun historique disponible</p>';
+                } else {
+                    html = '<div style="margin: 15px 0;">';
+                    Object.entries(history).forEach(([date, entries]) => {
+                        const count = entries.length;
+                        const lastEntry = entries[entries.length - 1];
+                        html += `<div style="margin: 15px 0; padding: 15px; background: rgba(255,255,255,0.05); border-radius: 8px; border-left: 4px solid var(--primary);">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                                <strong style="font-size: 1.1em;">📅 ${date}</strong>
+                                <span style="color: rgba(255,255,255,0.6);">${count} scan(s)</span>
+                            </div>
+                            <p style="color: rgba(255,255,255,0.7); margin: 5px 0;">Dernier scan: ${lastEntry.time}</p>
+                            <button class="btn btn-secondary" onclick="viewHistoryDetail('${date}')" style="margin-top: 10px; padding: 8px 16px;">Voir détails</button>
+                        </div>`;
+                    });
+                    html += '</div>';
+                }
+                document.getElementById('archiveList').innerHTML = html;
+            } catch (err) {
+                alert('Erreur: ' + err.message);
+            }
+        }
+
+        // View History Detail
+        async function viewHistoryDetail(date) {
+            try {
+                const response = await axios.get(`${API_URL}/history/${date}`);
+                const entries = response.data.entries;
+                let html = `<div style="margin: 20px 0;"><strong>Rapports du ${date}:</strong><div style="margin-top: 15px;">`;
+                
+                entries.forEach((entry, idx) => {
+                    html += `<div style="margin: 10px 0; padding: 10px; background: rgba(255,255,255,0.05); border-radius: 6px;">
+                        <strong>#${idx + 1}</strong> - ${entry.time}
+                        <br><span style="font-size: 0.85em; color: rgba(255,255,255,0.6);">
+                            ✓ ${entry.results.tests.owasp?.summary?.total || 0} issues OWASP | 
+                            ✓ ${entry.results.tests.trivy?.summary?.total || 0} vulns Trivy | 
+                            ✓ ${entry.results.tests.snyk?.summary?.total || 0} issues Snyk
+                        </span>
+                    </div>`;
+                });
+                
+                html += '</div>';
+                document.getElementById('archiveList').innerHTML = html;
+            } catch (err) {
+                alert('Erreur: ' + err.message);
+            }
         }
 
         // Load initial data

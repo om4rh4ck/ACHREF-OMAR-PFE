@@ -19,10 +19,28 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Security Results Storage
+const HISTORY_DIR = path.join(__dirname, 'reports-history');
+if (!fs.existsSync(HISTORY_DIR)) fs.mkdirSync(HISTORY_DIR);
+
 let securityResults = {
   timestamp: new Date().toISOString(),
   tests: {}
 };
+
+// Save report to history
+function saveToHistory() {
+  const date = new Date().toISOString().split('T')[0];
+  const time = new Date().toLocaleTimeString('fr-FR');
+  const filename = path.join(HISTORY_DIR, `${date}.json`);
+  const entry = { time, results: securityResults };
+  
+  let history = [];
+  if (fs.existsSync(filename)) {
+    history = JSON.parse(fs.readFileSync(filename, 'utf8'));
+  }
+  history.push(entry);
+  fs.writeFileSync(filename, JSON.stringify(history, null, 2));
+}
 
 // ============== ROUTES ==============
 
@@ -43,13 +61,17 @@ app.get('/api/security/owasp', (req, res) => {
     status: 'completed',
     timestamp: new Date().toISOString(),
     findings: [
-      { id: '1', name: 'Vulnerable lodash', severity: 'HIGH', cve: 'CVE-2021-23337', remediation: 'npm install lodash@latest' },
-      { id: '2', name: 'XSS in jquery', severity: 'CRITICAL', cve: 'CVE-2020-11022', remediation: 'Update to 3.5.1+' },
-      { id: '3', name: 'DoS in express', severity: 'MEDIUM', cve: 'CVE-2021-22911', remediation: 'npm update express' }
+      { id: '1', name: 'lodash < 4.17.21', severity: 'CRITICAL', cve: 'CVE-2021-23337', package: 'lodash@4.17.15', type: 'Prototype Pollution', remediation: 'Update to 4.17.21+', impact: 'Remote Code Execution' },
+      { id: '2', name: 'jquery XSS vulnerability', severity: 'CRITICAL', cve: 'CVE-2020-11022', package: 'jquery@3.4.1', type: 'Cross-Site Scripting', remediation: 'Update to 3.5.1+', impact: 'DOM-based XSS in HTML processing' },
+      { id: '3', name: 'express DoS', severity: 'HIGH', cve: 'CVE-2021-22911', package: 'express@4.17.1', type: 'Denial of Service', remediation: 'npm install express@4.17.3+', impact: 'Server crash with crafted requests' },
+      { id: '4', name: 'axios request smuggling', severity: 'HIGH', cve: 'CVE-2021-3749', package: 'axios@0.21.1', type: 'HTTP Request Smuggling', remediation: 'npm install axios@0.21.2+', impact: 'Cache poisoning, request forgery' },
+      { id: '5', name: 'ejs template injection', severity: 'HIGH', cve: 'CVE-2022-29078', package: 'ejs@3.1.6', type: 'Arbitrary Code Execution', remediation: 'Update to 3.1.7+', impact: 'Template injection leading to RCE' },
+      { id: '6', name: 'uuid weak randomness', severity: 'MEDIUM', cve: 'CVE-2021-23343', package: 'uuid@3.4.0', type: 'Weak PRNG', remediation: 'Update to 8.3.0+', impact: 'Predictable UUID generation' }
     ],
-    summary: { critical: 1, high: 1, medium: 1, low: 0, total: 3 }
+    summary: { critical: 2, high: 3, medium: 1, low: 0, total: 6 }
   };
   securityResults.tests.owasp = result;
+  saveToHistory();
   res.json(result);
 });
 
@@ -63,29 +85,38 @@ app.get('/api/security/trivy', (req, res) => {
     timestamp: new Date().toISOString(),
     images: [
       {
-        image: 'employee-service:latest',
+        image: 'employee-service:latest (openjdk:11-jre-slim)',
         vulnerabilities: [
-          { name: 'CVE-2021-29923 openssl', severity: 'CRITICAL', installed: '1.1.1g', fixed: '1.1.1k' },
-          { name: 'CVE-2021-3520 gcc-libs', severity: 'HIGH', installed: '10.2.0', fixed: '10.3.0' }
+          { id: 'CVE-2022-21365', name: 'OpenJDK buffer overflow', severity: 'CRITICAL', installed: '11.0.13', fixed: '11.0.15', description: 'Out-of-bounds memory access in VM initialization', exploitable: true },
+          { id: 'CVE-2022-21434', name: 'OpenJDK secure handling', severity: 'HIGH', installed: '11.0.13', fixed: '11.0.15', description: 'Sensitive information disclosure', exploitable: false },
+          { id: 'CVE-2021-2163', name: 'OpenJDK deserialization', severity: 'HIGH', installed: '11.0.13', fixed: '11.0.14', description: 'Remote code execution via deserialization', exploitable: true }
         ],
-        score: '5.4/10'
+        score: '4.2/10',
+        baseImage: 'openjdk:11-jre-slim'
       },
       {
-        image: 'api-gateway:latest',
-        vulnerabilities: [],
-        score: '8.9/10'
+        image: 'api-gateway:latest (nginx:alpine)',
+        vulnerabilities: [
+          { id: 'CVE-2021-43565', name: 'OpenSSH MaxStartups', severity: 'MEDIUM', installed: '8.6', fixed: '8.7', description: 'Denial of Service via crafted SSH packet', exploitable: false }
+        ],
+        score: '8.1/10',
+        baseImage: 'nginx:alpine'
       },
       {
-        image: 'frontend:latest',
+        image: 'frontend:latest (node:16-alpine)',
         vulnerabilities: [
-          { name: 'CVE-2021-23017 nginx', severity: 'HIGH', installed: '1.19.0', fixed: '1.21.1' }
+          { id: 'CVE-2021-44717', name: 'Node.js dns lookup', severity: 'CRITICAL', installed: '16.13.0', fixed: '16.13.2', description: 'Command injection via DNS lookup', exploitable: true },
+          { id: 'CVE-2021-22911', name: 'openssl padding oracle', severity: 'HIGH', installed: '1.1.1k', fixed: '1.1.1l', description: 'Padding oracle attack leading to decryption', exploitable: true },
+          { id: 'CVE-2022-24397', name: 'c-ares integer overflow', severity: 'MEDIUM', installed: '1.18.0', fixed: '1.18.1', description: 'Memory corruption vulnerability', exploitable: false }
         ],
-        score: '6.2/10'
+        score: '3.8/10',
+        baseImage: 'node:16-alpine'
       }
     ],
-    summary: { critical: 1, high: 2, medium: 0, low: 0, total: 3 }
+    summary: { critical: 2, high: 4, medium: 2, low: 0, total: 8 }
   };
   securityResults.tests.trivy = result;
+  saveToHistory();
   res.json(result);
 });
 
@@ -100,21 +131,34 @@ app.get('/api/security/snyk', (req, res) => {
     projects: [
       {
         name: 'Employee Service',
+        language: 'Java',
         vulns: [
-          { id: 'SNYK-JS-LODASH-95440', package: 'lodash', severity: 'HIGH', title: 'Prototype Pollution' },
-          { id: 'SNYK-JAVA-SPRINGFRAMEWORK-1075528', package: 'spring-framework', severity: 'MEDIUM', title: 'DoS' }
+          { id: 'SNYK-JAVA-ORGAPACHESTOMCAT-1074930', package: 'tomcat-core', version: '9.0.45', severity: 'CRITICAL', title: 'Remote Code Execution', description: 'Log4Shell vulnerability in embedded Tomcat', cvss: 9.8, fixVersion: '9.0.50+' },
+          { id: 'SNYK-JAVA-SPRINGFRAMEWORK-1075528', package: 'spring-framework', version: '5.3.8', severity: 'HIGH', title: 'Denial of Service', description: 'ReDoS in glob pattern matching', cvss: 7.5, fixVersion: '5.3.10+' },
+          { id: 'SNYK-JAVA-COMMONSIO-1074632', package: 'commons-io', version: '2.6', severity: 'MEDIUM', title: 'Deserialization Issue', description: 'Unsafe object marshalling', cvss: 6.8, fixVersion: '2.8+' }
         ]
       },
       {
         name: 'Recruitment Service',
+        language: 'Java',
         vulns: [
-          { id: 'SNYK-JAVA-JACKSON-1084528', package: 'jackson-databind', severity: 'CRITICAL', title: 'Code Injection' }
+          { id: 'SNYK-JAVA-JACKSON-1084528', package: 'jackson-databind', version: '2.12.4', severity: 'CRITICAL', title: 'Code Execution', description: 'Gadget chain allows arbitrary command execution', cvss: 9.8, fixVersion: '2.13.4.2+' },
+          { id: 'SNYK-JAVA-HIBERNATE-1081751', package: 'hibernate-core', version: '5.6.0', severity: 'HIGH', title: 'SQL Injection', description: 'HQL injection in criteria API', cvss: 7.2, fixVersion: '5.6.1+' }
+        ]
+      },
+      {
+        name: 'API Gateway',
+        language: 'JavaScript/Node.js',
+        vulns: [
+          { id: 'SNYK-JS-AXIOS-1579269', package: 'axios', version: '0.21.1', severity: 'HIGH', title: 'Request Smuggling', description: 'CRLF injection in request headers', cvss: 7.1, fixVersion: '0.21.4+' },
+          { id: 'SNYK-JS-EJS-1049328', package: 'ejs', version: '3.1.6', severity: 'CRITICAL', title: 'Template Injection', description: 'Arbitrary code execution via template injection', cvss: 9.8, fixVersion: '3.1.7+' }
         ]
       }
     ],
-    summary: { critical: 1, high: 1, medium: 1, low: 0, total: 3 }
+    summary: { critical: 3, high: 3, medium: 1, low: 0, total: 7 }
   };
   securityResults.tests.snyk = result;
+  saveToHistory();
   res.json(result);
 });
 
@@ -141,6 +185,7 @@ app.get('/api/security/sast', (req, res) => {
     summary: { critical: 10, high: 28, medium: 59, low: 93, total: 210 }
   };
   securityResults.tests.sast = result;
+  saveToHistory();
   res.json(result);
 });
 
@@ -177,6 +222,7 @@ app.get('/api/security/ssl', (req, res) => {
     summary: { validCerts: 2, expiringCerts: 0, expiredCerts: 0, tls13Support: 2, score: 'A+' }
   };
   securityResults.tests.ssl = result;
+  saveToHistory();
   res.json(result);
 });
 
@@ -200,6 +246,7 @@ app.get('/api/security/headers', (req, res) => {
     summary: { present: 3, missing: 4, critical: 1, high: 2, medium: 1, score: 44 }
   };
   securityResults.tests.headers = result;
+  saveToHistory();
   res.json(result);
 });
 
@@ -221,7 +268,42 @@ app.get('/api/security/dast', (req, res) => {
     summary: { critical: 3, high: 2, medium: 0, low: 0, total: 5 }
   };
   securityResults.tests.dast = result;
+  saveToHistory();
   res.json(result);
+});
+
+/**
+ * Get History
+ */
+app.get('/api/security/history', (req, res) => {
+  try {
+    const files = fs.readdirSync(HISTORY_DIR).sort().reverse();
+    const history = {};
+    files.forEach(file => {
+      const date = file.replace('.json', '');
+      const data = JSON.parse(fs.readFileSync(path.join(HISTORY_DIR, file), 'utf8'));
+      history[date] = data;
+    });
+    res.json({ history });
+  } catch (err) {
+    res.json({ history: {} });
+  }
+});
+
+/**
+ * Get History for specific date
+ */
+app.get('/api/security/history/:date', (req, res) => {
+  try {
+    const filepath = path.join(HISTORY_DIR, `${req.params.date}.json`);
+    if (!fs.existsSync(filepath)) {
+      return res.status(404).json({ error: 'No history for this date' });
+    }
+    const data = JSON.parse(fs.readFileSync(filepath, 'utf8'));
+    res.json({ date: req.params.date, entries: data });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
 /**
