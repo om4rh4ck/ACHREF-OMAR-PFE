@@ -31,3 +31,13 @@ springdoc:
 
 app:
   employee-service-url: ${EMPLOYEE_SERVICE_URL:http://employee-service:8082}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      probes:
+        enabled: true

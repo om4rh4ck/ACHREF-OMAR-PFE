@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: vermeg-config
+  namespace: vermeg
+data:
+  SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/vermeg_sirh
+  SPRING_DATASOURCE_USERNAME: vermeg
+  KEYCLOAK_ISSUER_URI: http://keycloak:8080/realms/vermeg-sirh
+  KEYCLOAK_SERVER_URL: http://keycloak:8080
+  KEYCLOAK_TOKEN_URL: http://keycloak:8080/realms/vermeg-sirh/protocol/openid-connect/token
+  KEYCLOAK_REALM: vermeg-sirh
+  EMPLOYEE_SERVICE_URL: http://employee-service:8082

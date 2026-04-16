@@ -39,13 +39,39 @@ Le frontend est dans `front/`.
 
 Pour un lancement Docker complet, pas besoin de `npm install`.
 
-## 6. Lancement complet (Docker Compose)
-Depuis la racine du projet:
+## 6. Lancement unifie
+Depuis la racine du projet, utilise une seule famille de commandes et garde les memes URLs locales dans les 2 cas:
+
+- Frontend: `http://localhost:5173`
+- Keycloak: `http://localhost:8080`
+- API Gateway: `http://localhost:8081`
+- PostgreSQL: `localhost:5432`
+
+### Docker
+```bash
+chmod +x scripts/run-stack.sh scripts/stop-stack.sh
+./scripts/run-stack.sh docker --build
+```
+
+### Kubernetes
+Prerequis: cluster Kubernetes deja demarre, par exemple avec Minikube.
 
 ```bash
-docker compose -f backend/docker-compose.yml build
-docker compose -f backend/docker-compose.yml up -d
+chmod +x scripts/run-stack.sh scripts/stop-stack.sh
+./scripts/run-stack.sh k8s
 ```
+
+Le mode `k8s` expose les memes ports locaux via `kubectl port-forward`, ce qui permet au frontend et a Keycloak de fonctionner avec les memes URLs que Docker.
+
+### Arret
+```bash
+./scripts/stop-stack.sh docker
+./scripts/stop-stack.sh k8s
+```
+
+Les donnees PostgreSQL sont conservees:
+- en `docker`, le script fait `stop` et conserve les conteneurs, le volume et la base
+- en `k8s`, le script met les deployments a `0` replica et conserve le `PersistentVolumeClaim` `postgres-data`
 
 ## 7. Initialisation des donnees (seed)
 Si tu veux le lancer dans WSL :
@@ -65,20 +91,13 @@ powershell -ExecutionPolicy Bypass -File backend/seed.ps1
 - `candidate@vermeg.com / candidate123` (si cree dans Keycloak/seed)
 
 ## 9. URLs utiles
-### Si Docker Desktop/localhost OK
 - Application: `http://localhost:5173`
 - Keycloak: `http://localhost:8080`
 - Gateway health: `http://localhost:8081/actuator/health`
+- PostgreSQL: `localhost:5432`
 
-### Si Docker tourne uniquement dans WSL (sans Desktop)
-Utiliser l’IP WSL:
-```bash
-hostname -I
-```
-Exemple:
-- Application: `http://<IP_WSL>:5173`
-- Keycloak: `http://<IP_WSL>:8080`
-- Gateway health: `http://<IP_WSL>:8081/actuator/health`
+Ces URLs sont les memes si tu lances le projet avec `docker` ou avec `k8s` via `./scripts/run-stack.sh`.
+
 
 ## 10. Structure du projet
 - `front/`: frontend Angular
@@ -362,3 +381,4 @@ Pour des questions ou problèmes:
 **Version:** 2.0.0 (with SAST & Vault)  
 **Last Updated:** January 2024
 **Stack Quality:** ⭐⭐⭐⭐⭐ Enterprise-Grade
+

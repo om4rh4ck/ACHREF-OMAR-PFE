@@ -10,7 +10,7 @@ export class AuthService {
   private readonly router = inject(Router);
   private readonly keycloakBaseUrl = 'http://localhost:8080';
   private readonly realm = 'vermeg-sirh';
-  private readonly clientId = 'vermeg-frontend';
+  private readonly clientId = 'sirh-frontend';
 
   readonly token = signal<string | null>(localStorage.getItem('token'));
   readonly user = signal<User | null>(this.readCachedUser());
