@@ -87,7 +87,7 @@ jobs:
           fi
 
   deploy-kubernetes:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     needs: build-and-push
     if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.deploy_target == 'kubernetes' }}
     steps:
@@ -100,11 +100,23 @@ jobs:
           version: latest
 
       - name: Configure kubeconfig
+        if: ${{ secrets.KUBE_CONFIG_DATA != '' }}
         shell: bash
         run: |
           mkdir -p "$HOME/.kube"
           echo "${{ secrets.KUBE_CONFIG_DATA }}" | base64 -d > "$HOME/.kube/config"
           chmod 600 "$HOME/.kube/config"
+
+      - name: Validate kubeconfig format
+        if: ${{ secrets.KUBE_CONFIG_DATA != '' }}
+        shell: bash
+        run: |
+          if grep -Eq 'client-certificate:|client-key:|certificate-authority:' "$HOME/.kube/config"; then
+            echo "KUBE_CONFIG_DATA contains local file paths and is not portable."
+            echo "Generate it with:"
+            echo "kubectl config view --flatten --minify --raw | base64 -w 0"
+            exit 1
+          fi
 
       - name: Verify cluster access
         run: kubectl cluster-info

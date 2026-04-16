@@ -34,11 +34,19 @@ Secrets GitHub requis:
 - `DOCKERHUB_USERNAME`
 - `DOCKERHUB_TOKEN`
 
-Exemple pour generer `KUBE_CONFIG_DATA`:
+Important: il faut un kubeconfig portable avec les certificats integres, pas un fichier qui reference `~/.minikube/...`.
+
+Commande correcte pour generer `KUBE_CONFIG_DATA`:
 
 ```bash
-base64 -w 0 ~/.kube/config
+kubectl config view --flatten --minify --raw | base64 -w 0
 ```
+
+Si vous utilisez directement `base64 ~/.kube/config`, GitHub Actions peut echouer avec des erreurs du type:
+
+- `unable to read client-cert`
+- `unable to read client-key`
+- `unable to read certificate-authority`
 
 Dans GitHub Actions:
 
