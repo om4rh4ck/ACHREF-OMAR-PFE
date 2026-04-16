@@ -65,6 +65,7 @@ jobs:
           push: true
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/vermeg-${{ matrix.image.name }}:${{ github.ref_name }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/vermeg-${{ matrix.image.name }}:${{ github.sha }}
             ${{ secrets.DOCKERHUB_USERNAME }}/vermeg-${{ matrix.image.name }}:latest
 
   deploy:
@@ -92,6 +93,8 @@ jobs:
     if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.deploy_target == 'kubernetes' }}
     env:
       KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+      IMAGE_TAG: ${{ github.sha }}
+      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -126,18 +129,53 @@ jobs:
       - name: Deploy manifests
         run: kubectl apply -k kubernetes
 
+      - name: Update application images to current build
+        shell: bash
+        run: |
+          kubectl set image deployment/employee-service employee-service=${DOCKERHUB_USERNAME}/vermeg-employee-service:${IMAGE_TAG} -n vermeg
+          kubectl set image deployment/recruitment-service recruitment-service=${DOCKERHUB_USERNAME}/vermeg-recruitment-service:${IMAGE_TAG} -n vermeg
+          kubectl set image deployment/approval-service approval-service=${DOCKERHUB_USERNAME}/vermeg-approval-service:${IMAGE_TAG} -n vermeg
+          kubectl set image deployment/api-gateway api-gateway=${DOCKERHUB_USERNAME}/vermeg-api-gateway:${IMAGE_TAG} -n vermeg
+          kubectl set image deployment/frontend frontend=${DOCKERHUB_USERNAME}/vermeg-frontend:${IMAGE_TAG} -n vermeg
+
       - name: Wait for PostgreSQL
         run: kubectl rollout status statefulset/postgres -n vermeg --timeout=180s
 
       - name: Wait for application deployments
         shell: bash
         run: |
-          kubectl wait --for=condition=Available deployment/keycloak -n vermeg --timeout=240s
-          kubectl wait --for=condition=Available deployment/employee-service -n vermeg --timeout=240s
-          kubectl wait --for=condition=Available deployment/recruitment-service -n vermeg --timeout=240s
-          kubectl wait --for=condition=Available deployment/approval-service -n vermeg --timeout=240s
-          kubectl wait --for=condition=Available deployment/api-gateway -n vermeg --timeout=240s
-          kubectl wait --for=condition=Available deployment/frontend -n vermeg --timeout=240s
+          kubectl rollout status deployment/keycloak -n vermeg --timeout=300s
+          kubectl rollout status deployment/employee-service -n vermeg --timeout=420s
+          kubectl rollout status deployment/recruitment-service -n vermeg --timeout=420s
+          kubectl rollout status deployment/approval-service -n vermeg --timeout=420s
+          kubectl rollout status deployment/api-gateway -n vermeg --timeout=420s
+          kubectl rollout status deployment/frontend -n vermeg --timeout=300s
+
+      - name: Diagnostics on failure
+        if: ${{ failure() }}
+        shell: bash
+        run: |
+          echo "=== kubectl get all ==="
+          kubectl get all -n vermeg || true
+          echo "=== kubectl describe deployments ==="
+          kubectl describe deployment employee-service -n vermeg || true
+          kubectl describe deployment recruitment-service -n vermeg || true
+          kubectl describe deployment approval-service -n vermeg || true
+          kubectl describe deployment api-gateway -n vermeg || true
+          kubectl describe deployment frontend -n vermeg || true
+          kubectl describe deployment keycloak -n vermeg || true
+          echo "=== kubectl describe pods ==="
+          kubectl describe pods -n vermeg || true
+          echo "=== employee-service logs ==="
+          kubectl logs deployment/employee-service -n vermeg --tail=200 || true
+          echo "=== recruitment-service logs ==="
+          kubectl logs deployment/recruitment-service -n vermeg --tail=200 || true
+          echo "=== approval-service logs ==="
+          kubectl logs deployment/approval-service -n vermeg --tail=200 || true
+          echo "=== api-gateway logs ==="
+          kubectl logs deployment/api-gateway -n vermeg --tail=200 || true
+          echo "=== keycloak logs ==="
+          kubectl logs deployment/keycloak -n vermeg --tail=200 || true
 
       - name: Show deployed resources
         run: kubectl get all -n vermeg
