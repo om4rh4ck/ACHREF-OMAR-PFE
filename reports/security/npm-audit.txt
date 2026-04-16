@@ -27,11 +27,11 @@ node_modules/@angular/core
   @angular/common  19.0.0-next.0 - 19.2.19
   Depends on vulnerable versions of @angular/core
   node_modules/@angular/common
-    @angular/forms  4.4.0-RC.0 - 4.4.0 || 19.0.0-next.0 - 19.2.19
-    Depends on vulnerable versions of @angular/common
-    Depends on vulnerable versions of @angular/core
-    Depends on vulnerable versions of @angular/platform-browser
-    node_modules/@angular/forms
+  @angular/forms  4.4.0-RC.0 - 4.4.0 || 19.0.0-next.0 - 19.2.19
+  Depends on vulnerable versions of @angular/common
+  Depends on vulnerable versions of @angular/core
+  Depends on vulnerable versions of @angular/platform-browser
+  node_modules/@angular/forms
   @angular/platform-browser  19.0.0-next.0 - 19.2.19
   Depends on vulnerable versions of @angular/animations
   Depends on vulnerable versions of @angular/common
